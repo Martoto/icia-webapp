@@ -8,10 +8,12 @@ on:
   push:
     branches:
       - main
+  env:
+    WEBAPP_NAME: 'icia'    
+    
   workflow_dispatch:
 
-env:
-  WEBAPP_NAME: 'icia'
+
 
 jobs:
   build:
