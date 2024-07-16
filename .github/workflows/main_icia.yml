@@ -36,7 +36,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Collect static
-        run: ./webapp/icia/python manage.py collectstatic
+        run: python ./webapp/icia/manage.py collectstatic
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
