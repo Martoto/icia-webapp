@@ -4,16 +4,16 @@
 
 name: Build and deploy Python app to Azure Web App - icia
 
+
+
 on:
   push:
     branches:
       - main
-  env:
-    WEBAPP_NAME: 'icia'    
-
   workflow_dispatch:
 
-
+env:
+  WEBAPP_NAME: 'icia'
 
 jobs:
   build:
