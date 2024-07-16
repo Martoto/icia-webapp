@@ -34,6 +34,9 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Collect static
+        run: python webapp/manage.py collectstatic && yes
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
@@ -79,7 +82,7 @@ jobs:
         uses: Azure/appservice-settings@v1
         with:  
           app-name: ${{ env.WEBAPP_NAME }}
-          app-settings-json: '[{ "name": "DISABLE_COLLECTSTATIC", "value": "true" }, { "name": "POST_BUILD_COMMAND",  "value": "python manage.py makemigrations && python manage.py migrate" }, { "name": "SCM_DO_BUILD_DURING_DEPLOYMENT", "value": "true" }, { "name": "DJANGO_ENV", "value": "production"}]'
+          app-settings-json: '[{ "name": "DISABLE_COLLECTSTATIC", "value": "true" }, { "name": "POST_BUILD_COMMAND",  "value": "python webapp/manage.py makemigrations && python webpapp/manage.py migrate" }, { "name": "SCM_DO_BUILD_DURING_DEPLOYMENT", "value": "true" }, { "name": "DJANGO_ENV", "value": "production"}]'
 
 
       - name: 'Deploy to Azure Web App'
