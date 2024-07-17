@@ -33,3 +33,7 @@ env/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+# Ignore Django migrations
+*/migrations/*
+!*/migrations/__init__.py
