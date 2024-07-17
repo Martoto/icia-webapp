@@ -15,6 +15,9 @@ on:
 env:
   WEBAPP_NAME: 'icia'
 
+startup-command: startup.txt
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -57,6 +60,7 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write 
+
 
     steps:
       - name: Download artifact from build job
