@@ -76,12 +76,6 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_EFCE4E39B8F042A78C3EDF7EFDD9C3BB }}
 
           
-      - name: Disable static collection and set migration command on App Service
-        uses: Azure/appservice-settings@v1
-        with:  
-          app-name: ${{ env.WEBAPP_NAME }}
-          app-settings-json: '[{ "name": "DISABLE_COLLECTSTATIC", "value": "true" }, { "name": "POST_BUILD_COMMAND",  "value": "python webapp/manage.py makemigrations && python webpapp/manage.py migrate" }, { "name": "SCM_DO_BUILD_DURING_DEPLOYMENT", "value": "true" }, { "name": "DJANGO_ENV", "value": "production"}]'
-
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
