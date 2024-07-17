@@ -15,8 +15,6 @@ on:
 env:
   WEBAPP_NAME: 'icia'
 
-startup-command: startup.txt
-
 
 jobs:
   build:
