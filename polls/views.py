@@ -1,11 +1,16 @@
 from django.db.models import F
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
 from .models import Choice, Question
+
+
+
+def health(request):
+    return JsonResponse({'status': 'healthy'}, status=200)
 
 
 class IndexView(generic.ListView):
