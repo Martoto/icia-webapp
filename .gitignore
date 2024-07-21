@@ -37,4 +37,4 @@ Thumbs.db
 # Ignore Django migrations
 */migrations/*
 !*/migrations/__init__.py
-*dev.py
+icia/settings/dev.py
