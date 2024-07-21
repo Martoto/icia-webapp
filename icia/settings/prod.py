@@ -77,7 +77,11 @@ WSGI_APPLICATION = 'icia.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.environ['DBNAME'],
+        'USER': os.environ['DBHOST'],
+        'PASSWORD': os.environ['DBUSER'],
+        'HOST': os.environ['DBPASS'],
+        'PORT': os.environ['DBPORT'],
     }
 }
 
