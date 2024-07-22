@@ -1,5 +1,5 @@
 from django.db.models import F
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
@@ -12,6 +12,8 @@ from .models import Choice, Question
 def health(request):
     return JsonResponse({'status': 'healthy'}, status=200)
 
+def nenezinho(request):
+    return HttpResponse("Eu te amo nenezinho")
 
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
