@@ -22,7 +22,6 @@ STATICFILES_DIRS = [
     "/var/www/static/",
 ]
 # Azure hosting
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Application definition
