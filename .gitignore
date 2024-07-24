@@ -30,6 +30,9 @@ env/
 *.sublime-project
 *.sublime-workspace
 
+# Ignore static files
+*/staticfiles/*
+
 # Ignore system files
 .DS_Store
 Thumbs.db
