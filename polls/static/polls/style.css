@@ -5,3 +5,10 @@ li a {
 body {
     background: white url("images/background.png") no-repeat;
 }
+
+.flex-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    height: 100vh;           /* Full viewport height */
+}
