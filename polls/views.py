@@ -1,9 +1,11 @@
 from django.db.models import F
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Choice, Question
 
@@ -15,7 +17,23 @@ def health(request):
 def nenezinho(request):
     return HttpResponse("Eu te amo nenezinho")
 
-class IndexView(generic.ListView):
+
+
+def login(request):
+    username = request.POST["username"]
+    password = request.POST["password"]
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return redirect('')
+    else:
+        return HttpResponse("invalido")
+    
+def loginView(request):
+    return render(request, "polls/login.html")
+
+
+class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
 

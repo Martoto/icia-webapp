@@ -25,6 +25,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Application definition
+LOGIN_URL = "login/"
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
