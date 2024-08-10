@@ -9,13 +9,17 @@ body {
     display: flex;
     flex-direction: column;
 }
+header {
+    padding: 10px;
+    text-align: left; /* Align text to the left */
+}
 header, footer {
     background-color: #ebf489;
     padding: 10px;
-    text-align: center;
 }
 footer {
     margin-top: auto; 
+    text-align: center;
 }
 .content {
     flex: 1; 
@@ -24,4 +28,16 @@ main {
     padding: 20px;
     text-align: center;
 
+}
+ul.horizontal-list {
+    list-style-type: none; 
+    padding: 0;
+    margin: 0;
+    display: grid; 
+    grid-auto-flow: column; 
+    column-gap: 20px; 
+}
+a {
+    text-decoration: none; /* Remove underline from links */
+    color: #333; /* Text color */
 }
