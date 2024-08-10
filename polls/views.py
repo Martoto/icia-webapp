@@ -18,21 +18,6 @@ def nenezinho(request):
     return HttpResponse("Eu te amo nenezinho")
 
 
-
-def login(request):
-    username = request.POST["username"]
-    password = request.POST["password"]
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect('')
-    else:
-        return HttpResponse("invalido")
-    
-def loginView(request):
-    return render(request, "polls/login.html")
-
-
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
