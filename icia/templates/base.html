@@ -4,16 +4,29 @@
 
 <head>
   {% load static %}
-  <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}ICIA{% endblock %}</title>
 </head>
 
+<header>
+  <h1>Welcome to My Django Home Page</h1>
+</header>
+
 <body>
+ 
   <main>
-    {% block content %}
-    {% endblock %}
+    <p>
+      {% block content %}
+      {% endblock %}
+    </p>
   </main>
+
 </body>
+
+<footer>
+  <p>&copy; 2024 My Django Project</p>
+</footer>
 
 </html>
