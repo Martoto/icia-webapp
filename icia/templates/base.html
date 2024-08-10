@@ -12,11 +12,11 @@
 </head>
 
 <header>
-  <h1><a href="{% url 'home' %}">IC.IA</a></h1>
+  <h1><a class="logo" href="{% url 'home' %}">IC.IA</a></h1>
 </header>
 
 <body>
- 
+
   <main>
     <p>
       {% block content %}
@@ -27,7 +27,8 @@
 </body>
 
 <footer>
-  <p>&copy; 2024 My Django Project</p>
+  <p>&copy; 2024 ICIA - UTFPR</p>
+  <a href="{% url 'about' %}">{%trans "About us" %}</a>
 </footer>
 
 </html>
