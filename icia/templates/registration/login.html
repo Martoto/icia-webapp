@@ -1,13 +1,18 @@
 <!-- templates/registration/login.html -->
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
+
 
 {% block title %}Login{% endblock %}
 
 {% block content %}
 <h2>Log In</h2>
-<form method="post">
+<form method="post" class="form">
   {% csrf_token %}
-  {{ form }}
-  <button type="submit">Log In</button>
+
+  {% bootstrap_form form %}
+
+  {% bootstrap_button button_type="submit" content="OK" %}
+  {% bootstrap_button button_type="reset" content="Cancel" %}
 </form>
 {% endblock %}

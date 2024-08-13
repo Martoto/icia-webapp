@@ -1,7 +1,11 @@
-{% load static %}
+<!-- templates/registration/login.html -->
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
+{% block title %}Login{% endblock %}
+
+{% block content %}
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
     <fieldset>
@@ -16,4 +20,6 @@
         {% endfor %}
     </fieldset>
     <input type="submit" value="Vote">
-    </form>
+</form>
+{% endblock %}
+
