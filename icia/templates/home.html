@@ -13,10 +13,10 @@ Hi {{ user.username }}!
   <button type="submit">Log Out</button>
 </form>
 {% else %}
-<ul class="horizontal-list">
-  <li><p>{% trans "You are not logged in" %}</p></li>
-  <li><a href="{% url 'login' %}">Log In</a></li>
-  <li><a href="{% url 'signup' %}">Sign</a></li>
-</ul>
+<div class="alert alert-warning">
+  <p>{% trans "You are not logged in." %}</p>
+  <a href="{% url 'login' %}" class="btn btn-primary">{% trans "Login" %}</a>
+  <a href="{% url 'signup' %}" class="btn btn-secondary">{% trans "Sign Up" %}</a>
+</div>
 {% endif %}
 {% endblock %}
