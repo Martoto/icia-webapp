@@ -13,10 +13,27 @@
 </head>
 
 <header>
-  <h1><a class="logo" href="{% url 'home' %}">IC.IA</a></h1>
+  <div class="row">
+    <div class="col">
+      <h1><a class="logo" href="{% url 'home' %}">IC.IA</a></h1>
+    </div>
+    <div text-align="right" class="col">
+        <ul>
+          <li><a href="default.asp">Home</a></li>
+          <li><a href="news.asp">News</a></li>
+          <li><a href="contact.asp">Contact</a></li>
+          <li><a href="about.asp">About</a></li>
+        </ul> 
+        {% if user.is_authenticated %}
+        Hi {{ user.username }}!
+        <form action="{% url 'logout' %}" method="post">
+         {% csrf_token %}
+          <button type="submit">Log Out</button>
+        </form>
+        {% endif %}
+    </div>
+  </div> 
 </header>
-
-<body class="body">
 
   <main>
     <p>
