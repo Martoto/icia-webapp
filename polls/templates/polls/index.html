@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
 
-{% block title %}Login{% endblock %}
+{% block title %}Polls{% endblock %}
 
 
 {% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item active"><a href="#">{% trans "Polls" %}</a></li>
+    </ol>
+</nav>
 {% if latest_question_list %}
 <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for question in latest_question_list %}
@@ -16,6 +23,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{ question.pk }}</h5>
                 <p class="card-text">{{ question.question_text }}</p>
+                <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary stretched-link">{% trans "Vote" %}</a>
               </div>
               <div class="card-footer">
                 <small class="text-muted">{{ question.pub_date}}</small>

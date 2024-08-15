@@ -1,16 +1,23 @@
-<!-- templates/registration/login.html -->
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
 
 {% block title %}Poll Detail{% endblock %}
 
 {% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'polls:index' %}">{% trans "Polls" %}</a></li>
+      <li class="breadcrumb-item active"><a href="#">{% trans "Question" %} {{ question.pk }}</a></li>
+    </ol>
+</nav>
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
     <fieldset>
         <legend>
-            <h1>Question {{ question.pk }}</h1>
+            <h1>{% trans "Question" %} {{ question.pk }}</h1>
             <h2>{{ question.question_text }}</h2>
         </legend>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
