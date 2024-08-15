@@ -3,7 +3,7 @@
 {% load django_bootstrap5 %}
 
 
-{% block title %}Login{% endblock %}
+{% block title %}Poll Detail{% endblock %}
 
 {% block content %}
 <form action="{% url 'polls:vote' question.id %}" method="post">

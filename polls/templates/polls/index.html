@@ -1,13 +1,31 @@
+{% extends "base.html" %}
 {% load static %}
+{% load django_bootstrap5 %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
+{% block title %}Login{% endblock %}
+
+
+{% block content %}
 {% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for question in latest_question_list %}
+        <div class="col">
+            <div class="card h-100" href="{% url 'polls:detail' question.id %}">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{ question.pk }}</h5>
+                <p class="card-text">{{ question.question_text }}</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">{{ question.pub_date}}</small>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+</div>
+
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{% endblock %}

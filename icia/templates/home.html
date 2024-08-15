@@ -13,6 +13,11 @@
   <a href="{% url 'login' %}" class="btn btn-primary">{% trans "Login" %}</a>
   <a href="{% url 'signup' %}" class="btn btn-secondary">{% trans "Sign Up" %}</a>
 </div>
+{% else %}
+<div class="alert alert-success">
+  <p>{% trans "Start polling" %}</p>
+  <a href="{% url 'polls:index' %}" class="btn btn-primary">{% trans "Polls" %}</a>
+</div>
 {% endif %}
 
 {% endblock %}
