@@ -8,8 +8,14 @@ class Question(models.Model):
     def was_published_recently(self):
         return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
 
+class Agent(models.Model):
+    score = models.BigIntegerField(decimal_places=2)
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
+
+class Vote():
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
