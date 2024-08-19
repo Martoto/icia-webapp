@@ -21,7 +21,19 @@ class Choice(models.Model):
     def get_votes(self):
         return self.vote_set.all().len
 
-class Vote():
+class Vote(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, db_index=True)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+
+class AgentPost(models.Model):
+    owner = models.ForeignKey(Agent, on_delete=models.CASCADE, db_index=True)
+    likes = models.ManyToManyField(Agent, related_name="like_set")
+    text = models.CharField(max_length=500)
+    pub_date = models.DateTimeField("date published")
+    def was_published_recently(self):
+        return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
+
+
+
+    
 

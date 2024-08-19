@@ -55,14 +55,10 @@
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </li>
       </ul>
+      {% if user.is_authenticated %}
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          {% if user.is_authenticated %}
             Hi {{ user.username }}
-            {% if user.agent_set.count > 0 %}
-              Score: {{ user.agent_set.all.getScore }}
-            {% endif %}
-          {% endif %}
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
           {% if user.is_authenticated %}
@@ -73,12 +69,13 @@
             </form>
           </li>
           {% endif %}
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
+          {% for agent in user.agent_set.all %}
+            <li><a class="dropdown-item" href="#">Score: {{ agent.get_score }}</a></li>
+          {% endfor %}
+          <li><a class="dropdown-item" href="#">{% trans "My votes" %}</a></li>
         </ul>
       </div>
-      
+      {% endif %}
     </div>
   </div>
 </nav>
