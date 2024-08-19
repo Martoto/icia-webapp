@@ -3,7 +3,6 @@ from .models import Question
 
 class QuestionSerializer(serializers.ModelSerializer):
     
-    
     class Meta:
         model = Question
         choices = Question.choice_set.all()
