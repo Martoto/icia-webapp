@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Choice, Question
+from .models import Choice, Question, Vote, Agent
 
 
 
@@ -42,6 +42,7 @@ class ResultsView(generic.DetailView):
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+    agent, x = Agent.get_or_create(user=request.user)
     try:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
@@ -50,8 +51,7 @@ def vote(request, question_id):
             "error_message": "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        Vote.models.create(agent=agent, choice=selected_choice)
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
 
 
