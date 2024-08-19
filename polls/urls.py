@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+
 
 from . import views
 
@@ -10,4 +11,5 @@ urlpatterns = [
     path("<int:question_id>/vote/", views.vote, name="vote"),
     path('health/', views.health, name='health'),
     path('nenezinho/', views.nenezinho, name='nenezinho'),
+    path('api/', name='api'),
 ]
