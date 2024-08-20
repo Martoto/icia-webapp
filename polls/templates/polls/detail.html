@@ -3,7 +3,7 @@
 {% load i18n %}
 
 
-{% block title %}Poll Detail{% endblock %}
+{% block title %}Question Detail{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb">
@@ -24,6 +24,12 @@
         {% for choice in question.choice_set.all %}
             <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
             <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+        {% for classification in question.classification_set.all %}
+            <label class="form-label" for="customRange1">Example range</label>
+            <div data-mdb-range-init class="range">
+            <input type="range" class="form-range" id="customRange1" />
+            </div>
         {% endfor %}
     </fieldset>
     <input type="submit" value="Vote">
