@@ -7,6 +7,15 @@ class Question(models.Model):
     question_text = models.TextField(max_length=5000)
     pub_date = models.DateTimeField("date published")
     available = models.BooleanField(default=True)
+    def get_voting_agents(self):
+        ret = []
+        for c in self.choice_set.all():
+            for v in c.vote_set.all():
+                ret.append(v.agent)
+        for c in self.classification_set.all():
+            for v in c.estimate_set.all():
+                ret.append(v.agent)        
+        return ret
     def was_published_recently(self):
         return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
 

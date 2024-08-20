@@ -13,6 +13,12 @@
       <li class="breadcrumb-item active"><a href="#">{% trans "Question" %} {{ question.pk }}</a></li>
     </ol>
 </nav>
+{% if active_agent in question.get_voting_agents %}
+<div class="alert alert-success">
+    <p>{% trans "You already voted" %}</p>
+    <a href="{% url 'polls:index' %}" class="btn btn-primary">{% trans "Polls" %}</a>
+</div>
+{% else %}
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
     <fieldset>
@@ -26,13 +32,30 @@
             <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
         {% endfor %}
         {% for classification in question.classification_set.all %}
-            <label class="form-label" for="customRange1">Example range</label>
-            <div data-mdb-range-init class="range">
-            <input type="range" class="form-range" id="customRange1" />
-            </div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col">
+                        {%trans "Safe" %}
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Chance of fraud" %}</label>
+                        <div data-mdb-range-init class="range">
+                        <input type="range" class="form-range" step="0.5" id="classification{{forloop.counter}}" oninput="updateValue(this.value)" value="{{classification.value}}"/>
+                        </div>
+                        <script type="text/javascript">
+                            function updateValue(value) {
+                                document.getElementById("rangeLabel{{forloop.counter}}").textContent = value;
+                            }
+                        </script>
+                    </div>
+                    <div class="col">
+                        {%trans "Fraud" %}
+                    </div>
+                </div> 
         {% endfor %}
     </fieldset>
     <input type="submit" value="Vote">
 </form>
+{%endif%}
 {% endblock %}
 

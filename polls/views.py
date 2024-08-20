@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Choice, Question, Vote, Agent, AgentPost
+from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification
 
 
 
@@ -36,24 +36,20 @@ class PostsView(LoginRequiredMixin, generic.ListView):
             :5
         ]
     
-def likePost(request, post_id):
-    post = get_object_or_404(AgentPost, pk=post_id)
-    agent, x = Agent.objects.get_or_create(user=request.user)
-    if post.likes.filter(id=request.user.id).exists():
-        post.likes.remove(agent)
-    else:
-        post.likes.add(agent)
-
-    post.save()
-    
-    return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
     
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Question
     template_name = "polls/detail.html"
     def get_queryset(self):
-        return Question.objects.filter(pub_date__lte=timezone.now())
+        return Question.objects.filter(pub_date__lte=timezone.now()).filter()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['active_agent'] = self.request.user.agent_set.all()[0]
+
+        return context
 
 
 class ResultsView(generic.DetailView):
@@ -64,16 +60,22 @@ class ResultsView(generic.DetailView):
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     agent, x = Agent.objects.get_or_create(user=request.user)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST["choice"])
-    except (KeyError, Choice.DoesNotExist):
-        return render(request, "polls/detail.html", {
-            "question": question,
-            "error_message": "You didn't select a choice.",
-        })
-    else:
-        vote, _ = Vote.objects.get_or_create(agent=agent, choice=selected_choice)
+    if question.classification_set.count() > 0:
+        for c in question.classification_set.all():
+            estimate, _ = Estimate.objects.get_or_create(agent=agent, classification=c, value=request.POST.get("classification.value", 50.0))
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+    if question.choice_set.count() > 0:
+        try:
+            selected_choice = question.choice_set.get(pk=request.POST["choice"])
+        except (KeyError, Choice.DoesNotExist):
+            return render(request, "polls/detail.html", {
+                "question": question,
+                "error_message": "You didn't select a choice.",
+            })
+        else:
+            vote, _ = Vote.objects.get_or_create(agent=agent, choice=selected_choice)
+
+    return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
 
 
 ################################ - API SPECS - #############################################
