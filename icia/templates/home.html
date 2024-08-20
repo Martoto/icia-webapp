@@ -1,12 +1,42 @@
 <!-- templates/home.html-->
 {% extends 'base.html' %}
 {% load i18n %}
+{% load embed_video_tags %}
 
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
+
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <iframe width="420" height="345" src="https://www.youtube.com/watch?v=i8LDG7D4e6w">
+      </iframe>
+    </div>
+    <div class="carousel-item">
+      <iframe width="420" height="345" src="https://www.youtube.com/watch?v=i8LDG7D4e6w">
+      </iframe>
+    </div>
+    <div class="carousel-item">
+      <iframe width="420" height="345" src="https://www.youtube.com/watch?v=i8LDG7D4e6w">
+      </iframe>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
 {% if not user.is_authenticated %}
+
 
 <div class="alert alert-warning">
   <p>{% trans "You are not logged in." %}</p>
@@ -17,6 +47,10 @@
 <div class="alert alert-success">
   <p>{% trans "Start polling" %}</p>
   <a href="{% url 'polls:index' %}" class="btn btn-primary">{% trans "Polls" %}</a>
+</div>
+<div class="alert alert-success">
+  <p>{% trans "Create Agent" %}</p>
+  <a href="{% url 'agents:index' %}" class="btn btn-primary">{% trans "Agents" %}</a>
 </div>
 {% endif %}
 

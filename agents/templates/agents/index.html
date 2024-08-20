@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+
+{% block title %}Agents{% endblock %}
+
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item active"><a href="#">{% trans "Agents" %}</a></li>
+    </ol>
+</nav>
+{% if agent_list %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for agent in agent_list %}
+        <div class="col">
+            <div class="card h-100">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{ agent.label }}</h5>
+                <p class="card-text">{{ agent.agent.get_score }}</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Owner: {{ agent.agent.user }}</small>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+</div>
+
+{% else %}
+    <p>No agents are available.</p>
+{% endif %}
+{% endblock %}
