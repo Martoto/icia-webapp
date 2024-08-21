@@ -2,6 +2,8 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Question(models.Model):
     question_text = models.TextField(max_length=5000)
@@ -22,8 +24,12 @@ class Question(models.Model):
 
 class Agent(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    def get_score(self):
-        return sum(v.choice.score for v in self.vote_set.all())
+    score = models.IntegerField(default=0)
+
+    def update_score(self):
+        self.score = sum(v.choice.score for v in self.vote_set.all())
+        self.save()
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -60,6 +66,8 @@ class AgentPost(models.Model):
         return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
 
 
-
+@receiver(post_save, sender=Vote)
+def update_agent_score(sender, instance, **kwargs):
+    instance.agent.update_score()
     
 

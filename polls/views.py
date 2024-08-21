@@ -1,4 +1,7 @@
+from collections.abc import Sequence
+from typing import Any
 from django.db.models import F
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
@@ -69,6 +72,25 @@ class ResultsView(LoginRequiredMixin, generic.DetailView):
         
         context['active_agent'], _ = Agent.objects.get_or_create(user=self.request.user)
  
+        return context
+    
+class LeaderboardView(LoginRequiredMixin, generic.ListView):
+    template_name = "polls/leaderboard.html"
+    model = Agent
+    paginate_by = 10
+    
+    def get_queryset(self):
+        agents = Agent.objects.annotate(
+            score=Sum('vote__choice__score')
+        )
+        return scorers.all()
+   
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_agent'], _ = Agent.objects.get_or_create(user=self.request.user)
+        context['active_agent_pos'] = list(self.object_list).index(context['active_agent'])+1
+
         return context
 
 
