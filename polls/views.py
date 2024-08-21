@@ -78,12 +78,7 @@ class LeaderboardView(LoginRequiredMixin, generic.ListView):
     template_name = "polls/leaderboard.html"
     model = Agent
     paginate_by = 10
-    
-    def get_queryset(self):
-        agents = Agent.objects.annotate(
-            score=Sum('vote__choice__score')
-        )
-        return scorers.all()
+    ordering = ['score']
    
     
     def get_context_data(self, **kwargs):

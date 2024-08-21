@@ -59,7 +59,7 @@
           </li>
           {% endif %}
           {% for agent in user.agent_set.all %}
-            <li><a class="dropdown-item" href="#">Score: {{ agent.get_score }}</a></li>
+            <li><a class="dropdown-item" href="#">Score: {{ agent.score }}</a></li>
           {% endfor %}
           <li><a class="dropdown-item" href="#">{% trans "My votes" %}</a></li>
         </ul>

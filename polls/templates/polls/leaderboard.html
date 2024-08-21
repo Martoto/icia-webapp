@@ -29,7 +29,7 @@
               <tbody>
                 <tr>
                   <th scope="row">{{active_agent_pos}}</th>
-                  <td>{{active_agent.get_score}}</td>
+                  <td>{{active_agent.score}}</td>
                   <td>{{active_agent.vote_set.count}}</td>
                   <td>{{active_agent.user.username}}</td>
                 </tr>
@@ -54,7 +54,7 @@
             {% for agent in object_list %}
               <tr>
                 <th scope="row">{{forloop.counter}}</th>
-                <td>{{agent.get_score}}</td>
+                <td>{{agent.score}}</td>
                 <td>{{agent.vote_set.count}}</td>
                 <td>{{agent.user.username}}</td>
               </tr>
