@@ -15,24 +15,56 @@
     </ol>
 </nav>
 {% if latest_question_list %}
-<div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for question in latest_question_list %}
-        <div class="col">
-            <div class="card h-100" href="{% url 'polls:detail' question.id %}">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">{{ question.pk }}</h5>
-                <p class="card-text">{{ question.question_text }}</p>
-                <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary stretched-link">{% trans "Vote" %}</a>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">{{ question.pub_date}}</small>
+<div class="p-3 border bg-light">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for question in page_obj %}
+          <div class="col">
+              <div class="card h-100" href="{% url 'polls:detail' question.id %}">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ question.pk }}</h5>
+                  <p class="card-text">{{ question.question_text }}</p>
+                  {% if active_agent in question.get_voting_agents %}
+                    <h5 class="card-title"><span aria-hidden="true">{% trans "Already voted" %}&#x2713;</span></h5>
+                    <a href="{% url 'polls:results' question.id %}" class="btn btn-primary stretched-link">{% trans "Results" %}</a>
+                  {% else %}
+                  <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary stretched-link">{% trans "Vote" %}</a>
+                  {%endif%}
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">{{ question.pub_date}}</small>
+                </div>
               </div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+  </div>
 </div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item disabled">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+    </li>
+    {%else%}
+    <li class="page-item disabled">
+      <a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a>
+    </li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+      <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+    {%endfor%}
 
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+    </li>
+    {%else%}
+    <li class="page-item disabled">
+      <a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}

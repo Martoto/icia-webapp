@@ -17,6 +17,7 @@
 <div class="alert alert-success">
     <p>{% trans "You already voted" %}</p>
     <a href="{% url 'polls:index' %}" class="btn btn-primary">{% trans "Polls" %}</a>
+    <a href="{% url 'polls:results' question.pk %}" class="btn btn-primary">{% trans "See results" %}</a>
 </div>
 {% else %}
 <form action="{% url 'polls:vote' question.id %}" method="post">

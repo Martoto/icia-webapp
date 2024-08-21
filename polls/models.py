@@ -18,6 +18,7 @@ class Question(models.Model):
         return ret
     def was_published_recently(self):
         return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
+    
 
 class Agent(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -42,7 +43,7 @@ class Classification(models.Model):
     score = models.BigIntegerField(default=1)
     def get_estimate(self):
         estimates = self.estimate_set.all()
-        return sum(estimate.value for estimate in estimates)/(estimates.len)
+        return sum(estimate.value for estimate in estimates)/(estimates.count())
 
 class Estimate(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, db_index=True)
