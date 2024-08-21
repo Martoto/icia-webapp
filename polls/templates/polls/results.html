@@ -26,6 +26,12 @@
                         <div class="col">
                             <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Group Estimate" %}</label>
                             <input type="range" class="form-range" id="disabledRange" value="{{ classification.get_estimate}}" disabled>
+                            <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Your Estimate" %}</label>
+                            {%for estimate in classification.estimate_set.all %}
+                            {%if estimate.agent == active_agent%}
+                                <input type="range" class="form-range" id="disabledRange" value="{{ estimate.value }}" disabled>
+                            {%endif%}
+                            {%endfor%}
                         </div>
                         <div class="col">
                             {%trans "Fraud" %}

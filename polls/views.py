@@ -29,7 +29,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['active_agent'] = Agent.objects.get_or_create(user=self.request.user)
+        context['active_agent'], _ = Agent.objects.get_or_create(user=self.request.user)
 
         return context
 
@@ -55,14 +55,21 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['active_agent'] = Agent.objects.get_or_create(user=self.request.user)
+        context['active_agent'], _ = Agent.objects.get_or_create(user=self.request.user)
  
         return context
 
 
-class ResultsView(generic.DetailView):
+class ResultsView(LoginRequiredMixin, generic.DetailView):
     model = Question
     template_name = "polls/results.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['active_agent'], _ = Agent.objects.get_or_create(user=self.request.user)
+ 
+        return context
 
 
 def vote(request, question_id):
@@ -70,7 +77,7 @@ def vote(request, question_id):
     agent, x = Agent.objects.get_or_create(user=request.user)
     if question.classification_set.count() > 0:
         for c in question.classification_set.all():
-            estimate, _ = Estimate.objects.get_or_create(agent=agent, classification=c, value=request.POST.get("classification.value", 50.0))
+            estimate, _ = Estimate.objects.get_or_create(agent=agent, classification=c, value=request.POST.get("classification"+str(c.pk), 50.0))
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
     if question.choice_set.count() > 0:
         try:

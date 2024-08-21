@@ -41,7 +41,7 @@
                     <div class="col">
                         <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Chance of fraud" %}</label>
                         <div data-mdb-range-init class="range">
-                        <input type="range" class="form-range" step="0.5" id="classification{{forloop.counter}}" oninput="updateValue(this.value)" value="{{classification.value}}"/>
+                        <input type="range" class="form-range" step="0.5" name="classification{{classification.pk}}" oninput="updateValue(this.value)"/>
                         </div>
                         <script type="text/javascript">
                             function updateValue(value) {
