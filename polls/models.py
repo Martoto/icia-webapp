@@ -27,7 +27,8 @@ class Agent(models.Model):
     score = models.IntegerField(default=0)
 
     def update_score(self):
-        self.score = sum(v.choice.score for v in self.vote_set.all())
+        self.score =  sum(v.choice.score for v in self.vote_set.all()) 
+        self.score += sum(v.classification.score*(1/(abs(v.value - v.classification.benchmark) if abs(v.value - v.classification.benchmark) < 1 else 1)) for v in self.estimate_set.all())
         self.save()
 
 
@@ -45,18 +46,21 @@ class Vote(models.Model):
 
 class Classification(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    classification_text = models.CharField(max_length=200)
+    classification_text = models.CharField(max_length=200, null=True)
     range = models.DecimalField(max_digits=5,decimal_places=2, default=100.00)
     score = models.BigIntegerField(default=1)
+    benchmark = models.DecimalField(max_digits=5,decimal_places=2, default=100.00)
+
     def get_estimate(self):
         estimates = self.estimate_set.all()
         return sum(estimate.value for estimate in estimates)/(estimates.count())
+    
 
 class Estimate(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, db_index=True)
     classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     value = models.DecimalField(max_digits=5,decimal_places=2,default=50.00)
-    description = models.TextField(null=True, max_length=200)
+    description = models.TextField(null=True, max_length=200) 
 
 class AgentPost(models.Model):
     owner = models.ForeignKey(Agent, on_delete=models.CASCADE, db_index=True)

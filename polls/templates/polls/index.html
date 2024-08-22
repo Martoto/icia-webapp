@@ -18,13 +18,14 @@
 <div class="p-3 border bg-light">
   <div class="row row-cols-1 row-cols-md-3 g-4">
           {% for question in page_obj %}
+          {% with question.get_voting_agents as voters%}
           <div class="col">
               <div class="card h-100" href="{% url 'polls:detail' question.id %}">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">{{ question.pk }}</h5>
-                  <p class="card-text">{{ question.question_text }}</p>
-                  {% if active_agent in question.get_voting_agents %}
+                  <h5 class="card-title">Question #{{ question.pk }}<span class="badge bg-secondary">{{voters|length}} Vote{{voters|length|pluralize}}</span></h5>
+                  <p class="card-text text-muted">{{ question.question_text|truncatewords:5 }}</p>
+                  {% if active_agent in voters %}
                     <h5 class="card-title"><span aria-hidden="true">{% trans "Already voted" %}&#x2713;</span></h5>
                     <a href="{% url 'polls:results' question.id %}" class="btn btn-primary stretched-link">{% trans "Results" %}</a>
                   {% else %}
@@ -32,14 +33,15 @@
                   {%endif%}
                 </div>
                 <div class="card-footer">
-                  <small class="text-muted">{{ question.pub_date}}</small>
+                  <small class="text-muted">Created {{ question.pub_date}}</small>
                 </div>
               </div>
             </div>
+          {%endwith%}
           {% endfor %}
   </div>
 </div>
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation">
   <ul class="pagination justify-content-center">
     {% if page_obj.has_previous %}
     <li class="page-item">

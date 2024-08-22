@@ -24,6 +24,8 @@
                             {%trans "Safe" %}
                         </div>
                         <div class="col">
+                            <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Benchmark" %}</label>
+                            <input type="range" class="form-range" id="disabledRange" value="{{ classification.benchmark}}" disabled>
                             <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Group Estimate" %}</label>
                             <input type="range" class="form-range" id="disabledRange" value="{{ classification.get_estimate}}" disabled>
                             <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Your Estimate" %}</label>

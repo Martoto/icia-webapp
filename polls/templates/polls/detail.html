@@ -23,10 +23,19 @@
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
     <fieldset>
-        <legend>
-            <h1>{% trans "Question" %} {{ question.pk }}</h1>
-            <h2>{{ question.question_text }}</h2>
-        </legend>
+        <div class="container-sm mt-4"></div>
+        <div class="card h-100" style="max-height: 300px">
+            <div class="card-header text-start">
+                Question #{{question.pk}}
+            </div>
+            <div class="card-body overflow-scroll">
+                <p class="card text-start" style="white-space: pre-wrap;">
+                    {{question.question_text}}
+                </p>
+            </div>
+          </div>
+          </div>
+       
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         {% for choice in question.choice_set.all %}
             <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
