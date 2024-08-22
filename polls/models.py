@@ -45,6 +45,7 @@ class Vote(models.Model):
 
 class Classification(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    classification_text = models.CharField(max_length=200)
     range = models.DecimalField(max_digits=5,decimal_places=2, default=100.00)
     score = models.BigIntegerField(default=1)
     def get_estimate(self):
