@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Question(models.Model):
+    question_query = models.TextField(null="true")
     question_text = models.TextField(max_length=5000)
     pub_date = models.DateTimeField("date published")
     available = models.BooleanField(default=True)

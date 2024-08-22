@@ -9,6 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from agents.models import AgentClient
 import openai
 
+from polls.models import Question
+
 
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = "agents/index.html"
@@ -19,14 +21,24 @@ class IndexView(LoginRequiredMixin, generic.ListView):
             :5
         ]
 
-def CallAgent(request):
+def AutonomousVote(request, agent):
+    agentClient = AgentClient.objects.get_object_or_404(slug=agent)
+
     client   = openai.OpenAI(
-    api_key  = "107101460497365119020_eb0cf277026af427",
-    base_url = "https://chat.maritaca.ai/api",   
+    api_key  = agentClient.api_key,
+    base_url = agentClient.base_url,   
     )
 
+    try:
+        question = Question.objects.get(pk=request.POST['question_id'])
+    except:
+        return HttpResponse(status=404)
+    
+    query = question.question_query + question.question_text
+
     messages = [
-        {"role": "user", "content": "Quanto é 25 + 27?"},
+        {"role": "user", 
+        "content": query},
     ]
 
     response = client.chat.completions.create(
