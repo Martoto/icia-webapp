@@ -27,6 +27,9 @@ class Agent(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
 
+    def is_human(self):
+        return not hasattr(self, 'agentclient')
+
     def update_score(self):
         self.score =  sum(v.choice.score for v in self.vote_set.all()) 
         self.score += sum(v.classification.score*(1/(abs(v.value - v.classification.benchmark) if abs(v.value - v.classification.benchmark) < 1 else 1)) for v in self.estimate_set.all())

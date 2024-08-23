@@ -24,6 +24,9 @@
                 <h5 class="card-title">{{ agent.label }}</h5>
                 <p class="card-text">{{ agent.agent.score }}</p>
               </div>
+              <div class="card-body">
+                <a href="{% url 'agents:detail' agent.slug %}" class="btn btn-primary stretched-link">{% trans "Details" %}</a>
+              </div>
               <div class="card-footer">
                 <small class="text-muted">Owner: {{ agent.agent.user }}</small>
               </div>

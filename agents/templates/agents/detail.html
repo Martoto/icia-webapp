@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+
+{% block title %}Agent Client{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'agents:index' %}">{% trans "Agents" %}</a></li>
+      <li class="breadcrumb-item active"><a href="#">{% trans "Client" %} {{ AgentClient.label }}</a></li>
+    </ol>
+</nav>
+{% if user != agentclient.agent.user %}
+<div class="alert alert-failure">
+    <p>{% trans "This Client belongs to another user" %}</p>
+    <a href="{% url 'agents:index' %}" class="btn btn-primary">{% trans "Agents" %}</a>
+</div>
+{% else %}
+<form action="{% url 'agents:autovote' agentclient.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <div class="container-sm mt-4"></div>
+        <div class="card h-100" style="max-height: 300px">
+            <div class="card-header text-start">
+                {{AgentClient.label}}
+            </div>
+            <div class="card-body overflow-scroll">
+                <p class="card text-start" style="white-space: pre-wrap;">
+                    TEXTO
+                </p>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ active_question.pk|default:"Choose question" }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="questionSelection">
+            {%for question in questions%}
+              <li><a class="dropdown-item" href="?question={{question.pk}}">Question #{{question.pk}}</a></li>
+            {%endfor%}
+            </ul>
+        </div>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    </fieldset>
+    <input type="hidden" name="question_id" value="{{active_question.pk}}">
+    <input type="submit" value="Vote">
+</form>
+{%endif%}
+{% endblock %}
+
