@@ -35,7 +35,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="#">{%trans "Home" %}</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'polls:index' %}">{%trans "Polls"%}</a>
@@ -43,6 +43,16 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'polls:leaderboard' %}">{%trans "Leaderboard"%}</a>
         </li>
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}" />
+        <li class="nav-item">
+          <select class="form-control" name="language" onchange="this.form.submit()">
+            <option value="pt">🇧🇷 {%trans "Portuguese" %}</option>
+            <option value="en">🇺🇸 {%trans "English" %}</option>
+          </select>
+        </li>
+        </form>
       </ul>
       {% if user.is_authenticated %}
       <div class="dropdown">
@@ -86,3 +96,5 @@
 </footer>
 
 </html>
+
+

@@ -84,7 +84,7 @@ class LeaderboardView(LoginRequiredMixin, generic.ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['active_agent'], _ = Agent.objects.get_or_create(user=self.request.user)
+        context['active_agent'], _ = Agent.objects.filter(user=self.request.user).all()
         context['active_agent_pos'] = list(self.object_list).index(context['active_agent'])+1
 
         return context
