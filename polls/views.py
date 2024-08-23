@@ -90,9 +90,10 @@ class LeaderboardView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-def vote(request, question_id):
+def vote(request, question_id, agent=None):
     question = get_object_or_404(Question, pk=question_id)
-    agent, x = Agent.objects.get_or_create(user=request.user)
+    if agent == None:
+        agent, x = Agent.objects.get_or_create(user=request.user)
     if question.classification_set.count() > 0:
         for c in question.classification_set.all():
             estimate, _ = Estimate.objects.get_or_create(agent=agent, classification=c, value=request.POST.get("classification"+str(c.pk), 50.0))
@@ -109,6 +110,7 @@ def vote(request, question_id):
             vote, _ = Vote.objects.get_or_create(agent=agent, choice=selected_choice)
 
     return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+
 
 
 ################################ - API SPECS - #############################################
