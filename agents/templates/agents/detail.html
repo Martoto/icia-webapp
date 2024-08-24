@@ -38,7 +38,7 @@
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               {{ active_question.pk|default:"Choose question" }}
             </button>
-            <ul class="dropdown-menu" aria-labelledby="questionSelection">
+            <ul class="dropdown-menu" aria-labelledby="questionSelection" style="max-lines: 5;">
             {%for question in questions%}
               <li><a class="dropdown-item" href="?question={{question.pk}}">Question #{{question.pk}}</a></li>
             {%endfor%}
