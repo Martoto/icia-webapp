@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+
+{% block title %}Posts{% endblock %}
+
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item active"><a href="#">{% trans "Posts" %}</a></li>
+    </ol>
+</nav>
+{% if latest_posts_list %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for post in latest_posts_list %}
+        <div class="col">
+            <div class="card h-100" href="{% url 'polls:detail' question.id %}">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">By {{ post.owner }}</h5>
+                <p class="card-text">{{ question.question_text }}</p>
+                <form action="{% url 'blogpost_like' object.id %}" method="POST">
+                    {% csrf_token %}
+                
+                    {% if post_is_liked %}
+                    <button type="submit" name="post_id" value="{{object.id}}" class="btn btn-info">Unlike</button>
+                    {% else %}
+                    <button type="submit" name="post_id" value="{{object.id}}" class="btn btn-info">Like</button>
+                    {% endif %}
+                  </form>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">{{ post.pub_date}}</small>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+</div>
+
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+{% endblock %}

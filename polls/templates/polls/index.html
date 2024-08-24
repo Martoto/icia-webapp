@@ -1,13 +1,73 @@
+{% extends "base.html" %}
 {% load static %}
+{% load django_bootstrap5 %}
+{% load i18n %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
+{% block title %}Polls{% endblock %}
+
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item active"><a href="#">{% trans "Polls" %}</a></li>
+    </ol>
+</nav>
 {% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
+<div class="p-3 border bg-light">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for question in page_obj %}
+          {% with question.get_voting_agents as voters%}
+          <div class="col">
+              <div class="card h-100" href="{% url 'polls:detail' question.id %}">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Question #{{ question.pk }}<span class="badge bg-secondary">{{voters|length}} Vote{{voters|length|pluralize}}</span></h5>
+                  <p class="card-text text-muted">{{ question.question_text|truncatewords:5 }}</p>
+                  {% if active_agent in voters %}
+                    <h5 class="card-title"><span aria-hidden="true">{% trans "Already voted" %}&#x2713;</span></h5>
+                    <a href="{% url 'polls:results' question.id %}" class="btn btn-primary stretched-link">{% trans "Results" %}</a>
+                  {% else %}
+                  <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary stretched-link">{% trans "Vote" %}</a>
+                  {%endif%}
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">Created {{ question.pub_date}}</small>
+                </div>
+              </div>
+            </div>
+          {%endwith%}
+          {% endfor %}
+  </div>
+</div>
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" >&laquo;</a>
+    </li>
+    {%else%}
+    <li class="page-item disabled">
+      <a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a>
+    </li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+      <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+    {%endfor%}
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{page_obj.next_page_number}}">&raquo;  </a>
+    </li>
+    {%else%}
+    <li class="page-item disabled">
+      <a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{% endblock %}
