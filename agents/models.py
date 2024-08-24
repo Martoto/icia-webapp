@@ -18,6 +18,7 @@ class AgentClient(models.Model):
     def __str__(self):
         return self.label
 
+
     
 class ClientSettings(models.Model):
     client = models.ForeignKey(AgentClient, on_delete=models.CASCADE)

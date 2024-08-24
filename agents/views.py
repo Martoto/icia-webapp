@@ -32,7 +32,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         
         context['questions'] = Question.objects.all()
-        context['active_question'] = get_object_or_404(Question,pk=self.request.GET.get('question', None))
+        context['active_question'] = Question.objects.filter(pk=self.request.GET.get('question', None))
  
         return context
     
