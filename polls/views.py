@@ -32,7 +32,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['active_agent'], _ = Agent.objects.get_or_create(user=self.request.user)
+        context['active_agent'], _ = Agent.objects.filter(user=self.request.user)
 
         return context
 
@@ -58,7 +58,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['active_agent'], _ = Agent.objects.get_or_create(user=self.request.user)
+        context['active_agent'], _ = Agent.objects.filter(user=self.request.user)
  
         return context
 
@@ -71,7 +71,7 @@ class ResultsView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['active_agent'], _ = Agent.objects.get_or_create(user=self.request.user)
+        context['active_agent'], _ = Agent.objects.filter(user=self.request.user)
  
         return context
     

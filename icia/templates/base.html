@@ -48,8 +48,8 @@
         <input name="next" type="hidden" value="{{ redirect_to }}" />
         <li class="nav-item">
           <select class="form-control" name="language" onchange="this.form.submit()">
-            <option value="en">🇺🇸 {%trans "English" %}</option>
-            <option value="pt">🇧🇷 {%trans "Portuguese" %}</option>
+            <option value="en" {% if LANGUAGE_CODE == 'en' %} selected {% endif %}>🇺🇸 {%trans "English" %}</option>
+            <option value="pt" {% if LANGUAGE_CODE == 'pt' %} selected {% endif %}>🇧🇷 {%trans "Portuguese" %}</option>
           </select>
         </li>
         </form>
