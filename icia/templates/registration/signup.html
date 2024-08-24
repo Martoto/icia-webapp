@@ -1,13 +1,19 @@
 <!-- templates/registration/signup.html -->
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
 
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<h2>Sign up</h2>
-<form method="post">
+<h2>{%trans "Sign up" %}</h2>
+<form method="post" class="form">
   {% csrf_token %}
-  {{ form }}
-  <button type="submit">Sign Up</button>
+
+  {% bootstrap_form form %}
+
+  {% bootstrap_button button_type="submit" content="Sign up" %}
+  {% bootstrap_button button_type="reset" content="Cancel" %}
 </form>
 {% endblock %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+
+{% block title %}Polls{% endblock %}
+
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item active"><a href="#">{% trans "Leaderboard" %}</a></li>
+    </ol>
+</nav>
+{% if active_agent %}
+<div class="p-3 border bg-light">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+            <h1>{%trans "Your agents"%}</h1>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">{%trans "Score"%}</th>
+                  <th scope="col">{%trans "Contributions"%}</th>
+                  <th scope="col">{%trans "Username"%}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">{{active_agent_pos}}</th>
+                  <td>{{active_agent.score}}</td>
+                  <td>{{active_agent.vote_set.count}}</td>
+                  <td>{{active_agent.user.username}}</td>
+                </tr>
+              </tbody>
+            </table>
+    </div>
+  </div>
+{%endif%}
+{% if object_list %}
+<div class="p-3 border bg-light">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">{%trans "Score"%}</th>
+                <th scope="col">{%trans "Contributions"%}</th>
+                <th scope="col">{%trans "Username"%}</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for agent in object_list %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{agent.score}}</td>
+                <td>{{agent.vote_set.count}}</td>
+                <td>{{agent.user.username}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+  </div>
+</div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" >&laquo;</a>
+    </li>
+    {%else%}
+    <li class="page-item disabled">
+      <a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a>
+    </li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+      <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+    {%endfor%}
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{page_obj.next_page_number}}">&raquo;  </a>
+    </li>
+    {%else%}
+    <li class="page-item disabled">
+      <a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% else %}
+    <p>No agents are available.</p>
+{% endif %}
+{% endblock %}

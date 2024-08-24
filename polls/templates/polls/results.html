@@ -1,9 +1,57 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+
+
+{% block title %}Poll Detail{% endblock %}
+{% block content %}
 <h1>{{ question.question_text }}</h1>
 
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
 
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<div class="container-fluid">
+    <div class="col gy-5">
+        <div class="row">
+        <ul>
+        {% for choice in question.choice_set.all %}
+            <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+        {% endfor %}
+        </ul>
+        {% for classification in question.classification_set.all %}
+                <div class="p-3 border bg-light">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            {%trans "Safe" %}
+                        </div>
+                        <div class="col">
+                            <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Benchmark" %}</label>
+                            <input type="range" class="form-range" id="disabledRange" value="{{ classification.benchmark}}" disabled>
+                            <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Group Estimate" %}</label>
+                            <input type="range" class="form-range" id="disabledRange" value="{{ classification.get_estimate}}" disabled>
+                            <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Your Estimate" %}</label>
+                            {%for estimate in classification.estimate_set.all %}
+                            {%if estimate.agent == active_agent%}
+                                <input type="range" class="form-range" id="disabledRange" value="{{ estimate.value }}" disabled>
+                            {%endif%}
+                            {%endfor%}
+                        </div>
+                        <div class="col">
+                            {%trans "Fraud" %}
+                        </div>
+                    </div> 
+                </div>
+            {% endfor %}
+            </div>
+        <div class="row">
+            <div class="alert alert-success">
+                <p>{% trans "Back to polls" %}</p>
+                <a href="{% url 'polls:index' %}" class="btn btn-primary">{% trans "Polls" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+

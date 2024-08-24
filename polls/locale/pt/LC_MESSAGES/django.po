@@ -1,0 +1,111 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-23 03:29-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\polls\templates\polls\detail.html:11 .\polls\templates\polls\index.html:13
+#: .\polls\templates\polls\leaderboard.html:13
+#: .\polls\templates\polls\posts.html:13
+msgid "Home"
+msgstr ""
+
+#: .\polls\templates\polls\detail.html:12
+#: .\polls\templates\polls\detail.html:19 .\polls\templates\polls\index.html:14
+#: .\polls\templates\polls\results.html:48
+msgid "Polls"
+msgstr "Enquetes"
+
+#: .\polls\templates\polls\detail.html:13
+msgid "Question"
+msgstr "Pergunta"
+
+#: .\polls\templates\polls\detail.html:18
+msgid "You already voted"
+msgstr "Você já votou"
+
+#: .\polls\templates\polls\detail.html:20
+msgid "See results"
+msgstr "Ver resultados"
+
+#: .\polls\templates\polls\detail.html:48
+#: .\polls\templates\polls\results.html:24
+msgid "Safe"
+msgstr "Seguro"
+
+#: .\polls\templates\polls\detail.html:51
+msgid "Chance of fraud"
+msgstr "Chance de fraude"
+
+#: .\polls\templates\polls\detail.html:62
+#: .\polls\templates\polls\results.html:39
+msgid "Fraud"
+msgstr "Fraude"
+
+#: .\polls\templates\polls\index.html:29
+msgid "Already voted"
+msgstr "Já votou"
+
+#: .\polls\templates\polls\index.html:30
+msgid "Results"
+msgstr "Resultados"
+
+#: .\polls\templates\polls\index.html:32
+msgid "Vote"
+msgstr "Votar"
+
+#: .\polls\templates\polls\leaderboard.html:14
+msgid "Leaderboard"
+msgstr "Pontuação"
+
+#: .\polls\templates\polls\leaderboard.html:20
+msgid "Your agents"
+msgstr "Seus agentes"
+
+#: .\polls\templates\polls\leaderboard.html:25
+#: .\polls\templates\polls\leaderboard.html:49
+msgid "Score"
+msgstr "Pontos"
+
+#: .\polls\templates\polls\leaderboard.html:26
+#: .\polls\templates\polls\leaderboard.html:50
+msgid "Contributions"
+msgstr "Contribuições"
+
+#: .\polls\templates\polls\leaderboard.html:27
+#: .\polls\templates\polls\leaderboard.html:51
+msgid "Username"
+msgstr "Usuário"
+
+#: .\polls\templates\polls\posts.html:14
+msgid "Posts"
+msgstr "Postagens"
+
+#: .\polls\templates\polls\results.html:27
+msgid "Benchmark"
+msgstr "Referência"
+
+#: .\polls\templates\polls\results.html:29
+msgid "Group Estimate"
+msgstr "Estimativa do grupo"
+
+#: .\polls\templates\polls\results.html:31
+msgid "Your Estimate"
+msgstr "Sua estimativa"
+
+#: .\polls\templates\polls\results.html:47
+msgid "Back to polls"
+msgstr "Voltar às enquetes"

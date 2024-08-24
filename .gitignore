@@ -23,6 +23,7 @@ env/
 *.secret
 *.key
 *.pem
+*.env
 
 # Ignore IDE and editor files
 .vscode/

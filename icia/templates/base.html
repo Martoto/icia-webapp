@@ -3,15 +3,98 @@
 <html>
 
 <head>
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% bootstrap_messages %}
+  {% load static %}
+  {% load i18n %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
   <meta charset="utf-8">
-  <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}ICIA{% endblock %}</title>
 </head>
 
+
+<header>
+  <div class="row">
+    <div class="col">
+      <h1><a class="logo" href="{% url 'home' %}">IC.IA</a></h1>
+    </div>
+  </div> 
+</header>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+    </svg></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">{%trans "Home" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'polls:index' %}">{%trans "Polls"%}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'polls:leaderboard' %}">{%trans "Leaderboard"%}</a>
+        </li>
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}" />
+        <li class="nav-item">
+          <select class="form-control" name="language" onchange="this.form.submit()">
+            <option value="en" {% if LANGUAGE_CODE == 'en' %} selected {% endif %}>🇺🇸 {%trans "English" %}</option>
+            <option value="pt" {% if LANGUAGE_CODE == 'pt' %} selected {% endif %}>🇧🇷 {%trans "Portuguese" %}</option>
+          </select>
+        </li>
+        </form>
+      </ul>
+      {% if user.is_authenticated %}
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Hi {{ user.username }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+          {% if user.is_authenticated %}
+          <li>
+            <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            {% bootstrap_button button_type="submit" class="dropdown-item" content="Log out" %}
+            </form>
+          </li>
+          {% endif %}
+          {% for agent in user.agent_set.all %}
+            <li><a class="dropdown-item" href="#">Score: {{ agent.score }}</a></li>
+          {% endfor %}
+          <li><a class="dropdown-item" href="#">{% trans "My votes" %}</a></li>
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
 <body>
+
   <main>
-    {% block content %}
-    {% endblock %}
+    <p>
+      {% block content %}
+      {% endblock %}
+    </p>
   </main>
+
 </body>
 
+<footer class="footer">
+  <p>&copy; 2024 ICIA - UTFPR</p>
+  <a href="{% url 'about' %}">{%trans "About us" %}</a>
+</footer>
+
 </html>
+
+

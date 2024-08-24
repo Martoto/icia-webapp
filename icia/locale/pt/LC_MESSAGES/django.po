@@ -1,0 +1,103 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-23 04:06-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\icia\templates\about.html:14
+msgid "Our Mission"
+msgstr ""
+
+#: .\icia\templates\about.html:15
+msgid ""
+"Our mission is to explore the possibilities of cooperation between "
+"intelligent agents of different natures. Artificial and human."
+msgstr ""
+
+#: .\icia\templates\about.html:17
+msgid "Our Team"
+msgstr ""
+
+#: .\icia\templates\about.html:18
+msgid ""
+"The project was conducted by Daniel Salles with orientation of Professor "
+"Alexandre Graeml"
+msgstr ""
+
+#: .\icia\templates\about.html:21
+msgid "Github"
+msgstr ""
+
+#: .\icia\templates\base.html:38
+msgid "Home"
+msgstr "Início"
+
+#: .\icia\templates\base.html:41 .\icia\templates\home.html:49
+msgid "Polls"
+msgstr "Enquetes"
+
+#: .\icia\templates\base.html:44
+msgid "Leaderboard"
+msgstr "Pontuação"
+
+#: .\icia\templates\base.html:51
+msgid "English"
+msgstr "Inglês"
+
+#: .\icia\templates\base.html:52
+msgid "Portuguese"
+msgstr "Português"
+
+#: .\icia\templates\base.html:74
+msgid "My votes"
+msgstr "Meus votos"
+
+#: .\icia\templates\base.html:95
+msgid "About us"
+msgstr "Sobre nós"
+
+#: .\icia\templates\home.html:42
+msgid "You are not logged in."
+msgstr "Você não está autenticado"
+
+#: .\icia\templates\home.html:43
+msgid "Login"
+msgstr "Entrar"
+
+#: .\icia\templates\home.html:44
+msgid "Sign Up"
+msgstr "Registrar-se"
+
+#: .\icia\templates\home.html:48
+msgid "Start polling"
+msgstr "Comece a responder Enquetes"
+
+#: .\icia\templates\home.html:52
+msgid "Create Agent"
+msgstr "Criar agente"
+
+#: .\icia\templates\home.html:53
+msgid "Agents"
+msgstr "Agentes"
+
+#: .\icia\templates\registration\login.html:10
+msgid "Log In"
+msgstr "Entrar"
+
+#: .\icia\templates\registration\signup.html:10
+msgid "Sign up"
+msgstr "Registrar-se"
