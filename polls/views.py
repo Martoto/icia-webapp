@@ -9,8 +9,11 @@ from django.views import generic
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
 
-from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification
+from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification, Crowd
+from .forms import CrowdForm
 
 
 
@@ -46,6 +49,41 @@ class PostsView(LoginRequiredMixin, generic.ListView):
         return AgentPost.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[
             :5
         ]
+    
+class TestView(LoginRequiredMixin, generic.DetailView):
+    model = Question
+    template_name = "polls/test.html"
+    def get_queryset(self):
+        return Question.objects.filter(available=True).filter()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context["active_agent"] = get_object_or_404(self.request.session.crowd)
+        except:
+            return HttpResponseRedirect(reverse("polls:crowds"))
+
+        return context
+    
+def crowdsForm(request):
+    if request.method == "POST":
+        form = CrowdForm(request.POST)
+        if form.is_valid():
+            try:
+                new_crowd = Crowd(agent = Agent(user=User.objects.filter(is_superuser=True).first()),
+                    name=form.name, 
+                    email=form.email,
+                    session=request.session)
+                new_crowd.save()
+                return HttpResponseRedirect(reverse("polls:test"))
+            except:
+                return render(request, "polls/detail.html", {
+                    "error_message": _("Fail"),
+                })            
+    else:
+        form = CrowdForm()
+
+    return render(request, "polls/crowdsForm.html", {"form": form})
     
     
 

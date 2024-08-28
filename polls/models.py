@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.sessions.models import Session
 
 class Question(models.Model):
     question_query = models.TextField(null="true")
@@ -24,8 +25,10 @@ class Question(models.Model):
     
 
 class Agent(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     score = models.IntegerField(default=0)
+
+    
 
     def is_human(self):
         return not hasattr(self, 'agentclient')
@@ -34,6 +37,12 @@ class Agent(models.Model):
         self.score =  sum(v.choice.score for v in self.vote_set.all()) 
         self.score += sum(v.classification.score*(1/(abs(v.value - v.classification.benchmark) if abs(v.value - v.classification.benchmark) < 1 else 1)) for v in self.estimate_set.all())
         self.save()
+
+class Crowd(models.Model):
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    email = models.EmailField(primary_key=True)
+    name = models.CharField(max_length=30)
+    session = models.OneToOneField(Session, on_delete=models.CASCADE, null=True)
 
 
 class Choice(models.Model):
