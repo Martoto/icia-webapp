@@ -6,7 +6,10 @@
 {% block title %}Question{% endblock %}
 
 {% block content %}
-{% if active_agent in question.get_voting_agents %}
+{% if some_condition %}
+    <meta http-equiv="refresh" content="0;url={% url 'some_url_name' %}">
+{% endif %}
+{% if active_agent in questiongroup.first.get_voting_agents %}
 <div class="alert alert-success">
     <p>{% trans "You already voted" %}</p>
     <a href="{% url 'polls:index' %}" class="btn btn-primary">{% trans "Polls" %}</a>
@@ -14,51 +17,69 @@
 </div>
 {% else %}
 <form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    <fieldset>
-        <div class="container-sm mt-4"></div>
-        <div class="card h-100" style="max-height: 300px">
-            <div class="card-header text-start">
-                Question #{{question.pk}}
+{% csrf_token %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner  bg-dark">
+      <div class="carousel-item active">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/i8LDG7D4e6w?si=MWEvSplkx-b2yQ2y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      {%for question in questiongroup.question_set%}
+        <div class="carousel-item">
+          <div class="container-sm mt-4"></div>
+          <div class="card h-100" style="max-height: 300px">
+              <div class="card-header text-start">
+                  Question #{{question.pk}}
+              </div>
+              <div class="card-body overflow-scroll">
+                  <p class="card text-start" style="white-space: pre-wrap;">
+                      {{question.question_text}}
+                  </p>
+              </div>
             </div>
-            <div class="card-body overflow-scroll">
-                <p class="card text-start" style="white-space: pre-wrap;">
-                    {{question.question_text}}
-                </p>
             </div>
-          </div>
-          </div>
-       
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        {% for choice in question.choice_set.all %}
-            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-        {% endfor %}
-        {% for classification in question.classification_set.all %}
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col">
-                        {%trans "Safe" %}
-                    </div>
-                    <div class="col">
-                        <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Chance of fraud" %}</label>
-                        <div data-mdb-range-init class="range">
-                        <input type="range" class="form-range" step="0.5" name="classification{{classification.pk}}" oninput="updateValue(this.value)"/>
-                        </div>
-                        <script type="text/javascript">
-                            function updateValue(value) {
-                                document.getElementById("rangeLabel{{forloop.counter}}").textContent = value;
-                            }
-                        </script>
-                    </div>
-                    <div class="col">
-                        {%trans "Fraud" %}
-                    </div>
-                </div> 
-        {% endfor %}
-    </fieldset>
-    <input type="submit" value="Vote">
-</form>
+         
+          {% for choice in question.choice_set.all %}
+              <input type="radio" name="choice{{ question.id }}" id="choice{{ forloop.counter }}" value="{{ choice.id }}q{{ question.id }}">
+              <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+          {% endfor %}
+          {% for classification in question.classification_set.all %}
+              <div class="container">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          {%trans "Safe" %}
+                      </div>
+                      <div class="col">
+                          <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Chance of fraud" %}</label>
+                          <div data-mdb-range-init class="range">
+                          <input type="range" class="form-range" step="0.5" name="classification{{classification.pk}}q{{question.id}}" oninput="updateValue(this.value)"/>
+                          </div>
+                          <script type="text/javascript">
+                              function updateValue(value) {
+                                  document.getElementById("rangeLabel{{forloop.counter}}").textContent = value;
+                              }
+                          </script>
+                      </div>
+                      <div class="col">
+                          {%trans "Fraud" %}
+                      </div>
+                  </div> 
+          {% endfor %}
+      </fieldset>
+      <input type="submit" value="Vote">
+        </div>
+      {%endfor%}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 {%endif%}
 {% endblock %}
 

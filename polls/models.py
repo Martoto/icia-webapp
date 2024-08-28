@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.sessions.models import Session
+from django.utils.text import slugify
+
+
 
 class Question(models.Model):
     question_query = models.TextField(null="true")
@@ -23,12 +26,26 @@ class Question(models.Model):
     def was_published_recently(self):
         return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
     
+class QuestionGroup(models.Model):
+    questions = models.ManyToManyField(Question, null=True)
+    label = models.CharField(max_length=30, null=True)
+    slug = models.SlugField(unique=True, blank=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.label)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.label
+
+    
 
 class Agent(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     score = models.IntegerField(default=0)
 
-    
+
 
     def is_human(self):
         return not hasattr(self, 'agentclient')

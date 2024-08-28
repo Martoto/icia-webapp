@@ -12,7 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 
-from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification, Crowd
+from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification, Crowd, QuestionGroup
 from .forms import CrowdForm
 
 
@@ -50,19 +50,13 @@ class PostsView(LoginRequiredMixin, generic.ListView):
             :5
         ]
     
-class TestView(LoginRequiredMixin, generic.DetailView):
-    model = Question
+class TestView(generic.DetailView):
+    model = QuestionGroup
     template_name = "polls/test.html"
-    def get_queryset(self):
-        return Question.objects.filter(available=True).filter()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        try:
-            context["active_agent"] = get_object_or_404(self.request.session.crowd)
-        except:
-            return HttpResponseRedirect(reverse("polls:crowds"))
-
+        context["active_agent"] = self.request.session.crowd.agent
         return context
     
 def crowdsForm(request):

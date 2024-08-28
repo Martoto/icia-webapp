@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Choice, Question, Agent, Classification
+from .models import Choice, Question, Agent, Classification, QuestionGroup
 
 
 class ChoiceInline(admin.StackedInline):
@@ -20,6 +20,12 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline, ClassificationInline]
 
 
+
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ('label',)
+    filter_horizontal = ('questions',)
+
+admin.site.register(QuestionGroup, GroupAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice)
 admin.site.register(Agent)
