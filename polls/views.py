@@ -50,13 +50,26 @@ class PostsView(LoginRequiredMixin, generic.ListView):
             :5
         ]
     
+
+class TestListView(LoginRequiredMixin, generic.ListView):
+    template_name = "polls/testList.html"
+    context_object_name = "test_list"
+    paginate_by = 6
+
+    def get_queryset(self):
+        return QuestionGroup.objects.all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        return context
 class TestView(generic.DetailView):
     model = QuestionGroup
     template_name = "polls/test.html"
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["active_agent"] = self.request.session.crowd.agent
+        context["form"] = CrowdForm()
         return context
     
 def crowdsForm(request):
@@ -120,6 +133,20 @@ class LeaderboardView(LoginRequiredMixin, generic.ListView):
         context['active_agent_pos'] = list(self.object_list).index(context['active_agent'])+1
 
         return context
+
+def submitTest(request, group_id, agent=None):
+    group = get_object_or_404(QuestionGroup, pk=group_id)
+
+    for question in group.question_set.all():
+        for c in question.classification_set.all():
+            estimate, _ = Estimate.objects.get_or_create(agent=agent, 
+                                                         classification=c, 
+                                                         value=request.POST.get("classification"+str(c.pk)+"q"+str(question.pk), 50.0)
+                                                         )
+            
+    return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+
+
 
 
 def vote(request, question_id, agent=None):

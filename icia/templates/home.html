@@ -42,6 +42,10 @@
 </div>
 {% else %}
 <div class="alert alert-success">
+  <p>{% trans "Answer quizzes" %}</p>
+  <a href="{% url 'polls:test_list' %}" class="btn btn-primary">{% trans "Quiz" %}</a>
+</div>
+<div class="alert alert-success">
   <p>{% trans "Start polling" %}</p>
   <a href="{% url 'polls:index' %}" class="btn btn-primary">{% trans "Polls" %}</a>
 </div>
