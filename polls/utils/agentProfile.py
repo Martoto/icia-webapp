@@ -1,5 +1,6 @@
 from enum import Enum
 from polls.models import Agent, QuestionGroup
+from skfuzzy import gaussmf
 
 #Use recall and precision
 #Differentiate fraud and safe answers 
@@ -21,19 +22,24 @@ class fraudProfiles(Enum):
 
 
 def getAgentProfile(agent):
-    tp,tn = 0
-    fp,fn = 0
+    tp = fp = tn = fn = 0
+    p_certainty = []
+    f_certainty = []
     for est in agent.estimate_set.all():
         if est.get_correct():
+            p_certainty.append(abs(est.value - est.classification.range/2))
             if est.get_side(): tp+=1
             else: tn +=1
         else:
+            f_certainty.append(abs(est.value - est.classification.range/2))
             if est.get_side(): fp+=1
             else: fn +=1
     precision = tp / (tp+fp)
     recall = tp / (tp + fn)
     f1 = 2*tp/(2*tp + fp + fn)
-    return precision, recall, f1
+    p_certainty =  sum(p_certainty) / len(p_certainty)
+    f_certainty = sum(f_certainty) / len(f_certainty)
+    return precision, recall, f1, p_certainty, f_certainty
 
 
     

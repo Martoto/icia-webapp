@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+
+{% block title %}Test Results{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+    </ol>
+</nav>
+{% if active_agent %}
+<div class="p-3 border bg-light">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+            <h1>{%trans "Your Results"%}</h1>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">{%trans "Score"%}</th>
+                  <th scope="col">{%trans "Contributions"%}</th>
+                  <th scope="col">{%trans "Username"%}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">{{active_agent_pos}}</th>
+                  <td>{{active_agent.score}}</td>
+                  <td>{{active_agent.estimate_set.count}}</td>
+                  {%if active_agent.crowd %}
+                    <td>{{active_agent.crowd.name}}</td>
+                  {%else%}
+                    <td>{{active_agent.user.username}}</td>
+                  {%endif%}
+                </tr>
+              </tbody>
+            </table>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-success">
+    <p>{% trans "Try answering the test" %}</p>
+    <a href="{% url 'polls:test' %}" class="btn btn-primary">{% trans "Test" %}</a>
+</div>
+{%endif%}
+{% endblock %}
+

@@ -138,6 +138,18 @@ class LeaderboardView(generic.ListView):
             context['active_agent_pos'] = list(self.object_list).index(context['active_agent'])+1
 
         return context
+    
+class TestResultView(generic.DetailView):
+    template_name = "polls/testResult.html"
+    model = QuestionGroup
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        thisUser = Agent.objects.filter(pk=self.request.session.get('quizUser', None))
+        if thisUser.exists(): 
+            context['active_agent'] = thisUser.first()
+
+        return context
 
 def submitTest(request, group_id, agent=None):
     group = get_object_or_404(QuestionGroup, pk=group_id)
@@ -163,11 +175,7 @@ def submitTest(request, group_id, agent=None):
                                                             value=request.POST.get("classification"+str(c.pk)+"q"+str(question.pk), 50.0)
                                                             )
                         estimate.save()
-            return render(request, "polls/test.html", {
-                "form": CrowdForm(),
-                "questiongroup": group,
-                "error_message": "deuboa",
-            })   
+            return HttpResponseRedirect(reverse("polls:test_result", args=[group.slug,]))
         except TypeError as e:
             return render(request, "polls/test.html", {
                 "form": CrowdForm(),
