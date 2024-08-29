@@ -15,7 +15,7 @@ from django.utils.translation import gettext as _
 from django.contrib.sessions.models import Session
 from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification, Crowd, QuestionGroup
 from .forms import CrowdForm
-
+from .utils.agentProfile import AgentProfile
 
 
 def health(request):
@@ -147,7 +147,9 @@ class TestResultView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         thisUser = Agent.objects.filter(pk=self.request.session.get('quizUser', None))
         if thisUser.exists(): 
-            context['active_agent'] = thisUser.first()
+            agent = thisUser.first()
+            context['active_agent'] = agent
+            context['agent_profile'] = AgentProfile(agent)
 
         return context
 

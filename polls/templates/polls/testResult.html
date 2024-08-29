@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% load i18n %}
-
+{% load static %}
 
 {% block title %}Test Results{% endblock %}
 
@@ -13,14 +13,18 @@
 </nav>
 {% if active_agent %}
 <div class="p-3 border bg-light">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-            <h1>{%trans "Your Results"%}</h1>
+    <h1>{%trans "Your Results"%}</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4 table-responsive">
             <table class="table">
               <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">{%trans "Score"%}</th>
-                  <th scope="col">{%trans "Contributions"%}</th>
+                  <th scope="col">{%trans "Precision"%}</th>
+                  <th scope="col">{%trans "Recall"%}</th>
+                  <th scope="col">{%trans "F1 Score"%}</th>
+                  <th scope="col">{%trans "Positive certainty"%}</th>
+                  <th scope="col">{%trans "Negative certainty"%}</th>
                   <th scope="col">{%trans "Username"%}</th>
                 </tr>
               </thead>
@@ -28,7 +32,11 @@
                 <tr>
                   <th scope="row">{{active_agent_pos}}</th>
                   <td>{{active_agent.score}}</td>
-                  <td>{{active_agent.estimate_set.count}}</td>
+                  <td>{{agent_profile.precision}}</td>
+                  <td>{{agent_profile.recall}}</td>
+                  <td>{{agent_profile.f1}}</td>
+                  <td>{{agent_profile.p_certainty}}%</td>
+                  <td>{{agent_profile.f_certainty}}%</td>
                   {%if active_agent.crowd %}
                     <td>{{active_agent.crowd.name}}</td>
                   {%else%}
@@ -38,6 +46,18 @@
               </tbody>
             </table>
     </div>
+    <div class="clearfix">
+        <img src="{%static 'polls/bees.jpg'%}" style="max-width: 30%;"class="col-md-6 float-md-end mb-3 ms-md-3" alt="abeias">
+        <p>
+          A paragraph of placeholder text. We're using it here to show the use of the clearfix class. We're adding quite a few meaningless phrases here to demonstrate how the columns interact here with the floated image.
+        </p>
+        <p>
+          As you can see the paragraphs gracefully wrap around the floated image. Now imagine how this would look with some actual content in here, rather than just this boring placeholder text that goes on and on, but actually conveys no tangible information at. It simply takes up space and should not really be read.
+        </p>
+        <p>
+          And yet, here you are, still persevering in reading this placeholder text, hoping for some more insights, or some hidden easter egg of content. A joke, perhaps. Unfortunately, there's none of that here.
+        </p>
+      </div>
 </div>
 {% else %}
 <div class="alert alert-success">
