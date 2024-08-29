@@ -27,7 +27,7 @@ class Question(models.Model):
         return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
     
 class QuestionGroup(models.Model):
-    questions = models.ManyToManyField(Question, null=True)
+    questions = models.ManyToManyField(Question)
     label = models.CharField(max_length=30, null=True)
     slug = models.SlugField(unique=True, blank=True, editable=False)
 
@@ -45,21 +45,19 @@ class Agent(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     score = models.IntegerField(default=0)
 
-
-
     def is_human(self):
         return not hasattr(self, 'agentclient')
 
     def update_score(self):
         self.score =  sum(v.choice.score for v in self.vote_set.all()) 
-        self.score += sum(v.classification.score*(1/(abs(v.value - v.classification.benchmark) if abs(v.value - v.classification.benchmark) < 1 else 1)) for v in self.estimate_set.all())
+        self.score += sum(v.classification.score - abs(v.value - v.classification.benchmark) for v in self.estimate_set.all())
         self.save()
 
 class Crowd(models.Model):
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    agent = models.OneToOneField(Agent, on_delete=models.CASCADE)
     email = models.EmailField(primary_key=True)
     name = models.CharField(max_length=30)
-    session = models.OneToOneField(Session, on_delete=models.CASCADE, null=True)
+    session = models.CharField(max_length=40, null=True)
 
 
 class Choice(models.Model):
@@ -102,6 +100,10 @@ class AgentPost(models.Model):
 
 
 @receiver(post_save, sender=Vote)
+def update_agent_score(sender, instance, **kwargs):
+    instance.agent.update_score()
+
+@receiver(post_save, sender=Estimate)
 def update_agent_score(sender, instance, **kwargs):
     instance.agent.update_score()
     

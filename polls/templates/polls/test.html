@@ -16,7 +16,7 @@
     <a href="{% url 'polls:results' question.pk %}" class="btn btn-primary">{% trans "See results" %}</a>
 </div>
 {% else %}
-<form action="{% url 'polls:submit_test' questiongroup.pk%}" method="post">
+<form action="{% url 'polls:submit_test' questiongroup.id%}" method="post">
 {% csrf_token %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -66,8 +66,7 @@
     {%endfor%}
     <div class="carousel-item">
       <div class="container-sm mt-4">
-        <h2>{%trans ""%}</h2>
-        <form method="post" class="form">
+        <h2>{%trans "Almost there! please fill out as much information as you can to support our research."%}</h2>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         {% csrf_token %}
         
@@ -75,7 +74,6 @@
             
         {% bootstrap_button button_type="submit" content="OK" %}
         {% bootstrap_button button_type="reset" content="Cancel" %}
-        </form>
       </div>
     </div>
   </div>

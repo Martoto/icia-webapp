@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 from typing import Any
+from django.db import IntegrityError
 from django.db.models import F
 from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
@@ -11,7 +12,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
-
+from django.contrib.sessions.models import Session
 from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification, Crowd, QuestionGroup
 from .forms import CrowdForm
 
@@ -116,11 +117,11 @@ class ResultsView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['active_agent'], _ = Agent.objects.filter(user=self.request.user)
+        context['active_agent'] = Agent.objects.filter(user=self.request.user).first()
  
         return context
     
-class LeaderboardView(LoginRequiredMixin, generic.ListView):
+class LeaderboardView(generic.ListView):
     template_name = "polls/leaderboard.html"
     model = Agent
     paginate_by = 10
@@ -129,20 +130,49 @@ class LeaderboardView(LoginRequiredMixin, generic.ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['active_agent'], _ = Agent.objects.filter(user=self.request.user).all()
-        context['active_agent_pos'] = list(self.object_list).index(context['active_agent'])+1
+        thisCrowd = Crowd.objects.filter(session=self.request.session.session_key)
+        if thisCrowd.exists(): 
+            context['active_agent'] = thisCrowd.first().agent
+            context['active_agent_pos'] = list(self.object_list).index(context['active_agent'])+1
 
         return context
 
 def submitTest(request, group_id, agent=None):
     group = get_object_or_404(QuestionGroup, pk=group_id)
-
-    for question in group.question_set.all():
-        for c in question.classification_set.all():
-            estimate, _ = Estimate.objects.get_or_create(agent=agent, 
-                                                         classification=c, 
-                                                         value=request.POST.get("classification"+str(c.pk)+"q"+str(question.pk), 50.0)
-                                                         )
+    form = CrowdForm(request.POST)
+    if form.is_valid():
+        try:
+            thisSession = request.session.session_key
+            exists = Crowd.objects.filter(
+                session= thisSession).exists()
+            if not exists:
+                newAgent = Agent(user=User.objects.filter(is_superuser=True).first())
+                newAgent.save()
+                new_crowd = Crowd( 
+                    agent = newAgent,               
+                    name=form.cleaned_data['name'], 
+                    email=form.cleaned_data['email'],
+                    session=thisSession
+                    )
+                new_crowd.save()
+                for question in group.questions.all():
+                    for c in question.classification_set.all():
+                        estimate, x = Estimate.objects.get_or_create(agent=newAgent, 
+                                                            classification=c, 
+                                                            value=request.POST.get("classification"+str(c.pk)+"q"+str(question.pk), 50.0)
+                                                            )
+                        estimate.save()
+            return render(request, "polls/test.html", {
+                "form": CrowdForm(),
+                "questiongroup": group,
+                "error_message": "deuboa",
+            })   
+        except TypeError as e:
+            return render(request, "polls/test.html", {
+                "form": CrowdForm(),
+                "questiongroup": group,
+                "error_message": e,
+            })      
             
     return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
 

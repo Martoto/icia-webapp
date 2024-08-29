@@ -31,8 +31,12 @@
                 <tr>
                   <th scope="row">{{active_agent_pos}}</th>
                   <td>{{active_agent.score}}</td>
-                  <td>{{active_agent.vote_set.count}}</td>
-                  <td>{{active_agent.user.username}}</td>
+                  <td>{{active_agent.estimate_set.count}}</td>
+                  {%if active_agent.crowd %}
+                    <td>{{active_agent.crowd.name}}</td>
+                  {%else%}
+                    <td>{{active_agent.user.username}}</td>
+                  {%endif%}
                 </tr>
               </tbody>
             </table>
@@ -56,8 +60,12 @@
               <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td>{{agent.score}}</td>
-                <td>{{agent.vote_set.count}}</td>
+                <td>{{agent.estimate_set.count}}</td>
+                {%if agent.crowd %}
+                <td>{{agent.crowd.name}}</td>
+                {%else%}
                 <td>{{agent.user.username}}</td>
+                {%endif%}
               </tr>
               {% endfor %}
             </tbody>
