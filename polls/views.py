@@ -36,7 +36,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['active_agent'], _ = Agent.objects.filter(user=self.request.user)
+        context['active_agent'] = Agent.objects.filter(user=self.request.user)
 
         return context
 
@@ -52,7 +52,7 @@ class PostsView(LoginRequiredMixin, generic.ListView):
         ]
     
 
-class TestListView(LoginRequiredMixin, generic.ListView):
+class TestListView(generic.ListView):
     template_name = "polls/testList.html"
     context_object_name = "test_list"
     paginate_by = 6
@@ -71,6 +71,9 @@ class TestView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CrowdForm()
+        thisUser = Agent.objects.filter(pk=self.request.session.get('quizUser', None))
+        if thisUser.exists(): 
+            context['active_agent'] = thisUser.first()
         return context
     
 def crowdsForm(request):
@@ -125,14 +128,13 @@ class LeaderboardView(generic.ListView):
     template_name = "polls/leaderboard.html"
     model = Agent
     paginate_by = 10
-    ordering = ['score']
-   
-    
+    ordering = ['-score']
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        thisCrowd = Crowd.objects.filter(session=self.request.session.session_key)
-        if thisCrowd.exists(): 
-            context['active_agent'] = thisCrowd.first().agent
+        thisUser = Agent.objects.filter(pk=self.request.session.get('quizUser', None))
+        if thisUser.exists(): 
+            context['active_agent'] = thisUser.first()
             context['active_agent_pos'] = list(self.object_list).index(context['active_agent'])+1
 
         return context
@@ -142,19 +144,18 @@ def submitTest(request, group_id, agent=None):
     form = CrowdForm(request.POST)
     if form.is_valid():
         try:
-            thisSession = request.session.session_key
-            exists = Crowd.objects.filter(
-                session= thisSession).exists()
-            if not exists:
+            hasAnswered = request.session.get('answered'+str(group_id),False)
+            if not hasAnswered:
                 newAgent = Agent(user=User.objects.filter(is_superuser=True).first())
                 newAgent.save()
                 new_crowd = Crowd( 
                     agent = newAgent,               
                     name=form.cleaned_data['name'], 
                     email=form.cleaned_data['email'],
-                    session=thisSession
                     )
                 new_crowd.save()
+                request.session['answered'+str(group_id)] = True
+                request.session['quizUser'] = newAgent.pk
                 for question in group.questions.all():
                     for c in question.classification_set.all():
                         estimate, x = Estimate.objects.get_or_create(agent=newAgent, 

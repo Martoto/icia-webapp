@@ -6,14 +6,11 @@
 {% block title %}Question{% endblock %}
 
 {% block content %}
-{% if some_condition %}
-    <meta http-equiv="refresh" content="0;url={% url 'some_url_name' %}">
-{% endif %}
-{% if active_agent in questiongroup.first.get_voting_agents %}
+
+{% if active_agent %}
 <div class="alert alert-success">
     <p>{% trans "You already voted" %}</p>
     <a href="{% url 'polls:index' %}" class="btn btn-primary">{% trans "Polls" %}</a>
-    <a href="{% url 'polls:results' question.pk %}" class="btn btn-primary">{% trans "See results" %}</a>
 </div>
 {% else %}
 <form action="{% url 'polls:submit_test' questiongroup.id%}" method="post">

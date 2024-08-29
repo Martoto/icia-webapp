@@ -4,7 +4,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.sessions.models import Session
 from django.utils.text import slugify
 
 
@@ -57,7 +56,6 @@ class Crowd(models.Model):
     agent = models.OneToOneField(Agent, on_delete=models.CASCADE)
     email = models.EmailField(primary_key=True)
     name = models.CharField(max_length=30)
-    session = models.CharField(max_length=40, null=True)
 
 
 class Choice(models.Model):
@@ -82,6 +80,9 @@ class Classification(models.Model):
     def get_estimate(self):
         estimates = self.estimate_set.all()
         return sum(estimate.value for estimate in estimates)/(estimates.count())
+    #True if over 50%
+    def get_side(self):
+        return True if self.benchmark > self.range/2 else False
     
 
 class Estimate(models.Model):
@@ -90,6 +91,15 @@ class Estimate(models.Model):
     value = models.DecimalField(max_digits=5,decimal_places=2,default=50.00)
     description = models.TextField(null=True, max_length=200) 
 
+    def get_score(self):
+        self.classification.score - abs(self.value - self.classification.benchmark)
+    #True if over 50%
+    def get_side(self):
+        return True if self.value > self.classification.range/2 else False
+    
+    def get_correct(self):
+        return True if self.get_side() == self.classification.get_side() else False
+    
 class AgentPost(models.Model):
     owner = models.ForeignKey(Agent, on_delete=models.CASCADE, db_index=True)
     likes = models.ManyToManyField(Agent, related_name="like_set")
