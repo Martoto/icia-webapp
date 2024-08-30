@@ -18,6 +18,7 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th scope="col">{%trans "Username"%}</th>
                   <th scope="col">#</th>
                   <th scope="col">{%trans "Score"%}</th>
                   <th scope="col">{%trans "Precision"%}</th>
@@ -25,11 +26,15 @@
                   <th scope="col">{%trans "F1 Score"%}</th>
                   <th scope="col">{%trans "Positive certainty"%}</th>
                   <th scope="col">{%trans "Negative certainty"%}</th>
-                  <th scope="col">{%trans "Username"%}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
+                  {%if active_agent.crowd %}
+                    <td>{{active_agent.crowd.name}}</td>
+                  {%else%}
+                    <td>{{active_agent.user.username}}</td>
+                  {%endif%}
                   <th scope="row">{{active_agent_pos}}</th>
                   <td>{{active_agent.score}}</td>
                   <td>{{agent_profile.precision}}</td>
@@ -37,27 +42,71 @@
                   <td>{{agent_profile.f1}}</td>
                   <td>{{agent_profile.p_certainty}}%</td>
                   <td>{{agent_profile.f_certainty}}%</td>
-                  {%if active_agent.crowd %}
-                    <td>{{active_agent.crowd.name}}</td>
-                  {%else%}
-                    <td>{{active_agent.user.username}}</td>
-                  {%endif%}
                 </tr>
               </tbody>
             </table>
     </div>
-    <div class="clearfix">
-        <img src="{%static 'polls/bees.jpg'%}" style="max-width: 30%;"class="col-md-6 float-md-end mb-3 ms-md-3" alt="abeias">
-        <p>
-          A paragraph of placeholder text. We're using it here to show the use of the clearfix class. We're adding quite a few meaningless phrases here to demonstrate how the columns interact here with the floated image.
-        </p>
-        <p>
-          As you can see the paragraphs gracefully wrap around the floated image. Now imagine how this would look with some actual content in here, rather than just this boring placeholder text that goes on and on, but actually conveys no tangible information at. It simply takes up space and should not really be read.
-        </p>
-        <p>
-          And yet, here you are, still persevering in reading this placeholder text, hoping for some more insights, or some hidden easter egg of content. A joke, perhaps. Unfortunately, there's none of that here.
-        </p>
-      </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4 table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">{%trans "Super"%}</th>
+                  <th scope="col">{%trans "Good"%}</th>
+                  <th scope="col">{%trans "Paranoid"%}</th>
+                  <th scope="col">{%trans "Naive"%}</th>
+                  <th scope="col">{%trans "Random"%}</th>
+                  <th scope="col">{%trans "Bad"%}</th>
+                  <th scope="col">{%trans "Malicious"%}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{profile_distances.SUPER_PREDICTOR}}</td>
+                  <td>{{profile_distances.GOOD_PREDICTOR}}</td>
+                  <td>{{profile_distances.PARANOID_PREDICTOR}}</td>
+                  <td>{{profile_distances.NAIVE_PREDICTOR}}</td>
+                  <td>{{profile_distances.RANDOM_PREDICTOR}}</td>
+                  <td>{{profile_distances.BAD_PREDICTOR}}</td>
+                  <td>{{profile_distances.MALICIOUS_PREDICTOR}}</td>
+                </tr>
+              </tbody>
+            </table>
+    </div>
+    <div class="row">
+        <div class="clearfix">
+            <img src="{%static 'polls/bees.jpg'%}" style="max-width: 30%;"class="col-md-6 float-md-end mb-3 ms-md-3" alt="abeias">
+            <h2>
+            {{main_personality}}
+            </h2>
+            <h2>
+            {{second_personality}}
+            </h2>
+            <p>
+            {%trans "Thanks for contributing"%}
+            </p>
+           <!-- AddToAny BEGIN -->
+            <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+            <a class="a2a_button_facebook"></a>
+            <a class="a2a_button_email"></a>
+            <a class="a2a_button_whatsapp"></a>
+            <a class="a2a_button_twitter"></a>
+            <script>
+                var text = "Eu sou um detector de fraude do tipo {{personality}}! Venha descobrir seu tipo e contribuir com a ciência: {{ request.scheme }}://{{ request.get_host }}{%url 'polls:test' 'quizFraude'%}"
+                var a2a_config = a2a_config || {};
+                a2a_config.templates = a2a_config.templates || {};
+                a2a_config.templates.twitter = {
+                    text: text,
+                };
+                a2a_config.templates.whatsapp = {
+                    text: text,
+                };
+            </script>
+            </div>
+            <script async src="https://static.addtoany.com/menu/page.js"></script>
+            <!-- AddToAny END -->
+        </div>
+    </div>
 </div>
 {% else %}
 <div class="alert alert-success">

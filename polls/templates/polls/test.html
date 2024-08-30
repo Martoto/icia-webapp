@@ -11,6 +11,8 @@
 <div class="alert alert-success">
     <p>{% trans "You already voted" %}</p>
     <a href="{% url 'polls:leaderboard' %}" class="btn btn-primary">{% trans "Leaderboard" %}</a>
+    <a href="{% url 'polls:test_result' %}" class="btn btn-primary">{% trans "Results" %}</a>
+
 </div>
 {% else %}
 <form action="{% url 'polls:submit_test' questiongroup.id%}" method="post">

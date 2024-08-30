@@ -3,21 +3,50 @@ from polls.models import Agent, QuestionGroup
 from dataclasses import dataclass
 from skfuzzy import gaussmf
 import numpy as np
+from django.utils.translation import gettext as _
 
-fraud_profiles = {
-    "SUPER_PREDICTOR": [0.95, 0.90, 0.92, 0.95, 0.90],
-    "GOOD_PREDICTOR": [0.80, 0.85, 0.82, 0.85, 0.80],
-    "PARANOID_PREDICTOR": [0.50, 0.95, 0.66, 0.60, 0.70],
-    "NAIVE_PREDICTOR": [0.90, 0.40, 0.55, 0.70, 0.50],
-    "RANDOM_PREDICTOR": [0.50, 0.50, 0.50, 0.50, 0.50],
-    "BAD_PREDICTOR": [0.20, 0.30, 0.24, 0.30, 0.25],
-    "MALICIOUS_PREDICTOR": [0.05, 0.10, 0.07, 0.10, 0.15]
-}
+
+class ProfileReading(Enum):
+    SUPER_PREDICTOR = (
+        _("Congratulations! You are a very accurate predictor of fraud and definitely very able to discern fraudulent information apart from safe info"),
+        _("You almost classified as a super predictor! You are great at telling apart what is real and what is fake"),
+        _("Super")
+    )
+    GOOD_PREDICTOR = (
+        _("You did a great job. You are not as accurate as a machine but you provided great human insight"),
+        _("You were undeniably good, better than most"),
+        _("Above average")
+    )
+    PARANOID_PREDICTOR = (
+        _("You are so wary of fraud to the point of ruling out safe information. Not everyone is out to get you, try to be more positive"),
+        _("You are too sensitive to possible frauds. Lighten up!"),
+        _("Paranoid")
+    )
+    NAIVE_PREDICTOR = (
+        _("You are too trusting of all sorts of information. Perhaps you should leave some of your optimism behind and be more wary of frauds"),
+        _("You are too relaxed around possible frauds. Be more aware!"),
+        _("Naive")
+    )
+    RANDOM_PREDICTOR = (
+        _("Your results were random and we couldn't determine anything. Did you skip the test?"),
+        _("Your results were quite random. Try to analyze each question more to increase your accuracy score"),
+        _("Random")
+    )
+    BAD_PREDICTOR = (
+        _("You are not so good at classifying e-mails. Perhaps you didn't understand the instructions very well. "),
+        _("You were not accurate at classifying. Apply yourself more"),
+        _("Bad")
+    )    
+    MALICIOUS_PREDICTOR = (
+        _("You are an agent of chaos deliberately trying to sabotage the test. That is the only explanation for your predictions!"),
+        _("You were so innacurate that we belive you could be sabotaging the test"),
+        _("Evil")
+    )
 
 
 def getDistances(profile):
-    profile_data = np.array([[value for value in profile] for profile in fraud_profiles.values()])
-    profile_names = list(fraud_profiles.keys())
+    profile_data = np.array([[value for value in profile] for profile in profile.fraud_profiles.values()])
+    profile_names = list(profile.fraud_profiles.keys())
     agent_profile = np.array(
         [float(profile.precision), 
         float(profile.recall), 
@@ -28,11 +57,22 @@ def getDistances(profile):
     return {name: float(distance) for name, distance in zip(profile_names, distances)}
 
 class AgentProfile():
+    fraud_profiles = {
+        "SUPER_PREDICTOR": [0.95, 0.90, 0.92, 0.95, 0.90],
+        "GOOD_PREDICTOR": [0.80, 0.85, 0.82, 0.85, 0.80],
+        "PARANOID_PREDICTOR": [0.50, 0.95, 0.66, 0.60, 0.90],
+        "NAIVE_PREDICTOR": [0.90, 0.40, 0.55, 0.70, 0.90],
+        "RANDOM_PREDICTOR": [0.50, 0.50, 0.50, 0.50, 0.50],
+        "BAD_PREDICTOR": [0.20, 0.30, 0.24, 0.30, 0.25],
+        "MALICIOUS_PREDICTOR": [0.05, 0.10, 0.07, 0.10, 0.15]
+    }
+
     precision: float
     recall: float
     f1: float
     p_certainty: float
     f_certainty: float
+    flavorText = ""
     def __init__(self, precision, recall, f1, p_certainty, f_certainty):
         self.precision = precision
         self.recall = recall

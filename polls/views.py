@@ -15,7 +15,7 @@ from django.utils.translation import gettext as _
 from django.contrib.sessions.models import Session
 from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification, Crowd, QuestionGroup
 from .forms import CrowdForm
-from .utils.agentProfile import AgentProfile
+from .utils.agentProfile import AgentProfile, ProfileReading, getDistances
 
 
 def health(request):
@@ -150,6 +150,11 @@ class TestResultView(generic.DetailView):
             agent = thisUser.first()
             context['active_agent'] = agent
             context['agent_profile'] = AgentProfile(agent)
+            context['profile_distances'] = getDistances(context['agent_profile'])
+            sortedDistances = dict(sorted(context['profile_distances'].items(), key=lambda item: item[1]))
+            context['main_personality'] = ProfileReading[list(sortedDistances)[0]].value[0] 
+            context['second_personality'] = ProfileReading[list(sortedDistances)[1]].value[1] 
+            context['personality'] = ProfileReading[list(sortedDistances)[0]].value[2] 
 
         return context
 
