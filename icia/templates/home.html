@@ -9,8 +9,8 @@
 {% block content %}
 
 
-<div id="carouselControls" class="carousel slide fill" data-bs-ride="carousel">
-  <div class="carousel-inner  bg-dark fill">
+<div id="carouselControls" class="carousel slide fill carousel-dark" data-bs-ride="carousel">
+  <div class="carousel-inner fill">
     <div class="carousel-item active">
       <div class="alert alert-success fill">
         <p>{% trans "Answer quiz" %}</p>
@@ -18,7 +18,9 @@
       </div>
     </div>
     <div class="carousel-item">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/i8LDG7D4e6w?si=MWEvSplkx-b2yQ2y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <div class="container-sm">
+        <iframe src="https://www.youtube.com/embed/i8LDG7D4e6w?si=MWEvSplkx-b2yQ2y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">

@@ -19,23 +19,32 @@
 {% csrf_token %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<div id="carouselControls" class="carousel slide" data-bs-interval="false" data-bs-touch="false" data-bs-wrap="false">
-  <div class="carousel-inner fill">
+
+<div id="carouselControls" class="carousel slide carousel-dark" data-bs-interval="false" data-bs-touch="false" data-bs-wrap="false">
+  <div class="carousel-indicators" style="bottom: auto;">
+    <button type="button" data-bs-target="#carouselControls" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    {%for question in questiongroup.questions.all %}
+    <button type="button" data-bs-target="#carouselControls" data-bs-slide-to="{{forloop.counter}}" aria-label="Slide{{forloop.counter}}"></button>
+    {%endfor%}
+    <button type="button" data-bs-target="#carouselControls" data-bs-slide-to="-1" aria-label="last"></button>
+  </div>
+  <div class="carousel-inner">
     <div class="carousel-item active">
       <div class="card h-100" style="height: 300px">
         <div class="card-header text-start">
             {%trans "Welcome to ICIA"%}
         </div>
         <div class="card-body overflow-scroll">
+            <iframe src="https://www.youtube.com/embed/i8LDG7D4e6w?si=MWEvSplkx-b2yQ2y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <p class="card text-start" style="white-space: pre-wrap;">
               {%trans "Recent times have seen a considerable increase in fraudulent digital activity. How good are you at telling apart real e-mails from fraudulent ones? find out!"%}
             </p>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
               {%trans "Tips"%}
             </button>
-          </p>
-          <div class="collapse" id="collapseExample">
+          <div class="collapse" id="collapse">
             <ul class="list-group">
+              <li class="list-group-item">{%trans "0% means you are certain the e-mail is safe. 100% means it is definitely fraudulent" %}</li>
               <li class="list-group-item">{%trans "Every e-mail is real and can be either fraudulent or not" %}</li>
               <li class="list-group-item">{%trans "Not every fraudulent e-mail is a direct scam" %}</li>
               <li class="list-group-item">{%trans "Be decisive! You lose points if you stay on the fence" %}</li>
@@ -46,8 +55,8 @@
     </div>
     </div>
     {%for question in questiongroup.questions.all %}
-    <div class="carousel-item">
-      <div class="container-sm mt-4">
+    <div class="carousel-item" style="height: fit-content;">
+      <div class="container">
         <div class="card h-100" style="height: 300px">
             <div class="card-header text-start">
                 Question #{{question.pk}}
@@ -58,30 +67,31 @@
                 </p>
             </div>
         </div>
-      </div>
         {% for classification in question.classification_set.all %}
-          <div class="container">
+          <div id="rangeContainer{{forloop.counter}}" class="container border border-primary">
             <div class="row align-items-center">
-              <div class="col">
+              <div id="safeTag{{forloop.counter}}" class="col">
                   {%trans "Safe" %}
               </div>
               <div class="col">
-                  <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Chance of fraud" %}</label>
+                  {%trans "Chance" %}
+                  <label class="form-label shadow border" for="customRange1" id="rangeLabel{{ forloop.counter }}">50</label>%
               </div>
-              <div class="col">
+              <div id="fraudTag{{forloop.counter}}" class="col">
                 {%trans "Fraud" %}
               </div>
             </div> 
                   <div data-mdb-range-init class="range">
-                  <input type="range" class="form-range" step="0.5" name="classification{{classification.pk}}q{{question.id}}" oninput="updateValue(this.value, {{forloop.counter}})"/>
+                  <input type="range" class="form-range" step="0.1" name="classification{{classification.pk}}q{{question.id}}" oninput="updateValue(this.value, {{forloop.counter}})"/>
                   </div>
       </div>
       {% endfor %}
     </div>
+    </div>
     {%endfor%}
     <div id="finalItem" class="carousel-item">
       <div class="container-sm mt-4">
-        <h2>{%trans "Almost there! please fill out as much information as you can to support our research."%}</h2>
+        <h2 class="display-4">{%trans "Almost there! please fill out as much information as you can to support our research."%}</h2>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         {% csrf_token %}
         
@@ -92,6 +102,7 @@
       </div>
     </div>
   </div>
+
       <div id="carouselControlBtns" class="btn-group fixed-bottom" role="group" aria-label="Basic example" enabled="true">
         <button type="button" class="btn btn-primary" data-bs-target="#carouselControls" data-bs-slide="prev">&laquo;Prev</button>
         <button type="button" class="btn btn-primary" data-bs-target="#carouselControls" data-bs-slide="next">Next&raquo;</button>
@@ -110,8 +121,6 @@
   var myCarousel = document.getElementById('carouselControls')
 
   myCarousel.addEventListener('slide.bs.carousel', function (slide) {
-    console.log("hello")
-    console.log(slide)
     if (slide.relatedTarget.id == "finalItem") {
         document.getElementById('carouselControlBtns').setAttribute('hidden','true')
     }
@@ -120,7 +129,24 @@
 </script>
 <script type="text/javascript">
   function updateValue(value, id) {
-      document.getElementById("rangeLabel"+id).textContent = value;
+    label = document.getElementById("rangeLabel"+id) 
+    label.textContent = value;
+    safe = document.getElementById("safeTag"+id) 
+    fraud = document.getElementById("fraudTag"+id) 
+    container = document.getElementById("rangeContainer"+id) 
+    if (value < 50) {
+      container.classList.add('border-success');
+      container.classList.remove('border-danger');
+
+      safe.classList.add('mark');
+      fraud.classList.remove('mark');
+    } else {
+      container.classList.add('border-danger');
+      container.classList.remove('border-success');
+
+      fraud.classList.add('mark');
+      safe.classList.remove('mark');
+    }
   }
 </script>
 {%endif%}

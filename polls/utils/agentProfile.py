@@ -88,6 +88,17 @@ class AgentProfile():
         self.f_certainty = f_certainty
 
 
+def percentile_rank(scores, score):
+    sorted_scores = sorted(scores)
+    
+    rank = sorted_scores.index(score) + 1
+    
+    percentile = (rank / len(sorted_scores)) * 100
+    
+    return percentile
+
+
+
 def getAgentProfile(agent):
     tp = fp = tn = fn = 0
     p_certainty = []

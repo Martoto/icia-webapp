@@ -16,27 +16,28 @@
 </nav>
 {% if active_agent %}
 <div class="p-3 border bg-light">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4 table-responsive">
             <h1>{%trans "Your agents"%}</h1>
             <table class="table">
               <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">{%trans "Score"%}</th>
-                  <th scope="col">{%trans "Contributions"%}</th>
                   <th scope="col">{%trans "Username"%}</th>
+                  <th scope="col">{%trans "Contributions"%}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <th scope="row">{{active_agent_pos}}</th>
                   <td>{{active_agent.score}}</td>
-                  <td>{{active_agent.estimate_set.count}}</td>
                   {%if active_agent.crowd %}
                     <td>{{active_agent.crowd.name}}</td>
                   {%else%}
                     <td>{{active_agent.user.username}}</td>
                   {%endif%}
+                  <td>{{active_agent.estimate_set.count}}</td>
+
                 </tr>
               </tbody>
             </table>
@@ -45,14 +46,14 @@
 {%endif%}
 {% if object_list %}
 <div class="p-3 border bg-light">
-  <div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4 table-responsive">
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">{%trans "Score"%}</th>
-                <th scope="col">{%trans "Contributions"%}</th>
                 <th scope="col">{%trans "Username"%}</th>
+                <th scope="col">{%trans "Contributions"%}</th>
               </tr>
             </thead>
             <tbody>
@@ -60,12 +61,13 @@
               <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td>{{agent.score}}</td>
-                <td>{{agent.estimate_set.count}}</td>
                 {%if agent.crowd %}
                 <td>{{agent.crowd.name}}</td>
                 {%else%}
                 <td>{{agent.user.username}}</td>
                 {%endif%}
+                <td>{{agent.estimate_set.count}}</td>
+
               </tr>
               {% endfor %}
             </tbody>

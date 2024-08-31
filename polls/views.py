@@ -15,7 +15,7 @@ from django.utils.translation import gettext as _
 from django.contrib.sessions.models import Session
 from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification, Crowd, QuestionGroup
 from .forms import CrowdForm
-from .utils.agentProfile import AgentProfile, ProfileReading, getDistances
+from .utils.agentProfile import AgentProfile, ProfileReading, getDistances, percentile_rank
 
 
 def health(request):
@@ -155,6 +155,10 @@ class TestResultView(generic.DetailView):
             context['main_personality'] = ProfileReading[list(sortedDistances)[0]].value[0] 
             context['second_personality'] = ProfileReading[list(sortedDistances)[1]].value[1] 
             context['personality'] = ProfileReading[list(sortedDistances)[0]].value[2] 
+            scores = []
+            for agent in Agent.objects.all().order_by('score'): scores.append(agent.score)
+            context['n_answers'] = len(scores)
+            context['top_percent'] = percentile_rank(scores, agent.score)
 
         return context
 
