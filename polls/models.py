@@ -21,8 +21,7 @@ class Question(models.Model):
             for v in c.estimate_set.all():
                 ret.append(v.agent)        
         return ret
-    def was_published_recently(self):
-        return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
+
     
 class QuestionGroup(models.Model):
     questions = models.ManyToManyField(Question)

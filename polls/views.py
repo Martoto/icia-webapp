@@ -31,7 +31,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")
+        return Question.objects.all().order_by('pk')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -102,7 +102,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Question
     template_name = "polls/detail.html"
     def get_queryset(self):
-        return Question.objects.filter(pub_date__lte=timezone.now()).filter()
+        return Question.objects.all()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
