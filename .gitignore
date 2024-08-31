@@ -6,8 +6,6 @@ __pycache__/
 venv/
 env/
 
-# Ignore the Django settings file
-/settings.py
 
 # Ignore database files
 *.sqlite3
@@ -38,7 +36,4 @@ env/
 .DS_Store
 Thumbs.db
 
-# Ignore Django migrations
-*/migrations/*
-!*/migrations/__init__.py
 icia/settings/dev.py

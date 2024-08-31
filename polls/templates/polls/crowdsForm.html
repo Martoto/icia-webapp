@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}Quiz{% endblock %}
+
+{% block content %}
+<div class="container-sm mt-4">
+        <h2 class="card text-start" >
+        {%trans "Are you cautious with e-mail phishing? Find out how good you are at pointing out fraudulent e-mails from safe e-mails" %}
+        </h2>
+        <form method="post" class="form">
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% csrf_token %}
+        
+        {% bootstrap_form form %}
+        
+        {% bootstrap_button button_type="submit" content="OK" %}
+        {% bootstrap_button button_type="reset" content="Cancel" %}
+        </form>
+</div>
+{% endblock %}

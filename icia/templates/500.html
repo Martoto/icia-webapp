@@ -1,0 +1,19 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+{% load i18n %}
+{% load embed_video_tags %}
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+
+<div class="card" style="width: 18rem;">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Server Error</h5>
+      <p class="card-text">{%trans "Something broke... Please don't go just yet"%}</p>
+      <a href="{% url 'home' %}" class="btn btn-primary">{%trans "Home"%}</a>
+    </div>
+  </div>

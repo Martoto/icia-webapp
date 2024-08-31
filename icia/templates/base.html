@@ -12,8 +12,9 @@
   <link rel="stylesheet" href="{% static 'style.css' %}">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}ICIA{% endblock %}</title>
+  <title>ICIA - {% block title %}{% endblock %}</title>
 </head>
+<link rel="shortcut icon" sizes="any" type="image/svg+xml" href="{% static 'images/favicon.svg' %}" >
 
 
 <header>
@@ -68,9 +69,9 @@
             </form>
           </li>
           {% endif %}
-          {% for agent in user.agent_set.all %}
+          {% with agent as user.agent_set.last %}
             <li><a class="dropdown-item" href="#">Score: {{ agent.score }}</a></li>
-          {% endfor %}
+          {% endwith %}
           <li><a class="dropdown-item" href="#">{% trans "My votes" %}</a></li>
         </ul>
       </div>
@@ -81,11 +82,11 @@
 
 <body>
 
-  <main>
-    <p>
+  <main class="flex-fill justify-content-center align-items-center bg-light p-0" style="touch-action: none;">
+    <div class="container-fluid">
       {% block content %}
       {% endblock %}
-    </p>
+    </div>
   </main>
 
 </body>

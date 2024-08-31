@@ -1,0 +1,19 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+{% load i18n %}
+{% load embed_video_tags %}
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+
+<div class="card" style="width: 18rem;">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Error 404!</h5>
+      <p class="card-text">{%trans "Page not found! Please be patient, if this wasn't supposed to happen, contact us."%}</p>
+      <a href="{% url 'home' %}" class="btn btn-primary">{%trans "Home"%}</a>
+    </div>
+  </div>

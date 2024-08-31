@@ -4,31 +4,30 @@
 {% load embed_video_tags %}
 
 
-{% block title %}Home{% endblock %}
+{%block title%}Home{% endblock %}
 
-{% block content %}
+{%block content%}
 
 
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
+<div id="carouselControls" class="carousel slide fill carousel-dark" data-bs-ride="carousel">
+  <div class="carousel-inner fill">
     <div class="carousel-item active">
-      <iframe width="420" height="345" src="https://www.youtube.com/watch?v=i8LDG7D4e6w">
-      </iframe>
+      <div class="alert alert-success fill">
+        <p>{% trans "Answer quiz" %}</p>
+        <a href="{% url 'polls:test_list' %}" class="btn btn-primary">{% trans "Quiz" %}</a>
+      </div>
     </div>
     <div class="carousel-item">
-      <iframe width="420" height="345" src="https://www.youtube.com/watch?v=i8LDG7D4e6w">
-      </iframe>
-    </div>
-    <div class="carousel-item">
-      <iframe width="420" height="345" src="https://www.youtube.com/watch?v=i8LDG7D4e6w">
-      </iframe>
+      <div class="container-sm">
+        <iframe src="https://www.youtube.com/embed/i8LDG7D4e6w?si=MWEvSplkx-b2yQ2y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>

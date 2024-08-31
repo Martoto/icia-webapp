@@ -32,9 +32,6 @@
                   <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary stretched-link">{% trans "Vote" %}</a>
                   {%endif%}
                 </div>
-                <div class="card-footer">
-                  <small class="text-muted">Created {{ question.pub_date}}</small>
-                </div>
               </div>
             </div>
           {%endwith%}
