@@ -1,0 +1,372 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-31 00:42-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: .\polls\forms.py:6
+msgid "M"
+msgstr ""
+
+#: .\polls\forms.py:6
+msgid "Male"
+msgstr ""
+
+#: .\polls\forms.py:7
+msgid "F"
+msgstr ""
+
+#: .\polls\forms.py:7
+msgid "Female"
+msgstr ""
+
+#: .\polls\forms.py:8
+msgid "Other"
+msgstr ""
+
+#: .\polls\forms.py:10
+msgid "Name"
+msgstr ""
+
+#: .\polls\forms.py:11
+msgid "E-mail"
+msgstr ""
+
+#: .\polls\templates\polls\crowdsForm.html:12
+msgid ""
+"Are you cautious with e-mail phishing? Find out how good you are at pointing "
+"out fraudulent e-mails from safe e-mails"
+msgstr ""
+
+#: .\polls\templates\polls\detail.html:11 .\polls\templates\polls\index.html:13
+#: .\polls\templates\polls\leaderboard.html:13
+#: .\polls\templates\polls\posts.html:13
+#: .\polls\templates\polls\testList.html:13
+#: .\polls\templates\polls\testResult.html:11
+msgid "Home"
+msgstr ""
+
+#: .\polls\templates\polls\detail.html:12
+#: .\polls\templates\polls\detail.html:19 .\polls\templates\polls\index.html:14
+#: .\polls\templates\polls\results.html:48
+msgid "Polls"
+msgstr ""
+
+#: .\polls\templates\polls\detail.html:13
+msgid "Question"
+msgstr ""
+
+#: .\polls\templates\polls\detail.html:18 .\polls\templates\polls\test.html:12
+msgid "You already voted"
+msgstr ""
+
+#: .\polls\templates\polls\detail.html:20
+msgid "See results"
+msgstr ""
+
+#: .\polls\templates\polls\detail.html:48
+#: .\polls\templates\polls\results.html:24 .\polls\templates\polls\test.html:74
+msgid "Safe"
+msgstr ""
+
+#: .\polls\templates\polls\detail.html:51
+msgid "Chance of fraud"
+msgstr ""
+
+#: .\polls\templates\polls\detail.html:62
+#: .\polls\templates\polls\results.html:39 .\polls\templates\polls\test.html:81
+msgid "Fraud"
+msgstr ""
+
+#: .\polls\templates\polls\index.html:29
+msgid "Already voted"
+msgstr ""
+
+#: .\polls\templates\polls\index.html:30 .\polls\templates\polls\test.html:14
+msgid "Results"
+msgstr ""
+
+#: .\polls\templates\polls\index.html:32
+msgid "Vote"
+msgstr ""
+
+#: .\polls\templates\polls\leaderboard.html:14
+#: .\polls\templates\polls\test.html:13
+msgid "Leaderboard"
+msgstr ""
+
+#: .\polls\templates\polls\leaderboard.html:20
+msgid "Your agents"
+msgstr ""
+
+#: .\polls\templates\polls\leaderboard.html:25
+#: .\polls\templates\polls\leaderboard.html:54
+#: .\polls\templates\polls\testResult.html:26
+msgid "Score"
+msgstr ""
+
+#: .\polls\templates\polls\leaderboard.html:26
+#: .\polls\templates\polls\leaderboard.html:55
+#: .\polls\templates\polls\testResult.html:25
+msgid "Username"
+msgstr ""
+
+#: .\polls\templates\polls\leaderboard.html:27
+#: .\polls\templates\polls\leaderboard.html:56
+msgid "Contributions"
+msgstr ""
+
+#: .\polls\templates\polls\posts.html:14
+msgid "Posts"
+msgstr ""
+
+#: .\polls\templates\polls\results.html:27
+msgid "Benchmark"
+msgstr ""
+
+#: .\polls\templates\polls\results.html:29
+msgid "Group Estimate"
+msgstr ""
+
+#: .\polls\templates\polls\results.html:31
+msgid "Your Estimate"
+msgstr ""
+
+#: .\polls\templates\polls\results.html:47
+msgid "Back to polls"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:35
+msgid "Welcome to ICIA"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:40
+msgid ""
+"Recent times have seen a considerable increase in fraudulent digital "
+"activity. How good are you at telling apart real e-mails from fraudulent "
+"ones? find out!"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:43
+msgid "Tips"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:47
+#, python-format
+msgid ""
+"0%% means you are certain the e-mail is safe. 100%% means it is definitely "
+"fraudulent"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:48
+msgid "Every e-mail is real and can be either fraudulent or not"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:49
+msgid "Not every fraudulent e-mail is a direct scam"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:50
+msgid "Be decisive! You lose points if you stay on the fence"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:51
+msgid "Scroll right or click next to proceed"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:77
+msgid "Chance"
+msgstr ""
+
+#: .\polls\templates\polls\test.html:94
+msgid ""
+"Almost there! please fill out as much information as you can to support our "
+"research."
+msgstr ""
+
+#: .\polls\templates\polls\testList.html:14
+msgid "Tests"
+msgstr ""
+
+#: .\polls\templates\polls\testList.html:27
+msgid "Answer"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:16
+msgid "Your Results"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:18
+msgid "Detailed results"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:27
+msgid "Precision"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:28
+msgid "Recall"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:29
+msgid "F1 Score"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:30
+msgid "Positive certainty"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:31
+msgid "Negative certainty"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:55 .\polls\utils\agentProfile.py:13
+msgid "Super"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:56
+msgid "Good"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:57 .\polls\utils\agentProfile.py:23
+msgid "Paranoid"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:58 .\polls\utils\agentProfile.py:28
+msgid "Naive"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:59 .\polls\utils\agentProfile.py:33
+msgid "Random"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:60 .\polls\utils\agentProfile.py:38
+msgid "Bad"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:61
+msgid "Malicious"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:81
+msgid "Your score is in the top"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:81
+msgid "out of"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:81
+msgid "answers"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:93
+msgid "Thanks for contributing"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:121
+msgid "Try answering the test"
+msgstr ""
+
+#: .\polls\templates\polls\testResult.html:122
+msgid "Test"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:11
+msgid ""
+"Congratulations! You are a very accurate predictor of fraud and definitely "
+"very able to discern fraudulent information apart from safe info"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:12
+msgid ""
+"You almost classified as a super predictor! You are great at telling apart "
+"what is real and what is fake"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:16
+msgid ""
+"You did a great job. You are not as accurate as a machine but you provided "
+"great human insight"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:17
+msgid "You were undeniably good, better than most"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:18
+msgid "Above average"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:21
+msgid ""
+"You are so wary of fraud to the point of ruling out safe information. Not "
+"everyone is out to get you, try to be more positive"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:22
+msgid "You are too sensitive to possible frauds. Lighten up!"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:26
+msgid ""
+"You are too trusting of all sorts of information. Perhaps you should leave "
+"some of your optimism behind and be more wary of frauds"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:27
+msgid "You are too relaxed around possible frauds. Be more aware!"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:31
+msgid ""
+"You were too uncertain and lacked confidence. Did you skip the test or are "
+"you too afraid to pick a side?"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:32
+msgid ""
+"You lacked confidence. Try to analyze each question more and pick a side "
+"based on evidence"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:36
+msgid ""
+"You are not so good at classifying e-mails. Perhaps you didn't understand "
+"the instructions very well. "
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:37
+msgid "You were not accurate at classifying. Apply yourself more"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:41
+msgid ""
+"You are an agent of chaos deliberately trying to sabotage the test. That is "
+"the only explanation for your predictions!"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:42
+msgid "You were so innacurate that we belive you could be sabotaging the test"
+msgstr ""
+
+#: .\polls\utils\agentProfile.py:43
+msgid "Evil"
+msgstr ""
+
+#: .\polls\views.py:92
+msgid "Fail"
+msgstr ""

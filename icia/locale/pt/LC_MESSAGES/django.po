@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-23 04:06-0300\n"
+"POT-Creation-Date: 2024-08-31 00:45-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,35 +18,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\icia\templates\about.html:14
-msgid "Our Mission"
-msgstr ""
-
-#: .\icia\templates\about.html:15
+#: .\icia\templates\404.html:16
 msgid ""
-"Our mission is to explore the possibilities of cooperation between "
-"intelligent agents of different natures. Artificial and human."
-msgstr ""
+"Page not found! Please be patient, if this wasn't supposed to happen, "
+"contact us."
+msgstr "Página não encontrada! O que você está procurando hein?"
 
-#: .\icia\templates\about.html:17
-msgid "Our Team"
-msgstr ""
-
-#: .\icia\templates\about.html:18
-msgid ""
-"The project was conducted by Daniel Salles with orientation of Professor "
-"Alexandre Graeml"
-msgstr ""
-
-#: .\icia\templates\about.html:21
-msgid "Github"
-msgstr ""
-
+#: .\icia\templates\404.html:17 .\icia\templates\500.html:17
 #: .\icia\templates\base.html:38
 msgid "Home"
 msgstr "Início"
 
-#: .\icia\templates\base.html:41 .\icia\templates\home.html:49
+#: .\icia\templates\500.html:16
+msgid "Something broke... Please don't go just yet"
+msgstr "Alguma coisa quebrou... por favor não me abandone ainda!"
+
+#: .\icia\templates\about.html:12
+#, fuzzy
+#| msgid "About us"
+msgid "About Us"
+msgstr "Sobre nós"
+
+#: .\icia\templates\about.html:14
+msgid "Our Mission"
+msgstr "Nossa Missão"
+
+#: .\icia\templates\about.html:15
+msgid ""
+"Our mission is to explore the possibilities of cooperation between "
+"intelligent agents of different natures. Artificial and human. We believe "
+"higher intelligence already exists among us, waiting to be tapped"
+msgstr ""
+
+#: .\icia\templates\about.html:17
+msgid "Our Team"
+msgstr "Nosso Time"
+
+#: .\icia\templates\about.html:18
+msgid ""
+"The project was conducted entirely by Daniel Salles with orientation of "
+"Professor Alexandre Graeml"
+msgstr ""
+"O projeto foi conduzido inteiramente por Daniel Salles com a orientação do "
+"Professor Alexandre Graeml."
+
+
+#: .\icia\templates\about.html:20
+msgid "Contact Us"
+msgstr "Contato"
+
+#: .\icia\templates\base.html:41 .\icia\templates\home.html:48
 msgid "Polls"
 msgstr "Enquetes"
 
@@ -70,27 +91,35 @@ msgstr "Meus votos"
 msgid "About us"
 msgstr "Sobre nós"
 
-#: .\icia\templates\home.html:42
+#: .\icia\templates\home.html:16
+msgid "Answer quiz"
+msgstr "Responda ao quiz"
+
+#: .\icia\templates\home.html:17
+msgid "Quiz"
+msgstr ""
+
+#: .\icia\templates\home.html:41
 msgid "You are not logged in."
 msgstr "Você não está autenticado"
 
-#: .\icia\templates\home.html:43
+#: .\icia\templates\home.html:42
 msgid "Login"
 msgstr "Entrar"
 
-#: .\icia\templates\home.html:44
+#: .\icia\templates\home.html:43
 msgid "Sign Up"
 msgstr "Registrar-se"
 
-#: .\icia\templates\home.html:48
+#: .\icia\templates\home.html:47
 msgid "Start polling"
 msgstr "Comece a responder Enquetes"
 
-#: .\icia\templates\home.html:52
+#: .\icia\templates\home.html:51
 msgid "Create Agent"
 msgstr "Criar agente"
 
-#: .\icia\templates\home.html:53
+#: .\icia\templates\home.html:52
 msgid "Agents"
 msgstr "Agentes"
 

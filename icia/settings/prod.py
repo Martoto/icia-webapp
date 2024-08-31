@@ -22,13 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = os.environ['SECRET_KEY']
+REGISTRATION_OPEN = os.environ['DJANGO_ALLOW_REGISTRATION']
 
-
-DEBUG = False
+DEBUG = os.environ['DJANGO_DEBUG']
 
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
 
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(' ')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+
 
 SECURE_SSL_REDIRECT = \
     os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
@@ -47,7 +51,11 @@ DATABASES = {
     }
 }
 
-
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 

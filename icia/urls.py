@@ -15,6 +15,6 @@ urlpatterns = [
     path('agents/', include('agents.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
-] 
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
