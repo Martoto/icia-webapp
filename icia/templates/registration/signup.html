@@ -7,7 +7,8 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<h2>{%trans "Sign up" %}</h2>
+{% if registration_open %}
+<h2 class="display-3">{%trans "Sign up" %}</h2>
 <form method="post" class="form">
   {% csrf_token %}
 
@@ -16,4 +17,10 @@
   {% bootstrap_button button_type="submit" content="Sign up" %}
   {% bootstrap_button button_type="reset" content="Cancel" %}
 </form>
+{% else %}
+<div class="alert alert-warning">
+  <p>{% trans "Registration is not allowed at the moment! But you can still answer the quiz" %}</p>
+  <a href="{% url 'polls:test_list' %}" class="btn btn-primary">{% trans "Quiz" %}</a>
+</div>
+{%endif%}
 {% endblock %}
