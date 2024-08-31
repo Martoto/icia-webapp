@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = os.environ['SECRET_KEY']
-
+REGISTRATION_OPEN = os.environ['DJANGO_ALLOW_REGISTRATION']
 
 DEBUG = os.environ['DJANGO_DEBUG']
 

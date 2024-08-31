@@ -68,9 +68,9 @@
             </form>
           </li>
           {% endif %}
-          {% for agent in user.agent_set.all %}
+          {% with agent as user.agent_set.last %}
             <li><a class="dropdown-item" href="#">Score: {{ agent.score }}</a></li>
-          {% endfor %}
+          {% endwith %}
           <li><a class="dropdown-item" href="#">{% trans "My votes" %}</a></li>
         </ul>
       </div>

@@ -13,10 +13,13 @@
 </nav>
 {% if active_agent %}
 <div class="p-3 border bg-light">
-    <h1 class="display-1">{%trans "Your Results"%}</h1>
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
+  <div class="container-fluid alert alert-success shadow ">
+    <h1 class="display-1 ">{%trans "Your Results"%}</h1>
+    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
       {%trans "Detailed results"%}
     </button>
+  </div>
+
   <div class="collapse" id="collapse">
     <div class="row row-cols-1 row-cols-md-3 g-4 table-responsive">
             <table class="table">
@@ -77,11 +80,14 @@
     </div>
     <div class="row">
         <div class="clearfix">
-            <h2 class="display-2 border border-primary rounded-2">
+            <h2 class="display-2 border rounded-2">
+              <a class="nav-link" href="{% url 'polls:leaderboard' %}">
               {%trans "Your score is in the top"%} <span style="color: blue;">{{top_percent}}%</span> {%trans "out of"%} {{n_answers}} {%trans "answers"%}
+              </a>
             </h2>
             <div class="container-fluid">
-            <img src="{%static 'polls/bee'|add:personality|add:'.jpg''%}" style="max-width: 100%;"class="shadow border" alt="abeias">
+            <img src="{%static 'polls/bee'|add:personality|add:'.jpg''%}" style="max-width: 300px;"class="" alt="Abelha{{personality_translated}}">
+            <h4 class="display-4 mark">{{personality_translated}}</h4>
             </div>
             <p class="display-3 border">
             {{main_personality}}
@@ -100,7 +106,7 @@
             <a class="a2a_button_whatsapp"></a>
             <a class="a2a_button_twitter"></a>
             <script>
-                var text = "Eu sou um detector de fraude do tipo {{personality}} e fiz {{active_agent.score}} pontos! Consegue fazer melhor? Venha descobrir seu tipo e contribuir com a ciência: {{ request.scheme }}://{{ request.get_host }}{%url 'polls:test' 'quizFraude'%}"
+                var text = "Eu sou um detector de fraude do tipo {{personality_translated}} e fiz {{active_agent.score}} pontos! Consegue fazer melhor? Venha descobrir seu tipo e contribuir com a ciência: ${link}"
                 var a2a_config = a2a_config || {};
                 a2a_config.templates = a2a_config.templates || {};
                 a2a_config.templates.twitter = {

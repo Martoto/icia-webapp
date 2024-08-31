@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -144,6 +144,7 @@ class TestResultView(generic.DetailView):
     model = QuestionGroup
 
     def get_context_data(self, **kwargs):
+        translation.activate(self.request.LANGUAGE_CODE)
         context = super().get_context_data(**kwargs)
         thisUser = Agent.objects.filter(pk=self.request.session.get('quizUser', None))
         if thisUser.exists(): 
@@ -152,9 +153,11 @@ class TestResultView(generic.DetailView):
             context['agent_profile'] = AgentProfile(agent)
             context['profile_distances'] = getDistances(context['agent_profile'])
             sortedDistances = dict(sorted(context['profile_distances'].items(), key=lambda item: item[1]))
-            context['main_personality'] = ProfileReading[list(sortedDistances)[0]].value[0] 
-            context['second_personality'] = ProfileReading[list(sortedDistances)[1]].value[1] 
-            context['personality'] = ProfileReading[list(sortedDistances)[0]].value[2] 
+            dists = list(sortedDistances)
+            context['main_personality'] = _(ProfileReading[dists[0]].value[0]) 
+            context['second_personality'] = _(ProfileReading[dists[1]].value[1]) 
+            context['personality'] = ProfileReading[dists[0]].value[2]
+            context['personality_translated'] = _(ProfileReading[dists[0]].value[2])  
             scores = []
             for agent in Agent.objects.all().order_by('score'): scores.append(agent.score)
             context['n_answers'] = len(scores)
@@ -185,7 +188,8 @@ def submitTest(request, group_id, agent=None):
                     for c in question.classification_set.all():
                         estimate, x = Estimate.objects.get_or_create(agent=newAgent, 
                                                             classification=c, 
-                                                            value=request.POST.get("classification"+str(c.pk)+"q"+str(question.pk), 50.0)
+                                                            value=request.POST.get("classification"+str(question.pk), 50.0),
+                                                            description=request.POST["description"+str(question.pk)],
                                                             )
                         estimate.save()
             return HttpResponseRedirect(reverse("polls:test_result", args=[group.slug,]))

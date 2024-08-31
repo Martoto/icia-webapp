@@ -56,7 +56,7 @@
     </div>
     {%for question in questiongroup.questions.all %}
     <div class="carousel-item" style="height: fit-content;">
-      <div class="container">
+      <div class="container-fluid">
         <div class="card h-100" style="height: 300px">
             <div class="card-header text-start">
                 Question #{{question.pk}}
@@ -67,25 +67,30 @@
                 </p>
             </div>
         </div>
-        {% for classification in question.classification_set.all %}
-          <div id="rangeContainer{{forloop.counter}}" class="container border border-primary">
+        {% with classification as question.classification_set.first %}
+          <div id="rangeContainer{{forloop.counter}}" class="container-fluid border border-primary">
             <div class="row align-items-center">
               <div id="safeTag{{forloop.counter}}" class="col">
                   {%trans "Safe" %}
               </div>
               <div class="col">
                   {%trans "Chance" %}
-                  <label class="form-label shadow border" for="customRange1" id="rangeLabel{{ forloop.counter }}">50</label>%
+                  <label class="form-label shadow border" for="customRange1" id="rangeLabel{{forloop.counter}}">50</label>%
               </div>
               <div id="fraudTag{{forloop.counter}}" class="col">
                 {%trans "Fraud" %}
               </div>
             </div> 
-                  <div data-mdb-range-init class="range">
-                  <input type="range" class="form-range" step="0.1" name="classification{{classification.pk}}q{{question.id}}" oninput="updateValue(this.value, {{forloop.counter}})"/>
-                  </div>
+            <div data-mdb-range-init class="range">
+              <input type="range" class="form-range" step="0.1" name="classification{{question.id}}" oninput="updateValue(this.value, {{forloop.counter}})"/>
+            </div>
+            <label for="inputPassword5" class="form-label">{%trans "Reasoning"%}</label>
+            <input type="text" name="description{{question.id}}" class="form-control" aria-describedby="tipDescript">
+            <div id="tipDescript" class="form-text">
+              {%trans "Feel free to comment on your reasoning for this evaluation. For example: words that could indicate scam or phishing attempt"%}
+            </div>
       </div>
-      {% endfor %}
+      {% endwith %}
     </div>
     </div>
     {%endfor%}
