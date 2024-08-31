@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 00:45-0300\n"
+"POT-Creation-Date: 2024-08-31 00:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,32 +16,29 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 #: .\icia\templates\404.html:16
 msgid ""
 "Page not found! Please be patient, if this wasn't supposed to happen, "
 "contact us."
-msgstr "Página não encontrada! O que você está procurando hein?"
+msgstr ""
 
 #: .\icia\templates\404.html:17 .\icia\templates\500.html:17
 #: .\icia\templates\base.html:38
 msgid "Home"
-msgstr "Início"
+msgstr ""
 
 #: .\icia\templates\500.html:16
 msgid "Something broke... Please don't go just yet"
-msgstr "Alguma coisa quebrou... por favor não me abandone ainda!"
+msgstr ""
 
 #: .\icia\templates\about.html:12
-#, fuzzy
-#| msgid "About us"
 msgid "About Us"
-msgstr "Sobre nós"
+msgstr ""
 
 #: .\icia\templates\about.html:14
 msgid "Our Mission"
-msgstr "Nossa Missão"
+msgstr ""
 
 #: .\icia\templates\about.html:15
 msgid ""
@@ -52,48 +49,45 @@ msgstr ""
 
 #: .\icia\templates\about.html:17
 msgid "Our Team"
-msgstr "Nosso Time"
+msgstr ""
 
 #: .\icia\templates\about.html:18
 msgid ""
 "The project was conducted entirely by Daniel Salles with orientation of "
 "Professor Alexandre Graeml"
 msgstr ""
-"O projeto foi conduzido inteiramente por Daniel Salles com a orientação do "
-"Professor Alexandre Graeml."
-
 
 #: .\icia\templates\about.html:20
 msgid "Contact Us"
-msgstr "Contato"
+msgstr ""
 
 #: .\icia\templates\base.html:41 .\icia\templates\home.html:48
 msgid "Polls"
-msgstr "Enquetes"
+msgstr ""
 
 #: .\icia\templates\base.html:44
 msgid "Leaderboard"
-msgstr "Pontuação"
+msgstr ""
 
 #: .\icia\templates\base.html:51
 msgid "English"
-msgstr "Inglês"
+msgstr ""
 
 #: .\icia\templates\base.html:52
 msgid "Portuguese"
-msgstr "Português"
+msgstr ""
 
 #: .\icia\templates\base.html:74
 msgid "My votes"
-msgstr "Meus votos"
+msgstr ""
 
 #: .\icia\templates\base.html:95
 msgid "About us"
-msgstr "Sobre nós"
+msgstr ""
 
 #: .\icia\templates\home.html:16
 msgid "Answer quiz"
-msgstr "Responda ao quiz"
+msgstr ""
 
 #: .\icia\templates\home.html:17
 msgid "Quiz"
@@ -101,32 +95,32 @@ msgstr ""
 
 #: .\icia\templates\home.html:41
 msgid "You are not logged in."
-msgstr "Você não está autenticado"
+msgstr ""
 
 #: .\icia\templates\home.html:42
 msgid "Login"
-msgstr "Entrar"
+msgstr ""
 
 #: .\icia\templates\home.html:43
 msgid "Sign Up"
-msgstr "Registrar-se"
+msgstr ""
 
 #: .\icia\templates\home.html:47
 msgid "Start polling"
-msgstr "Comece a responder Enquetes"
+msgstr ""
 
 #: .\icia\templates\home.html:51
 msgid "Create Agent"
-msgstr "Criar agente"
+msgstr ""
 
 #: .\icia\templates\home.html:52
 msgid "Agents"
-msgstr "Agentes"
+msgstr ""
 
 #: .\icia\templates\registration\login.html:10
 msgid "Log In"
-msgstr "Entrar"
+msgstr ""
 
 #: .\icia\templates\registration\signup.html:10
 msgid "Sign up"
-msgstr "Registrar-se"
+msgstr ""
