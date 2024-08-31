@@ -171,6 +171,8 @@ def submitTest(request, group_id, agent=None):
                     agent = newAgent,               
                     name=form.cleaned_data['name'], 
                     email=form.cleaned_data['email'],
+                    age=form.cleaned_data['age'],
+                    sex=form.cleaned_data['sex']
                     )
                 new_crowd.save()
                 request.session['answered'+str(group_id)] = True

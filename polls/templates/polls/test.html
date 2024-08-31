@@ -11,7 +11,7 @@
 <div class="alert alert-success">
     <p>{% trans "You already voted" %}</p>
     <a href="{% url 'polls:leaderboard' %}" class="btn btn-primary">{% trans "Leaderboard" %}</a>
-    <a href="{% url 'polls:test_result' %}" class="btn btn-primary">{% trans "Results" %}</a>
+    <a href="{% url 'polls:test_result' questiongroup.slug %}" class="btn btn-primary">{% trans "Results" %}</a>
 
 </div>
 {% else %}
@@ -19,10 +19,31 @@
 {% csrf_token %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<div id="carouselControls" class="carousel slide" data-bs-ride="false">
+<div id="carouselControls" class="carousel slide" data-bs-interval="false" data-bs-touch="false" data-bs-wrap="false">
   <div class="carousel-inner fill">
     <div class="carousel-item active">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/i8LDG7D4e6w?si=MWEvSplkx-b2yQ2y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <div class="card h-100" style="height: 300px">
+        <div class="card-header text-start">
+            {%trans "Welcome to ICIA"%}
+        </div>
+        <div class="card-body overflow-scroll">
+            <p class="card text-start" style="white-space: pre-wrap;">
+              {%trans "Recent times have seen a considerable increase in fraudulent digital activity. How good are you at telling apart real e-mails from fraudulent ones? find out!"%}
+            </p>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              {%trans "Tips"%}
+            </button>
+          </p>
+          <div class="collapse" id="collapseExample">
+            <ul class="list-group">
+              <li class="list-group-item">{%trans "Every e-mail is real and can be either fraudulent or not" %}</li>
+              <li class="list-group-item">{%trans "Not every fraudulent e-mail is a direct scam" %}</li>
+              <li class="list-group-item">{%trans "Be decisive! You lose points if you stay on the fence" %}</li>
+              <li class="list-group-item">{%trans "Scroll right or click next to proceed" %}</li>
+            </ul>
+          </div>
+        </div>
+    </div>
     </div>
     {%for question in questiongroup.questions.all %}
     <div class="carousel-item">
@@ -46,24 +67,19 @@
               </div>
               <div class="col">
                   <label class="form-label" for="customRange1" id="rangeLabel{{ forloop.counter }}">{%trans "Chance of fraud" %}</label>
-                  <div data-mdb-range-init class="range">
-                  <input type="range" class="form-range" step="0.5" name="classification{{classification.pk}}q{{question.id}}" oninput="updateValue(this.value)"/>
-                  </div>
-                  <script type="text/javascript">
-                      function updateValue(value) {
-                          document.getElementById("rangeLabel{{forloop.counter}}").textContent = value;
-                      }
-                  </script>
               </div>
               <div class="col">
-                  {%trans "Fraud" %}
+                {%trans "Fraud" %}
               </div>
-        </div> 
+            </div> 
+                  <div data-mdb-range-init class="range">
+                  <input type="range" class="form-range" step="0.5" name="classification{{classification.pk}}q{{question.id}}" oninput="updateValue(this.value, {{forloop.counter}})"/>
+                  </div>
       </div>
       {% endfor %}
     </div>
     {%endfor%}
-    <div class="carousel-item">
+    <div id="finalItem" class="carousel-item">
       <div class="container-sm mt-4">
         <h2>{%trans "Almost there! please fill out as much information as you can to support our research."%}</h2>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -76,7 +92,11 @@
       </div>
     </div>
   </div>
-
+      <div id="carouselControlBtns" class="btn-group fixed-bottom" role="group" aria-label="Basic example" enabled="true">
+        <button type="button" class="btn btn-primary" data-bs-target="#carouselControls" data-bs-slide="prev">&laquo;Prev</button>
+        <button type="button" class="btn btn-primary" data-bs-target="#carouselControls" data-bs-slide="next">Next&raquo;</button>
+      </div>    
+    
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
@@ -86,6 +106,23 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
+<script>
+  var myCarousel = document.getElementById('carouselControls')
+
+  myCarousel.addEventListener('slide.bs.carousel', function (slide) {
+    console.log("hello")
+    console.log(slide)
+    if (slide.relatedTarget.id == "finalItem") {
+        document.getElementById('carouselControlBtns').setAttribute('hidden','true')
+    }
+  })
+
+</script>
+<script type="text/javascript">
+  function updateValue(value, id) {
+      document.getElementById("rangeLabel"+id).textContent = value;
+  }
+</script>
 {%endif%}
 {% endblock %}
 

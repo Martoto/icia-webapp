@@ -11,7 +11,6 @@ from django.utils.text import slugify
 class Question(models.Model):
     question_query = models.TextField(null="true")
     question_text = models.TextField(max_length=5000)
-    pub_date = models.DateTimeField("date published")
     available = models.BooleanField(default=True)
     def get_voting_agents(self):
         ret = []
@@ -56,6 +55,8 @@ class Crowd(models.Model):
     agent = models.OneToOneField(Agent, on_delete=models.CASCADE)
     email = models.EmailField(primary_key=True)
     name = models.CharField(max_length=30)
+    age = models.IntegerField(null=True)
+    sex = models.CharField(null=True)
 
 
 class Choice(models.Model):
@@ -74,7 +75,7 @@ class Classification(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     classification_text = models.CharField(max_length=200, null=True)
     range = models.DecimalField(max_digits=5,decimal_places=2, default=100.00)
-    score = models.BigIntegerField(default=1)
+    score = models.BigIntegerField(default=100)
     benchmark = models.DecimalField(max_digits=5,decimal_places=2, default=100.00)
 
     def get_estimate(self):
