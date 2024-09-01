@@ -7,23 +7,62 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
 from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-
-load_dotenv()
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = os.environ['SECRET_KEY']
+REGISTRATION_OPEN = os.environ.get('DJANGO_ALLOW_REGISTRATION',True)
+
+ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(" ")
+
+
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', default=1))
+
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS','').split(' ')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+SECURE_SSL_REDIRECT = \
+    os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
+if SECURE_SSL_REDIRECT:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+if os.getenv('DJANGO_ENV') == 'dev': 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['DBNAME'],
+            'HOST': os.environ['DBHOST'],
+            'USER': os.environ['DBUSER'],
+            'PASSWORD': os.environ['DBPASS'],
+            'PORT': os.environ['DBPORT'],
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['DBNAME'],
+            'HOST': os.environ['DBHOST'],
+            'USER': os.environ['DBUSER'],
+            'PASSWORD': os.environ['DBPASS'],
+            'PORT': os.environ['DBPORT'],
+            'OPTIONS': {'sslmode': 'require'},
+        }
+    }
+
 
 # Azure hosting
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -75,9 +114,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'icia.wsgi.application'
-
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

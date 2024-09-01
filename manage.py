@@ -6,9 +6,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    environment = os.getenv('DJANGO_ENV', 'dev')  # Default to 'dev' if not set
-
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'icia.settings.'+environment)
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'icia.settings.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
