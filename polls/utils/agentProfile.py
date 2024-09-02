@@ -91,7 +91,6 @@ class AgentProfile():
 def percentile_rank(scores, score):    
     rank = scores.index(score) + 1
     
-    print(rank, len(scores))
     percentile = (rank / len(scores)) * 100.0
     
     return percentile
