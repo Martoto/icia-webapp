@@ -159,7 +159,7 @@ class TestResultView(generic.DetailView):
             context['personality'] = ProfileReading[dists[0]].value[2]
             context['personality_translated'] = _(ProfileReading[dists[0]].value[2])  
             scores = []
-            for agent in Agent.objects.all().order_by('score'): scores.append(agent.score)
+            for agent in Agent.objects.all().order_by('-score'): scores.append(agent.score)
             context['n_answers'] = len(scores)
             context['top_percent'] = percentile_rank(scores, agent.score)
 
