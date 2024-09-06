@@ -34,23 +34,14 @@
         <div class="card-header text-start">
             {%trans "Welcome to ICIA"%}
         </div>
-        <div class="card-body overflow-scroll">
+        <div class="card-body">
             <iframe src="https://www.youtube.com/embed/i8LDG7D4e6w?si=MWEvSplkx-b2yQ2y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <p class="card text-start" style="white-space: pre-wrap;">
               {%trans "Recent times have seen a considerable increase in fraudulent digital activity. How good are you at telling apart real e-mails from fraudulent ones? find out!"%}
             </p>
-            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
+            <button class="btn btn-danger w-100" type="button" data-bs-toggle="modal" data-bs-target="#modal">
               {%trans "Tips"%}
             </button>
-          <div class="collapse" id="collapse">
-            <ul class="list-group">
-              <li class="list-group-item">{%trans "0% means you are certain the e-mail is safe. 100% means it is definitely fraudulent" %}</li>
-              <li class="list-group-item">{%trans "Every e-mail is real and can be either fraudulent or not" %}</li>
-              <li class="list-group-item">{%trans "Not every fraudulent e-mail is a direct scam" %}</li>
-              <li class="list-group-item">{%trans "Be decisive! You lose points if you stay on the fence" %}</li>
-              <li class="list-group-item">{%trans "Scroll right or click next to proceed" %}</li>
-            </ul>
-          </div>
         </div>
     </div>
     </div>
@@ -61,7 +52,7 @@
             <div class="card-header text-start">
                 Question #{{question.pk}}
             </div>
-            <div class="card-body overflow-scroll">
+            <div class="card-body h-100">
                 <p class="card text-start" style="white-space: pre-wrap;">
                     {{question.question_text}}
                 </p>
@@ -82,7 +73,7 @@
               </div>
             </div> 
             <div data-mdb-range-init class="range">
-              <input type="range" class="form-range" step="0.1" name="classification{{question.id}}" oninput="updateValue(this.value, {{forloop.counter}})"/>
+              <input type="range" class="form-range" step="10" name="classification{{question.id}}" oninput="updateValue(this.value, {{forloop.counter}})"/>
             </div>
             <label for="inputPassword5" class="form-label">{%trans "Reasoning"%}</label>
             <input type="text" name="description{{question.id}}" class="form-control" aria-describedby="tipDescript">
@@ -106,21 +97,12 @@
         {% bootstrap_button button_type="reset" content="Cancel" %}
       </div>
     </div>
-  </div>
+  </div>      
+</div>
 
-      <div id="carouselControlBtns" class="btn-group fixed-bottom" role="group" aria-label="Basic example" enabled="true">
-        <button type="button" class="btn btn-primary" data-bs-target="#carouselControls" data-bs-slide="prev">&laquo;Prev</button>
-        <button type="button" class="btn btn-primary" data-bs-target="#carouselControls" data-bs-slide="next">Next&raquo;</button>
-      </div>    
-    
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+  <div id="carouselControlBtns" class="btn-group fixed-bottom" style="height: 13%;" role="group" aria-label="Basic example" enabled="true">
+    <button type="button" class="btn btn-success" data-bs-target="#carouselControls" data-bs-slide="prev">&laquo;Prev</button>
+    <button type="button" class="btn btn-success" data-bs-target="#carouselControls" data-bs-slide="next">Next&raquo;</button>
   </div>
 <script>
   var myCarousel = document.getElementById('carouselControls')
@@ -155,5 +137,30 @@
   }
 </script>
 {%endif%}
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{%trans "Tips"%}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li class="list-group-item">{%trans "0% means you are certain the e-mail is safe. 100% means it is definitely fraudulent" %}</li>
+          <li class="list-group-item">{%trans "Every e-mail is real and can be either fraudulent or not" %}</li>
+          <li class="list-group-item">{%trans "Not every fraudulent e-mail is a direct scam" %}</li>
+          <li class="list-group-item">{%trans "Be decisive! You lose points if you stay on the fence" %}</li>
+          <li class="list-group-item">{%trans "Scroll right or click next to proceed" %}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 {% endblock %}
 

@@ -62,7 +62,7 @@ class AgentProfile():
         "GOOD_PREDICTOR": [0.80, 0.85, 0.82, 0.85, 0.80],
         "PARANOID_PREDICTOR": [0.50, 0.95, 0.66, 0.60, 0.50],
         "NAIVE_PREDICTOR": [0.90, 0.50, 0.55, 0.70, 0.50],
-        "RANDOM_PREDICTOR": [0.50, 0.50, 0.50, 0.01, 0.01],
+        "RANDOM_PREDICTOR": [0.0, 0.0, 0.5, 0.01, 0.01],
         "BAD_PREDICTOR": [0.20, 0.30, 0.24, 0.30, 0.25],
         "MALICIOUS_PREDICTOR": [0.05, 0.10, 0.07, 0.10, 1.0]
     }

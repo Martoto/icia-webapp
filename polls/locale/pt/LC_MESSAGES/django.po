@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 04:35-0300\n"
+"POT-Creation-Date: 2024-09-05 23:45-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,7 @@ msgid "See results"
 msgstr "Ver resultados"
 
 #: .\polls\templates\polls\detail.html:48
-#: .\polls\templates\polls\results.html:24 .\polls\templates\polls\test.html:74
+#: .\polls\templates\polls\results.html:24 .\polls\templates\polls\test.html:65
 msgid "Safe"
 msgstr "Seguro"
 
@@ -88,7 +88,7 @@ msgid "Chance of fraud"
 msgstr "Chance de fraude"
 
 #: .\polls\templates\polls\detail.html:62
-#: .\polls\templates\polls\results.html:39 .\polls\templates\polls\test.html:81
+#: .\polls\templates\polls\results.html:39 .\polls\templates\polls\test.html:72
 msgid "Fraud"
 msgstr "Fraude"
 
@@ -115,13 +115,13 @@ msgstr "Seus agentes"
 
 #: .\polls\templates\polls\leaderboard.html:25
 #: .\polls\templates\polls\leaderboard.html:54
-#: .\polls\templates\polls\testResult.html:29
+#: .\polls\templates\polls\testResult.html:52
 msgid "Score"
 msgstr "Pontos"
 
 #: .\polls\templates\polls\leaderboard.html:26
 #: .\polls\templates\polls\leaderboard.html:55
-#: .\polls\templates\polls\testResult.html:28
+#: .\polls\templates\polls\testResult.html:51
 msgid "Username"
 msgstr "Usuário"
 
@@ -164,11 +164,35 @@ msgstr ""
 "fraudulenta.Quão bom você é em distinguir e-mails reais de fraudulentos? "
 "Descubra!"
 
-#: .\polls\templates\polls\test.html:43
+#: .\polls\templates\polls\test.html:43 .\polls\templates\polls\test.html:145
 msgid "Tips"
 msgstr "Dicas"
 
-#: .\polls\templates\polls\test.html:47
+#: .\polls\templates\polls\test.html:68
+msgid "Chance"
+msgstr "Chance"
+
+#: .\polls\templates\polls\test.html:78
+msgid "Reasoning"
+msgstr "Descrição"
+
+#: .\polls\templates\polls\test.html:81
+msgid ""
+"Feel free to comment on your reasoning for this evaluation. For example: "
+"words that could indicate scam or phishing attempt"
+msgstr ""
+"Sinta-se à vontade para comentar o motivo dessa avaliação. Por exemplo: "
+"palavras-chave que podem indicar uma tentativa de golpe ou phishing"
+
+#: .\polls\templates\polls\test.html:90
+msgid ""
+"Almost there! please fill out as much information as you can to support our "
+"research."
+msgstr ""
+"Quase lá! Por favor, preencha o máximo de informações que puder para apoiar "
+"nossa pesquisa."
+
+#: .\polls\templates\polls\test.html:150
 #, python-format
 msgid ""
 "0%% means you are certain the e-mail is safe. 100%% means it is definitely "
@@ -177,43 +201,21 @@ msgstr ""
 "0%% significa que você tem certeza de que o e-mail é seguro. 100%% significa "
 "que é definitivamente fraudulento."
 
-#: .\polls\templates\polls\test.html:48
+#: .\polls\templates\polls\test.html:151
 msgid "Every e-mail is real and can be either fraudulent or not"
 msgstr "Todo e-mail é real e pode ser fraudulento ou não."
 
-#: .\polls\templates\polls\test.html:49
+#: .\polls\templates\polls\test.html:152
 msgid "Not every fraudulent e-mail is a direct scam"
 msgstr "Nem todo e-mail fraudulento é um golpe direto."
 
-#: .\polls\templates\polls\test.html:50
+#: .\polls\templates\polls\test.html:153
 msgid "Be decisive! You lose points if you stay on the fence"
 msgstr "Seja decisivo! Você perde pontos se ficar em cima do muro."
 
-#: .\polls\templates\polls\test.html:51
+#: .\polls\templates\polls\test.html:154
 msgid "Scroll right or click next to proceed"
 msgstr "Role para a direita ou clique em próximo para continuar."
-
-#: .\polls\templates\polls\test.html:77
-msgid "Chance"
-msgstr "Chance"
-
-#: .\polls\templates\polls\test.html:87
-msgid "Reasoning"
-msgstr "Descrição"
-
-#: .\polls\templates\polls\test.html:90
-msgid ""
-"Feel free to comment on your reasoning for this evaluation. For example: "
-"words that could indicate scam or phishing attempt"
-msgstr "Sinta-se à vontade para comentar o motivo dessa avaliação. Por exemplo: palavras-chave que podem indicar uma tentativa de golpe ou phishing"
-
-#: .\polls\templates\polls\test.html:99
-msgid ""
-"Almost there! please fill out as much information as you can to support our "
-"research."
-msgstr ""
-"Quase lá! Por favor, preencha o máximo de informações que puder para apoiar "
-"nossa pesquisa."
 
 #: .\polls\templates\polls\testList.html:14
 msgid "Tests"
@@ -227,86 +229,90 @@ msgstr "Resposta"
 #, fuzzy
 #| msgid "Results"
 msgid "Your Results"
-msgstr "Resultados"
+msgstr "Seus Resultados"
 
-#: .\polls\templates\polls\testResult.html:19
+#: .\polls\templates\polls\testResult.html:26
+msgid "Your score is in the top"
+msgstr "Sua pontuação está no percentil"
+
+#: .\polls\templates\polls\testResult.html:26
+msgid "out of"
+msgstr "de"
+
+#: .\polls\templates\polls\testResult.html:26
+msgid "answers"
+msgstr "respostas"
+
+#: .\polls\templates\polls\testResult.html:31
+msgid "Your personality type is: "
+msgstr "O seu tipo de personalidade é"
+
+#: .\polls\templates\polls\testResult.html:41
+msgid "Thanks for contributing"
+msgstr "Obrigado por contribuir"
+
+#: .\polls\templates\polls\testResult.html:44
 #, fuzzy
 #| msgid "See results"
 msgid "Detailed results"
 msgstr "Ver resultados"
 
-#: .\polls\templates\polls\testResult.html:30
+#: .\polls\templates\polls\testResult.html:53
 msgid "Precision"
 msgstr "Precisão"
 
-#: .\polls\templates\polls\testResult.html:31
+#: .\polls\templates\polls\testResult.html:54
 msgid "Recall"
 msgstr ""
 
-#: .\polls\templates\polls\testResult.html:32
+#: .\polls\templates\polls\testResult.html:55
 #, fuzzy
 #| msgid "Score"
 msgid "F1 Score"
 msgstr "Pontos"
 
 # #: .\polls\templates\polls\testResult.html:30
-#: .\polls\templates\polls\testResult.html:33
+#: .\polls\templates\polls\testResult.html:56
 msgid "Positive certainty"
 msgstr "Certeza positiva"
 
-#: .\polls\templates\polls\testResult.html:34
+#: .\polls\templates\polls\testResult.html:57
 msgid "Negative certainty"
 msgstr "Certeza negativa"
 
-#: .\polls\templates\polls\testResult.html:58 .\polls\utils\agentProfile.py:13
+#: .\polls\templates\polls\testResult.html:81 .\polls\utils\agentProfile.py:13
 msgid "Super"
-msgstr "Ótimo"
+msgstr "Super preditor"
 
-#: .\polls\templates\polls\testResult.html:59
+#: .\polls\templates\polls\testResult.html:82
 msgid "Good"
-msgstr "Bom"
+msgstr "Bom preditor"
 
-#: .\polls\templates\polls\testResult.html:60 .\polls\utils\agentProfile.py:23
+#: .\polls\templates\polls\testResult.html:83 .\polls\utils\agentProfile.py:23
 msgid "Paranoid"
 msgstr "Paranoico"
 
-#: .\polls\templates\polls\testResult.html:61 .\polls\utils\agentProfile.py:28
+#: .\polls\templates\polls\testResult.html:84 .\polls\utils\agentProfile.py:28
 msgid "Naive"
 msgstr "Ingênuo"
 
-#: .\polls\templates\polls\testResult.html:62 .\polls\utils\agentProfile.py:33
+#: .\polls\templates\polls\testResult.html:85 .\polls\utils\agentProfile.py:33
 msgid "Random"
 msgstr "Aleatório"
 
-#: .\polls\templates\polls\testResult.html:63 .\polls\utils\agentProfile.py:38
+#: .\polls\templates\polls\testResult.html:86 .\polls\utils\agentProfile.py:38
 msgid "Bad"
-msgstr "Ruim"
+msgstr "Preditor ruim"
 
-#: .\polls\templates\polls\testResult.html:64
+#: .\polls\templates\polls\testResult.html:87
 msgid "Malicious"
 msgstr "Malicioso"
 
-#: .\polls\templates\polls\testResult.html:85
-msgid "Your score is in the top"
-msgstr "Sua pontuação está no topo"
-
-#: .\polls\templates\polls\testResult.html:85
-msgid "out of"
-msgstr "de"
-
-#: .\polls\templates\polls\testResult.html:85
-msgid "answers"
-msgstr "respostas"
-
-#: .\polls\templates\polls\testResult.html:99
-msgid "Thanks for contributing"
-msgstr "Obrigado por contribuir"
-
-#: .\polls\templates\polls\testResult.html:127
+#: .\polls\templates\polls\testResult.html:130
 msgid "Try answering the test"
 msgstr "Tente responder ao teste"
 
-#: .\polls\templates\polls\testResult.html:128
+#: .\polls\templates\polls\testResult.html:131
 msgid "Test"
 msgstr "Teste"
 

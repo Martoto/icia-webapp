@@ -15,78 +15,20 @@
 <div class="p-3 border bg-light">
   <div class="container-fluid alert alert-success shadow ">
     <h1 class="display-1 ">{%trans "Your Results"%}</h1>
-    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
-      {%trans "Detailed results"%}
-    </button>
+
   </div>
 
-  <div class="collapse" id="collapse">
-    <div class="row row-cols-1 row-cols-md-3 g-4 table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">{%trans "Username"%}</th>
-                  <th scope="col">{%trans "Score"%}</th>
-                  <th scope="col">{%trans "Precision"%}</th>
-                  <th scope="col">{%trans "Recall"%}</th>
-                  <th scope="col">{%trans "F1 Score"%}</th>
-                  <th scope="col">{%trans "Positive certainty"%}</th>
-                  <th scope="col">{%trans "Negative certainty"%}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  {%if active_agent.crowd %}
-                    <td>{{active_agent.crowd.name}}</td>
-                  {%else%}
-                    <td>{{active_agent.user.username}}</td>
-                  {%endif%}
-                  <td>{{active_agent.score}}</td>
-                  <td>{{agent_profile.precision}}</td>
-                  <td>{{agent_profile.recall}}</td>
-                  <td>{{agent_profile.f1}}</td>
-                  <td>{{agent_profile.p_certainty}}%</td>
-                  <td>{{agent_profile.f_certainty}}%</td>
-                </tr>
-              </tbody>
-            </table>
-    </div>
-    <div class="row row-cols-1 row-cols-md-3 g-4 table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">{%trans "Super"%}</th>
-                  <th scope="col">{%trans "Good"%}</th>
-                  <th scope="col">{%trans "Paranoid"%}</th>
-                  <th scope="col">{%trans "Naive"%}</th>
-                  <th scope="col">{%trans "Random"%}</th>
-                  <th scope="col">{%trans "Bad"%}</th>
-                  <th scope="col">{%trans "Malicious"%}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{profile_distances.SUPER_PREDICTOR}}</td>
-                  <td>{{profile_distances.GOOD_PREDICTOR}}</td>
-                  <td>{{profile_distances.PARANOID_PREDICTOR}}</td>
-                  <td>{{profile_distances.NAIVE_PREDICTOR}}</td>
-                  <td>{{profile_distances.RANDOM_PREDICTOR}}</td>
-                  <td>{{profile_distances.BAD_PREDICTOR}}</td>
-                  <td>{{profile_distances.MALICIOUS_PREDICTOR}}</td>
-                </tr>
-              </tbody>
-            </table>
-    </div>
-    </div>
+
     <div class="row">
         <div class="clearfix">
-            <h2 class="display-2 border rounded-2">
-              <a class="nav-link" href="{% url 'polls:leaderboard' %}">
+            <h2 class="display-2 border rounded-2 bg-light">
+              <a class="nav-link" href="{% url 'polls:leaderboard' %}" >
               {%trans "Your score is in the top"%} <span style="color: blue;">{{top_percent}}%</span> {%trans "out of"%} {{n_answers}} {%trans "answers"%}
               </a>
             </h2>
             <div class="container-fluid">
             <img src="{%static 'polls/bee'|add:personality|add:'.jpg''%}" style="max-width: 300px;"class="" alt="Abelha{{personality_translated}}">
+            <h4 class="display-4">{%trans "Your personality type is: " %}</h4>
             <h4 class="display-4 mark">{{personality_translated}}</h4>
             </div>
             <p class="display-3 border">
@@ -98,6 +40,67 @@
             <p>
             {%trans "Thanks for contributing"%}
             </p>
+            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
+              {%trans "Detailed results"%}
+            </button>
+            <div class="collapse" id="collapse">
+              <div class="row row-cols-1 row-cols-md-3 g-4 table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">{%trans "Username"%}</th>
+                            <th scope="col">{%trans "Score"%}</th>
+                            <th scope="col">{%trans "Precision"%}</th>
+                            <th scope="col">{%trans "Recall"%}</th>
+                            <th scope="col">{%trans "F1 Score"%}</th>
+                            <th scope="col">{%trans "Positive certainty"%}</th>
+                            <th scope="col">{%trans "Negative certainty"%}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            {%if active_agent.crowd %}
+                              <td>{{active_agent.crowd.name}}</td>
+                            {%else%}
+                              <td>{{active_agent.user.username}}</td>
+                            {%endif%}
+                            <td>{{active_agent.score}}</td>
+                            <td>{{agent_profile.precision}}</td>
+                            <td>{{agent_profile.recall}}</td>
+                            <td>{{agent_profile.f1}}</td>
+                            <td>{{agent_profile.p_certainty}}%</td>
+                            <td>{{agent_profile.f_certainty}}%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+              </div>
+              <div class="row row-cols-1 row-cols-md-3 g-4 table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">{%trans "Super"%}</th>
+                            <th scope="col">{%trans "Good"%}</th>
+                            <th scope="col">{%trans "Paranoid"%}</th>
+                            <th scope="col">{%trans "Naive"%}</th>
+                            <th scope="col">{%trans "Random"%}</th>
+                            <th scope="col">{%trans "Bad"%}</th>
+                            <th scope="col">{%trans "Malicious"%}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{{profile_distances.SUPER_PREDICTOR}}</td>
+                            <td>{{profile_distances.GOOD_PREDICTOR}}</td>
+                            <td>{{profile_distances.PARANOID_PREDICTOR}}</td>
+                            <td>{{profile_distances.NAIVE_PREDICTOR}}</td>
+                            <td>{{profile_distances.RANDOM_PREDICTOR}}</td>
+                            <td>{{profile_distances.BAD_PREDICTOR}}</td>
+                            <td>{{profile_distances.MALICIOUS_PREDICTOR}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+              </div>
+              </div>
            <!-- AddToAny BEGIN -->
             <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
             <a class="a2a_dd" href="https://www.addtoany.com/share"></a>

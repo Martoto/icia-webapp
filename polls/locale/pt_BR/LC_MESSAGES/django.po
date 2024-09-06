@@ -199,15 +199,15 @@ msgstr ""
 
 #: .\polls\templates\polls\testList.html:14
 msgid "Tests"
-msgstr ""
+msgstr "Testes"
 
 #: .\polls\templates\polls\testList.html:27
 msgid "Answer"
-msgstr ""
+msgstr "Responder"
 
 #: .\polls\templates\polls\testResult.html:16
 msgid "Your Results"
-msgstr ""
+msgstr "Seus resultados"
 
 #: .\polls\templates\polls\testResult.html:18
 msgid "Detailed results"
