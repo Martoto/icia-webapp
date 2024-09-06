@@ -161,7 +161,7 @@ class TestResultView(generic.DetailView):
             scores = []
             for agent in Agent.objects.all().order_by('-score'): scores.append(agent.score)
             context['n_answers'] = len(scores)
-            context['top_percent'] = percentile_rank(scores, agent.score)
+            context['top_percent'] = str(round(percentile_rank(scores, agent.score),2))
 
         return context
 

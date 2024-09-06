@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 00:45-0300\n"
+"POT-Creation-Date: 2024-09-05 23:43-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgid ""
 msgstr "Página não encontrada! O que você está procurando hein?"
 
 #: .\icia\templates\404.html:17 .\icia\templates\500.html:17
-#: .\icia\templates\base.html:38
+#: .\icia\templates\base.html:39
 msgid "Home"
 msgstr "Início"
 
@@ -62,32 +62,31 @@ msgstr ""
 "O projeto foi conduzido inteiramente por Daniel Salles com a orientação do "
 "Professor Alexandre Graeml."
 
-
 #: .\icia\templates\about.html:20
 msgid "Contact Us"
 msgstr "Contato"
 
-#: .\icia\templates\base.html:41 .\icia\templates\home.html:48
+#: .\icia\templates\base.html:42 .\icia\templates\home.html:48
 msgid "Polls"
 msgstr "Enquetes"
 
-#: .\icia\templates\base.html:44
+#: .\icia\templates\base.html:45
 msgid "Leaderboard"
 msgstr "Pontuação"
 
-#: .\icia\templates\base.html:51
+#: .\icia\templates\base.html:52
 msgid "English"
 msgstr "Inglês"
 
-#: .\icia\templates\base.html:52
+#: .\icia\templates\base.html:53
 msgid "Portuguese"
 msgstr "Português"
 
-#: .\icia\templates\base.html:74
+#: .\icia\templates\base.html:75
 msgid "My votes"
 msgstr "Meus votos"
 
-#: .\icia\templates\base.html:95
+#: .\icia\templates\base.html:96
 msgid "About us"
 msgstr "Sobre nós"
 
@@ -95,7 +94,7 @@ msgstr "Sobre nós"
 msgid "Answer quiz"
 msgstr "Responda ao quiz"
 
-#: .\icia\templates\home.html:17
+#: .\icia\templates\home.html:17 .\icia\templates\registration\signup.html:23
 msgid "Quiz"
 msgstr ""
 
@@ -127,6 +126,11 @@ msgstr "Agentes"
 msgid "Log In"
 msgstr "Entrar"
 
-#: .\icia\templates\registration\signup.html:10
+#: .\icia\templates\registration\signup.html:11
 msgid "Sign up"
 msgstr "Registrar-se"
+
+#: .\icia\templates\registration\signup.html:22
+msgid ""
+"Registration is not allowed at the moment! But you can still answer the quiz"
+msgstr ""
