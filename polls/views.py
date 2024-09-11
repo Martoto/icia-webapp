@@ -16,7 +16,7 @@ from django.contrib.sessions.models import Session
 from .models import Choice, Question, Vote, Agent, AgentPost, Estimate, Classification, Crowd, QuestionGroup
 from .forms import CrowdForm
 from .utils.agentProfile import AgentProfile, ProfileReading, getDistances, percentile_rank
-
+import random
 
 def health(request):
     return JsonResponse({'status': 'healthy'}, status=200)
@@ -67,7 +67,7 @@ class TestListView(generic.ListView):
 class TestView(generic.DetailView):
     model = QuestionGroup
     template_name = "polls/test.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CrowdForm()
@@ -107,7 +107,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['active_agent'], _ = Agent.objects.filter(user=self.request.user)
+        context['active_agent'] = Agent.objects.filter(user=self.request.user).first()
  
         return context
 

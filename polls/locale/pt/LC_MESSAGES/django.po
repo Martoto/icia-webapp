@@ -298,7 +298,7 @@ msgstr "Ingênuo"
 
 #: .\polls\templates\polls\testResult.html:85 .\polls\utils\agentProfile.py:33
 msgid "Random"
-msgstr "Aleatório"
+msgstr "Confuso"
 
 #: .\polls\templates\polls\testResult.html:86 .\polls\utils\agentProfile.py:38
 msgid "Bad"
