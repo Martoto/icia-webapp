@@ -56,7 +56,7 @@ class Crowd(models.Model):
     name = models.CharField(max_length=30)
     age = models.IntegerField(null=True)
     sex = models.CharField(null=True)
-    duration = models.DurationField(null=True)
+    duration = models.IntegerField(null=True)
 
 
 class Choice(models.Model):

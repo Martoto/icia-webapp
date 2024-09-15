@@ -172,7 +172,7 @@
   myCarousel.addEventListener('slide.bs.carousel', function (slide) {
     if (slide.relatedTarget.id == "finalItem") {
         let formEndtime = new Date();
-        document.getElementById('timeToFinish').value = (formEndtime - formOpenTime)/1000;
+        document.getElementById('timeToFinish').value = Math.floor((formEndtime - formOpenTime)/1000);
         document.getElementById('carouselControlBtns').setAttribute('hidden','true')
     }
   })

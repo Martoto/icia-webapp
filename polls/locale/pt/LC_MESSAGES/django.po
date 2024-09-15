@@ -235,11 +235,11 @@ msgstr ""
 
 #: .\polls\templates\polls\test.html:162
 msgid "Prev"
-msgstr ""
+msgstr "Anterior"
 
 #: .\polls\templates\polls\test.html:163
 msgid "Next"
-msgstr ""
+msgstr "Próximo"
 
 #: .\polls\templates\polls\test.html:208
 #, python-format
@@ -276,7 +276,7 @@ msgstr "Resposta"
 
 #: .\polls\templates\polls\testResult.html:17
 msgid "Your af-IQ Score: "
-msgstr ""
+msgstr "Sua pontuação de QI-af: "
 
 #: .\polls\templates\polls\testResult.html:25
 msgid "Your score is in the top"
@@ -296,7 +296,7 @@ msgstr "O seu tipo de personalidade é"
 
 #: .\polls\templates\polls\testResult.html:32
 msgid "Share with your friends and see who scores highest"
-msgstr ""
+msgstr "Compartilhe com seus amigos e veja quem pontua melhor"
 
 #: .\polls\templates\polls\testResult.html:69
 msgid "Thanks for contributing"
