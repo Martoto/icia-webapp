@@ -175,11 +175,12 @@ def submitTest(request, group_id, agent=None):
                 newAgent = Agent(user=User.objects.filter(is_superuser=True).first())
                 newAgent.save()
                 new_crowd = Crowd( 
-                    agent = newAgent,               
-                    name=form.cleaned_data['name'], 
-                    email=form.cleaned_data['email'],
-                    age=form.cleaned_data['age'],
-                    sex=form.cleaned_data['sex']
+                        agent = newAgent,               
+                        name=form.cleaned_data['name'], 
+                        email=form.cleaned_data['email'],
+                        age=form.cleaned_data['age'],
+                        sex=form.cleaned_data['sex'],
+                        duration = request.POST.get("timeToFinish", 0)
                     )
                 new_crowd.save()
                 request.session['answered'+str(group_id)] = True
@@ -189,7 +190,7 @@ def submitTest(request, group_id, agent=None):
                         estimate, x = Estimate.objects.get_or_create(agent=newAgent, 
                                                             classification=c, 
                                                             value=request.POST.get("classification"+str(question.pk), 50.0),
-                                                            description=request.POST["description"+str(question.pk)],
+                                                            description=request.POST["description"+str(question.pk)]
                                                             )
                         estimate.save()
             return HttpResponseRedirect(reverse("polls:test_result", args=[group.slug,]))

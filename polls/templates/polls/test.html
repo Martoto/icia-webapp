@@ -133,7 +133,7 @@
             <div data-mdb-range-init class="range">
               <input type="range" class="form-range" step="10" name="classification{{question.id}}" oninput="updateValue(this.value, {{forloop.counter}})"/>
             </div>
-            <label for="inputPassword5" class="form-label">{%trans "Reasoning"%}</label>
+            <label class="form-label">{%trans "Reasoning"%}</label>
             <input type="text" name="description{{question.id}}" class="form-control" aria-describedby="tipDescript">
             <div id="tipDescript" class="form-text">
               {%trans "Feel free to comment on your reasoning for this evaluation. For example: words that could indicate scam or phishing attempt"%}
@@ -155,6 +155,7 @@
         {% bootstrap_button button_type="reset" content="Cancel" %}
       </div>
     </div>
+    <input name="timeToFinish" id="timeToFinish" type="hidden" value="0">
   </div>      
 </div>
 
@@ -163,10 +164,15 @@
     <button type="button" class="btn btn-success btn-outline-primary rounded-start-pill" data-bs-target="#carouselControls" data-bs-slide="next">{%trans "Next" %}<h3>&raquo;</h3></button>
   </div>
 <script>
+  let formOpenTime = new Date();
+
+  console.log(formOpenTime)
   var myCarousel = document.getElementById('carouselControls')
 
   myCarousel.addEventListener('slide.bs.carousel', function (slide) {
     if (slide.relatedTarget.id == "finalItem") {
+        let formEndtime = new Date();
+        document.getElementById('timeToFinish').value = (formEndtime - formOpenTime)/1000;
         document.getElementById('carouselControlBtns').setAttribute('hidden','true')
     }
   })
