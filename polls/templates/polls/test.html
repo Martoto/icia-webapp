@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
 {% load i18n %}
+{% load static %}
 
 
-{% block title %}Question{% endblock %}
+
+{% block title %}{%trans "Test" %}{% endblock %}
 
 {% block content %}
 
@@ -39,9 +41,65 @@
             <p class="card text-start" style="white-space: pre-wrap;">
               {%trans "Recent times have seen a considerable increase in fraudulent digital activity. How good are you at telling apart real e-mails from fraudulent ones? find out!"%}
             </p>
+            
             <button class="btn btn-danger w-100" type="button" data-bs-toggle="modal" data-bs-target="#modal">
               {%trans "Tips"%}
             </button>
+            
+<!--Personality Cards --> 
+            <h1 class="display-2">{%trans "Find out which one you are" %}</h1>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+              <div class="col">
+                <div class="card">
+                  <img src="{%static 'polls/beeSuper.jpg'%}" style="max-width: 200px;"class="card-img-top mx-auto" alt="AbelhaSuper">
+                  <div class="card-body">
+                    <h5 class="card-title">{%trans "Super"%}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card">
+                  <img src="{%static 'polls/beeAbove average.jpg'%}" style="max-width: 200px;"class="card-img-top mx-auto" alt="Abelhabom">
+                  <div class="card-body">
+                    <h5 class="card-title">{%trans "Good"%}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card">
+                  <img src="{%static 'polls/beeParanoid.jpg'%}" style="max-width: 200px;"class="card-img-top mx-auto" alt="Abelhaa">
+                  <div class="card-body">
+                    <h5 class="card-title">{%trans "Paranoid"%}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card">
+                  <img src="{%static 'polls/beeNaive.jpg'%}" style="max-width: 200px;"class="card-img-top mx-auto" alt="Abelhaa">
+                  <div class="card-body">
+                    <h5 class="card-title">{%trans "Naive"%}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card">
+                  <img src="{%static 'polls/beeBad.jpg'%}" style="max-width: 200px;"class="card-img-top mx-auto" alt="Abelhaa">
+                  <div class="card-body">
+                    <h5 class="card-title">{%trans "Bad"%}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card">
+                  <img src="{%static 'polls/beeRandom.jpg'%}" style="max-width: 200px;"class="card-img-top mx-auto" alt="Abelhaa">
+                  <div class="card-body">
+                    <h5 class="card-title">{%trans "Random"%}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+<!--End Personality Cards --> 
+
         </div>
     </div>
     </div>
@@ -50,10 +108,10 @@
       <div class="container-fluid">
         <div class="card h-100" style="height: 300px">
             <div class="card-header text-start">
-                Question #{{question.pk}}
+                {%trans "Question" %} #{{forloop.counter}}
             </div>
             <div class="card-body h-100">
-                <p class="card text-start" style="white-space: pre-wrap;">
+                <p class="card text-start">
                     {{question.question_text}}
                 </p>
             </div>
@@ -75,7 +133,7 @@
             <div data-mdb-range-init class="range">
               <input type="range" class="form-range" step="10" name="classification{{question.id}}" oninput="updateValue(this.value, {{forloop.counter}})"/>
             </div>
-            <label for="inputPassword5" class="form-label">{%trans "Reasoning"%}</label>
+            <label class="form-label">{%trans "Reasoning"%}</label>
             <input type="text" name="description{{question.id}}" class="form-control" aria-describedby="tipDescript">
             <div id="tipDescript" class="form-text">
               {%trans "Feel free to comment on your reasoning for this evaluation. For example: words that could indicate scam or phishing attempt"%}
@@ -97,18 +155,24 @@
         {% bootstrap_button button_type="reset" content="Cancel" %}
       </div>
     </div>
+    <input name="timeToFinish" id="timeToFinish" type="hidden" value="0">
   </div>      
 </div>
 
-  <div id="carouselControlBtns" class="btn-group fixed-bottom" style="height: 13%;" role="group" aria-label="Basic example" enabled="true">
-    <button type="button" class="btn btn-success" data-bs-target="#carouselControls" data-bs-slide="prev">&laquo;Prev</button>
-    <button type="button" class="btn btn-success" data-bs-target="#carouselControls" data-bs-slide="next">Next&raquo;</button>
+  <div id="carouselControlBtns" class="btn-group fixed-bottom" style="height: 10%;" role="group" aria-label="Basic example" enabled="true">
+    <button type="button" class="btn btn-success btn-outline-primary rounded-end-pill" data-bs-target="#carouselControls" data-bs-slide="prev">{%trans "Prev" %}<h3>&laquo;</h3></button>
+    <button type="button" class="btn btn-success btn-outline-primary rounded-start-pill" data-bs-target="#carouselControls" data-bs-slide="next">{%trans "Next" %}<h3>&raquo;</h3></button>
   </div>
 <script>
+  let formOpenTime = new Date();
+
+  console.log(formOpenTime)
   var myCarousel = document.getElementById('carouselControls')
 
   myCarousel.addEventListener('slide.bs.carousel', function (slide) {
     if (slide.relatedTarget.id == "finalItem") {
+        let formEndtime = new Date();
+        document.getElementById('timeToFinish').value = Math.floor((formEndtime - formOpenTime)/1000);
         document.getElementById('carouselControlBtns').setAttribute('hidden','true')
     }
   })
