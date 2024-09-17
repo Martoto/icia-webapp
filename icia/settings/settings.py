@@ -68,18 +68,16 @@ else:
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
-    'agents.apps.AgentsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'embed_video',
     "django_bootstrap5",
-    'rest_framework',
-    "accounts"
+    'accounts',
+    'polls',
+    'agents',
 ]
 
 MIDDLEWARE = [

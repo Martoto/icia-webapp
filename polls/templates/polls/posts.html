@@ -19,7 +19,6 @@
         {% for post in latest_posts_list %}
         <div class="col">
             <div class="card h-100" href="{% url 'polls:detail' question.id %}">
-              <img src="..." class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">By {{ post.owner }}</h5>
                 <p class="card-text">{{ question.question_text }}</p>

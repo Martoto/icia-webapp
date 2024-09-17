@@ -21,7 +21,6 @@
           {% with question.get_voting_agents as voters%}
           <div class="col">
               <div class="card h-100" href="{% url 'polls:detail' question.id %}">
-                <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">Question #{{ question.pk }}<span class="badge bg-secondary">{{voters|length}} Vote{{voters|length|pluralize}}</span></h5>
                   <p class="card-text text-muted">{{ question.question_text|truncatewords:5 }}</p>
