@@ -177,7 +177,7 @@ msgstr "Dicas"
 
 #: .\polls\templates\polls\test.html:50
 msgid "Find out which one you are"
-msgstr ""
+msgstr "Descubra qual você é!"
 
 #: .\polls\templates\polls\test.html:56
 #: .\polls\templates\polls\testResult.html:110 .\polls\utils\agentProfile.py:13
