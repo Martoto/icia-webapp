@@ -23,7 +23,7 @@ REGISTRATION_OPEN = os.environ.get('DJANGO_ALLOW_REGISTRATION',True)
 ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(" ")
 
 
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', default=1))
+DEBUG = os.environ.get('DJANGO_DEBUG', default="True")
 
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS','').split(' ')
 CSRF_COOKIE_SECURE = True
