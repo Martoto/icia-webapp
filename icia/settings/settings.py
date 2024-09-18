@@ -111,6 +111,8 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 WSGI_APPLICATION = 'icia.wsgi.application'
 
 # Password validation
