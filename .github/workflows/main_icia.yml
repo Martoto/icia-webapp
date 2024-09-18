@@ -83,4 +83,10 @@ jobs:
         with:
           app-name: ${{ env.WEBAPP_NAME }}
           slot-name: 'Production'
+
+      - name: Collect Static Files
+        run: python manage.py collectstatic --noinput
+
+
+    
           
