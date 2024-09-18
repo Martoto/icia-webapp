@@ -37,6 +37,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+        
+      - name: Collect Static Files
+        run: python manage.py collectstatic --noinput
+
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
 
@@ -84,8 +88,6 @@ jobs:
           app-name: ${{ env.WEBAPP_NAME }}
           slot-name: 'Production'
 
-      - name: Collect Static Files
-        run: python manage.py collectstatic --noinput
 
 
     
