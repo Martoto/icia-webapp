@@ -39,7 +39,7 @@ jobs:
 
         
       - name: Run collectstatic
-        run: python icia/manage.py collectstatic --noinput
+        run: python manage.py collectstatic --noinput
 
 
       - name: Zip artifact for deployment
