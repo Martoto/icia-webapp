@@ -33,9 +33,13 @@
                   <td>{{active_agent.score}}</td>
                   {%if active_agent.crowd %}
                     <td>{{active_agent.crowd.name}}</td>
-                  {%else%}
+                  {% else %}
+                    {% if active_agent.agentClient %}
+                    <td>{{ active_agent.agentClient.label }}</td>
+                    {% else %}
                     <td>{{active_agent.user.username}}</td>
-                  {%endif%}
+                    {% endif %}
+                  {% endif %}
                   <td>{{active_agent.estimate_set.count}}</td>
 
                 </tr>

@@ -33,6 +33,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         
         context['questions'] = Question.objects.all()
         context['active_question'] = Question.objects.filter(pk=self.request.GET.get('question', None))
+        print(context['active_question'])
  
         return context
     
@@ -40,10 +41,11 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 @login_required
 def autonomous_vote(request, agent):
     question = get_object_or_404(Question, pk=request.POST.get('question_id', None))
+    prompt = request.GET.get('prompt', None)
     
     #classification question loop
     for i,c in enumerate(question.classification_set.all()):
-        query = f"{question.question_query or ''}{question.question_text or ''}{c.classification_text or ''}"
+        query = f"{prompt or ''}{question.question_text or ''}"
         answer = QueryAgent(query, agent)
         try:
             request.POST['classification'+str(i)] = answer.astype(float)
@@ -52,18 +54,6 @@ def autonomous_vote(request, agent):
                 "agent": agent,
                 "error_message": "Couldn't parse AI classification response",
             })
-        
-    #multiple choice question query
-    query = f"{question.question_query or ''}{question.question_text or ''}"
-    for c in question.choice_set.all():
-        query += str(c.pk) + ": " + c.choice_text
-    try:
-        request.POST['choice'] = answer.astype(int)
-    except: 
-        return render(request, "polls/detail.html", {
-            "agent": agent,
-            "error_message": "Couldn't parse AI classification response",
-        })
         
     Vote(request, question)
 

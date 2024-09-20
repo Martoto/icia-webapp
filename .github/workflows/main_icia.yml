@@ -84,6 +84,9 @@ jobs:
         with:
           app-name: ${{ env.WEBAPP_NAME }}
           slot-name: 'Production'
+          startup-command: 'python manage.py collectstatic --noinput'
+
+
 
 
 

@@ -19,34 +19,48 @@
     <a href="{% url 'agents:index' %}" class="btn btn-primary">{% trans "Agents" %}</a>
 </div>
 {% else %}
+<h1>{%trans "Agent tuning "%} {{ object.label }}</h1>
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      {%trans "Question "%}{{ active_question.first.pk|default:"Choose question" }}
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="questionSelection" style="max-lines: 5;">
+    {%for question in questions%}
+      <li><a class="dropdown-item" href="?question={{question.pk}}">Question #{{question.pk}}</a></li>
+    {%endfor%}
+    </ul>
+</div>
 <form action="{% url 'agents:autovote' agentclient.id %}" method="post">
     {% csrf_token %}
     <fieldset>
         <div class="container-sm mt-4"></div>
-        <div class="card h-100" style="max-height: 300px">
+        <div class="card h-100" >
             <div class="card-header text-start">
-                {{AgentClient.label}}
+                {%trans "Edit prompt" %}
             </div>
-            <div class="card-body overflow-scroll">
-                <p class="card text-start" style="white-space: pre-wrap;">
-                    TEXTO
-                </p>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="card-body">
+                            <textarea class="form-control" id="promptTextArea" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card-body overflow-scroll">
+                            <p class="card text-start" style="white-space: pre-wrap;">
+                                {{ active_question.first.question_text }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                </div>
+
             </div>
           </div>
         </div>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ active_question.pk|default:"Choose question" }}
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="questionSelection" style="max-lines: 5;">
-            {%for question in questions%}
-              <li><a class="dropdown-item" href="?question={{question.pk}}">Question #{{question.pk}}</a></li>
-            {%endfor%}
-            </ul>
-        </div>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     </fieldset>
-    <input type="hidden" name="question_id" value="{{active_question.pk}}">
+    <input type="hidden" name="question_id" value="{{active_question.first.pk}}">
     <input type="submit" value="Vote">
 </form>
 {%endif%}
