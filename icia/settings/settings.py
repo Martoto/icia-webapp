@@ -7,6 +7,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+from django.core.management.utils import get_random_secret_key
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -17,7 +18,7 @@ load_dotenv(BASE_DIR / ".env")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', default=get_random_secret_key())
 REGISTRATION_OPEN = os.environ.get('DJANGO_ALLOW_REGISTRATION',True)
 
 ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(" ")
