@@ -21,7 +21,7 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', default=get_random_secret_key())
 REGISTRATION_OPEN = os.environ.get('DJANGO_ALLOW_REGISTRATION',True)
 
-ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(" ")
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', default=" ").split(" ")
 
 
 DEBUG = os.environ.get('DJANGO_DEBUG',False)
@@ -51,7 +51,7 @@ if os.getenv('DJANGO_ENV') == 'dev':
             'PORT': os.environ['DBPORT'],
         }
     }
-else:
+elif os.getenv('DJANGO_ENV') == 'prod':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -63,7 +63,9 @@ else:
             'OPTIONS': {'sslmode': 'require'},
         }
     }
-
+else:
+    DATABASES = {
+    }
 
 # Azure hosting
 STATIC_ROOT = BASE_DIR / 'staticfiles'
