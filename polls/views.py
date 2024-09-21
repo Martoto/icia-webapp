@@ -164,6 +164,33 @@ class TestResultView(generic.DetailView):
             context['top_percent'] = str(round(percentile_rank(scores, agent.score),2))
 
         return context
+    
+class TestResultAdminView(generic.DetailView):
+    template_name = "polls/testResultAdmin.html"
+    model = QuestionGroup
+
+    def get_context_data(self, **kwargs):
+        translation.activate(self.request.LANGUAGE_CODE)
+        context = super().get_context_data(**kwargs)
+        thisUser = Agent.objects.filter(pk=self.request.GET.get('agent', None))
+        context['agents'] = Agent.objects.all()
+        if thisUser.exists(): 
+            agent = thisUser.first()
+            context['active_agent'] = agent
+            context['agent_profile'] = AgentProfile(agent)
+            context['profile_distances'] = getDistances(context['agent_profile'])
+            sortedDistances = dict(sorted(context['profile_distances'].items(), key=lambda item: item[1]))
+            dists = list(sortedDistances)
+            context['main_personality'] = _(ProfileReading[dists[0]].value[0]) 
+            context['second_personality'] = _(ProfileReading[dists[1]].value[1]) 
+            context['personality'] = ProfileReading[dists[0]].value[2]
+            context['personality_translated'] = _(ProfileReading[dists[0]].value[2])  
+            scores = []
+            for a in Agent.objects.all().order_by('-score'): scores.append(a.score)
+            context['n_answers'] = len(scores)
+            context['top_percent'] = str(round(percentile_rank(scores, agent.score),2))
+
+        return context
 
 def submitTest(request, group_id, agent=None):
     group = get_object_or_404(QuestionGroup, pk=group_id)

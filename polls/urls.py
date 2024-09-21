@@ -14,6 +14,7 @@ urlpatterns = [
     path('test/<slug:slug>', views.TestView.as_view(), name='test'),
     path('test/<int:group_id>/vote', views.submitTest, name='submit_test'),
     path('test/<slug:slug>/result', views.TestResultView.as_view(), name='test_result'),
+    path('test/<slug:slug>/resultAdmin', views.TestResultAdminView.as_view(), name='test_resultAdmin'),
     path('crowds/', views.crowdsForm, name='crowds'),
     path('health/', views.health, name='health'),
     path('nenezinho/', views.nenezinho, name='nenezinho'),

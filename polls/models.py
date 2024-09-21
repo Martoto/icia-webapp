@@ -55,7 +55,7 @@ class Crowd(models.Model):
     email = models.EmailField(primary_key=True)
     name = models.CharField(max_length=30)
     age = models.IntegerField(null=True)
-    sex = models.CharField(null=True)
+    sex = models.CharField(null=True, max_length=3)
     duration = models.IntegerField(null=True)
 
 
