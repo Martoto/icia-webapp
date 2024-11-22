@@ -23,5 +23,5 @@ class AgentClient(models.Model):
 class ClientSettings(models.Model):
     client = models.ForeignKey(AgentClient, on_delete=models.CASCADE)
     model = models.TextField(max_length=100)
-    temperature = models.IntegerField(default=10.0)
+    temperature = models.IntegerField(default=1.0)
 

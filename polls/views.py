@@ -165,7 +165,8 @@ class TestResultView(generic.DetailView):
 
         return context
     
-class TestResultAdminView(generic.DetailView):
+
+class TestResultAdminView(generic.DetailView, LoginRequiredMixin):
     template_name = "polls/testResultAdmin.html"
     model = QuestionGroup
 

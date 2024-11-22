@@ -9,6 +9,7 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
 from agents.models import AgentClient, ClientSettings
 from polls.views import Vote
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import openai
 
@@ -24,7 +25,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
             :5
         ]
     
-class DetailView(LoginRequiredMixin, generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView ):
     model = AgentClient
     template_name = "agents/detail.html"
 
@@ -41,39 +42,36 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 @login_required
 def autonomous_vote(request, agent):
     question = get_object_or_404(Question, pk=request.POST.get('question_id', None))
-    prompt = request.GET.get('prompt', None)
-    
+    prompt = request.GET.get('prompt', 'qual a chance entre 0 a 100 deste e-mail ser fraudulento? tire a conclusão inteiramente pelo seu conhecimento sem alucinar nem responder nada além de um número entre 0 e 100') 
+    answer = ""
     #classification question loop
-    for i,c in enumerate(question.classification_set.all()):
+    for i in question.classification_set.all():
         query = f"{prompt or ''}{question.question_text or ''}"
+        print("Querying AI: " + query[0:50])
         answer = QueryAgent(query, agent)
         try:
             request.POST['classification'+str(i)] = answer.astype(float)
         except: 
-            return render(request, "polls/detail.html", {
-                "agent": agent,
-                "error_message": "Couldn't parse AI classification response",
-            })
+            messages.warning(request, str(answer.content))
         
+
     Vote(request, question)
+    return redirect("agents:detail", slug=agent)
+
 
         
     
 def QueryAgent(query, agent, client_settings=None):
-    agentClient = AgentClient.objects.get_object_or_404(slug=agent)
-    if client_settings == None:
-        try:
-            client_settings = ClientSettings.objects.get_object_or_404(agent=agent)
-        except:     
-            return JsonResponse({'resposta': 'ERRO',
-                                 'erro': 'unconfigured AI client' }, status=400)
+    agentClient = get_object_or_404(AgentClient, slug=agent)
+    client_settings = get_object_or_404(ClientSettings, client=agentClient)
+
 
     client   = openai.OpenAI(
     api_key  = agentClient.api_key,
     base_url = agentClient.base_url,   
     )
     messages = [
-        {"role": "icia_autovote", 
+        {"role": "tool", 
         "content": query},
     ]
 
@@ -81,9 +79,10 @@ def QueryAgent(query, agent, client_settings=None):
         model=client_settings.model,   
         messages=messages,
         temperature=client_settings.temperature,
-        max_tokens=512,
+        max_tokens=50,
     )
     answer = response.choices[0].message.content
+    print("Resposta IA: " + answer)
     return JsonResponse({'resposta': answer}, status=200)
 
 

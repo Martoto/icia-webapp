@@ -30,7 +30,7 @@
     {%endfor%}
     </ul>
 </div>
-<form action="{% url 'agents:autovote' agentclient.id %}" method="post">
+<form action="{% url 'agents:autovote' agentclient.slug %}" method="post">
     {% csrf_token %}
     <fieldset>
         <div class="container-sm mt-4"></div>
@@ -58,7 +58,13 @@
             </div>
           </div>
         </div>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </fieldset>
     <input type="hidden" name="question_id" value="{{active_question.first.pk}}">
     <input type="submit" value="Vote">
