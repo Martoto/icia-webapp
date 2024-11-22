@@ -43,7 +43,7 @@ class Agent(models.Model):
     score = models.IntegerField(default=0)
 
     def is_human(self):
-        return not hasattr(self, 'agentclient')
+        return not hasattr(self, 'autoagent')
 
     def update_score(self):
         self.score =  sum(v.choice.score for v in self.vote_set.all()) 

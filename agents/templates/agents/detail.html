@@ -13,7 +13,7 @@
       <li class="breadcrumb-item active"><a href="#">{% trans "Client" %} {{ AgentClient.label }}</a></li>
     </ol>
 </nav>
-{% if user != agentclient.agent.user %}
+{% if user != agentclient.owner %}
 <div class="alert alert-failure">
     <p>{% trans "This Client belongs to another user" %}</p>
     <a href="{% url 'agents:index' %}" class="btn btn-primary">{% trans "Agents" %}</a>

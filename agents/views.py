@@ -53,7 +53,6 @@ def autonomous_vote(request, agent):
             request.POST['classification'+str(i)] = answer.astype(float)
         except: 
             messages.warning(request, str(answer.content))
-        
 
     Vote(request, question)
     return redirect("agents:detail", slug=agent)

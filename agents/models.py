@@ -4,7 +4,7 @@ from django.utils.text import slugify
 
 
 class AgentClient(models.Model):
-    agent = models.OneToOneField(Agent, on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', related_name='clients', on_delete=models.CASCADE)
     label = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True, editable=False)
     api_key = models.CharField(max_length=100)
@@ -17,11 +17,13 @@ class AgentClient(models.Model):
 
     def __str__(self):
         return self.label
-
-
     
 class ClientSettings(models.Model):
     client = models.ForeignKey(AgentClient, on_delete=models.CASCADE)
     model = models.TextField(max_length=100)
-    temperature = models.IntegerField(default=1.0)
+    temperature = models.FloatField(default=1.0)
 
+class AutoAgent(models.Model):
+    agent = models.OneToOneField(Agent, on_delete=models.CASCADE)
+    ClientSettings = models.ForeignKey(ClientSettings, on_delete=models.CASCADE)
+    label = models.CharField(max_length=100)
