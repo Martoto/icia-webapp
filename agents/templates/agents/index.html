@@ -25,6 +25,7 @@
               </div>
               <div class="card-body">
                 <a href="{% url 'agents:detail' agent.slug %}" class="btn btn-primary stretched-link">{% trans "Details" %}</a>
+                <a href="{% url 'agents:voting' agent.slug %}" class="btn btn-primary stretched-link">{% trans "Auto vote" %}</a>
               </div>
               <div class="card-footer">
                 <small class="text-muted">Owner: {{ agent.owner }}</small>

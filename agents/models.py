@@ -1,5 +1,5 @@
 from django.db import models
-from polls.models import Agent, Question
+from polls.models import Agent, Question, QuestionGroup
 from django.utils.text import slugify
 
 
@@ -23,7 +23,18 @@ class ClientSettings(models.Model):
     model = models.TextField(max_length=100)
     temperature = models.FloatField(default=1.0)
 
+class AutoVote(models.Model):
+    client_settings = models.ForeignKey(ClientSettings, on_delete=models.CASCADE)
+    question_group = models.ForeignKey(QuestionGroup, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    total_votes = models.IntegerField(default=0)
+    vote_count = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
+
+
 class AutoAgent(models.Model):
+    autovote = models.ForeignKey(AutoVote, on_delete=models.CASCADE)
     agent = models.OneToOneField(Agent, on_delete=models.CASCADE)
-    ClientSettings = models.ForeignKey(ClientSettings, on_delete=models.CASCADE)
     label = models.CharField(max_length=100)
+    
