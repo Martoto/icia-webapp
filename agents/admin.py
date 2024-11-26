@@ -9,7 +9,7 @@ class SettingsInline(admin.StackedInline):
 
 class ClientAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {"fields": ["owner","label"]}),
+        (None, {"fields": ["owner","label", "default_prompt"]}),
         ("Connection information", {"fields": ["base_url", "api_key"], "classes": ["collapse"]})
     ]
     inlines = [SettingsInline]

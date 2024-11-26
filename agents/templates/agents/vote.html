@@ -52,7 +52,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="card-body">
-                            <textarea class="form-control" id="promptTextArea" oninput="updateHiddenInput()" rows="3"></textarea>
+                            <textarea class="form-control" id="promptTextArea" oninput="updateHiddenInput()" rows="3">{{object.default_prompt}}</textarea>
                         </div>
                     </div>
                     <div class="col">
@@ -76,6 +76,7 @@
         {% endif %}
     </fieldset>
     <input type="hidden" name="prompt" id="prompt" value=promptTextArea.val>
+    <input type="hidden" name="settings_id" value="{{active_settings.first.pk}}">
     <input type="hidden" name="question_id" value="{{active_question.first.pk}}">
     <input type="submit" value="Vote">
 </form>

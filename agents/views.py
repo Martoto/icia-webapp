@@ -63,18 +63,32 @@ def autonomous_vote(request, agent):
         autonomous_vote = AutoVote.objects.create(question_group=question_group, client_settings=ClientSettings.objects.get(pk=request.POST.get('settings_id', None)))
         auto_agent = AutoAgent.objects.create(autovote=autonomous_vote, agent=Agent.objects.create(), label=request.POST.get('label', ''))
         messages.info(request, str(_("The agent has begun answering")))
-
-        prompt = request.POST.get('prompt', 'qual a chance entre 0 a 100 deste e-mail ser fraudulento? tire a conclusão inteiramente pelo seu conhecimento sem alucinar nem responder nada além de um número entre 0 e 100') 
+        prompt = request.POST.get('prompt', None) 
+        if prompt == None or prompt == "":
+            prompt = Agent.objects.get(pk=request.POST.get('agent_id', None)).default_prompt 
         for q in question_list:
             query = f"{prompt or ''}{q.question_text or ''}"
             print("Querying AI: " + query[0:50])
-            response = QueryAgent(query, agent)
+            response = QueryAgent(query, agent, request.POST.get('settings_id', None))
             answer = str(response.content.decode('utf-8'))
-            print("Resposta IA: " + answer)
-            estimate = Estimate.objects.create(agent=auto_agent.agent, classification=q.classification_set().first, value=answer.astype(float))
+            answer = float(answer) if answer.isnumeric() else None
+            i = 0
+            while answer is None:
+                i += 1
+                response = QueryAgent(query, agent, request.POST.get('settings_id', None))
+                answer = str(response.content.decode('utf-8')).strip()
+                print("Resposta IA: " + answer)
+                answer = float(answer) if answer.isnumeric() else None
+                if i > 5 and answer is None:
+                    raise Http404(_("The AI could not answer the question"))
+
+
+            estimate = Estimate.objects.create(agent=auto_agent.agent, classification=q.classification_set.first(), value=float(answer))
+            autonomous_vote.save()
+            auto_agent.save()
             estimate.save()
 
-        return redirect("polls:test_resultAdmin", slug=agent)
+        return redirect("polls:test_resultAdmin", slug=question_group.slug)
     else:
         raise Http404("Method not allowed")
     
@@ -84,7 +98,7 @@ def autonomous_vote(request, agent):
     
 def QueryAgent(query, agent, client_settings=None):
     agentClient = get_object_or_404(AgentClient, slug=agent)
-    client_settings = get_object_or_404(ClientSettings, client=agentClient)
+    client_settings = ClientSettings.objects.get(pk=client_settings, client=agentClient)
 
 
     client   = openai.OpenAI(
@@ -103,7 +117,6 @@ def QueryAgent(query, agent, client_settings=None):
         max_tokens=50,
     )
     answer = response.choices[0].message.content
-    print("Resposta IA: " + answer)
     return HttpResponse(answer, status=200)
 
 

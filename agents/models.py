@@ -6,6 +6,7 @@ from django.utils.text import slugify
 class AgentClient(models.Model):
     owner = models.ForeignKey('auth.User', related_name='clients', on_delete=models.CASCADE)
     label = models.CharField(max_length=100)
+    default_prompt = models.TextField(default="", max_length=500)
     slug = models.SlugField(unique=True, blank=True, editable=False)
     api_key = models.CharField(max_length=100)
     base_url = models.URLField()
