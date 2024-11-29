@@ -1,5 +1,5 @@
 from enum import Enum
-from polls.models import Agent, QuestionGroup
+from polls.models import Agent, AgentMetrics, QuestionGroup
 from dataclasses import dataclass
 from skfuzzy import gaussmf
 import numpy as np
@@ -15,7 +15,7 @@ class ProfileReading(Enum):
     GOOD_PREDICTOR = (
         _("You did a great job. You are not as accurate as a machine but you provided great human insight"),
         _("You were undeniably good, better than most"),
-        _("Above average")
+        _("Good")
     )
     PARANOID_PREDICTOR = (
         _("You are so wary of fraud to the point of ruling out safe information. Not everyone is out to get you, try to be more positive"),
@@ -96,7 +96,6 @@ def percentile_rank(scores, score):
     return percentile
 
 
-
 def getAgentProfile(agent):
     tp = fp = tn = fn = 0
     p_certainty = []
@@ -117,5 +116,21 @@ def getAgentProfile(agent):
     f_certainty = (sum(f_certainty) / len(f_certainty)) if len(f_certainty) > 0 else 0.0
     return precision, recall, f1, p_certainty, f_certainty
 
+def updateAllProfiles():
+    for agent in Agent.objects.all():
+        profile, _ = AgentMetrics.objects.get_or_create(agent=agent)
+        ap = AgentProfile(agent)
+        profile.precision = ap.precision
+        profile.recall = ap.recall
+        profile.f1_score = ap.f1
+        profile.p_certainty = ap.p_certainty
+        profile.n_certainty = ap.f_certainty
+
+        sortedDistances = dict(sorted(getDistances(ap).items(), key=lambda item: item[1]))
+        dists = list(sortedDistances)
+        profile.main_personality = ProfileReading[dists[0]].value[2]
+        profile.secondary_personality = ProfileReading[dists[1]].value[2]
+        profile.save()
+        agent.save()
 
     

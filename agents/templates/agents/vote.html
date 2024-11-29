@@ -6,6 +6,30 @@
 {% block title %}Auto vote{% endblock %}
 
 {% block content %}
+<style>
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        border-width: 0.3rem;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
@@ -40,7 +64,7 @@
     {%endfor%}
     </ul>
 </div>
-<form action="{% url 'agents:autovote' agentclient.slug %}" method="post">
+<form id="query_form" action="{% url 'agents:autovote' agentclient.slug %}" method="post">
     {% csrf_token %}
     <fieldset>
         <div class="container-sm mt-4"></div>
@@ -78,8 +102,14 @@
     <input type="hidden" name="prompt" id="prompt" value=promptTextArea.val>
     <input type="hidden" name="settings_id" value="{{active_settings.first.pk}}">
     <input type="hidden" name="question_id" value="{{active_question.first.pk}}">
-    <input type="submit" value="Vote">
+    <input type="numeric" name="iterations" value="1">{%trans "Iterations"%}
+    <input type="submit" value="Vote" >
 </form>
+<div id="overlay" class="overlay hidden">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
 <script>
     function updateHiddenInput() {
         var promptTextArea = document.getElementById('promptTextArea');
@@ -88,8 +118,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        updateHiddenInput();
-    });
+            updateHiddenInput();
+            var form = document.getElementById('query_form');
+            form.addEventListener('submit', function() {
+                document.getElementById('overlay').classList.remove('hidden');
+            });
+        });
 </script>
 <script>
     function updateURLParameter(param, value) {

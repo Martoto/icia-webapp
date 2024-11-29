@@ -36,7 +36,7 @@ class QuestionGroup(models.Model):
     def __str__(self):
         return self.label
 
-    
+
 
 class Agent(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
@@ -108,6 +108,17 @@ class AgentPost(models.Model):
     pub_date = models.DateTimeField("date published")
     def was_published_recently(self):
         return timezone.now() - datetime.timedelta(days=1) <= self.pub_date <= timezone.now()
+    
+class AgentMetrics(models.Model):
+    agent = models.OneToOneField(Agent, on_delete=models.CASCADE)
+    f1_score = models.DecimalField(max_digits=5,decimal_places=2,default=0.00)
+    precision = models.DecimalField(max_digits=5,decimal_places=2,default=0.00)
+    recall = models.DecimalField(max_digits=5,decimal_places=2,default=0.00)
+    p_certainty = models.DecimalField(max_digits=5,decimal_places=2,default=0.00)
+    n_certainty = models.DecimalField(max_digits=5,decimal_places=2,default=0.00)
+    main_personality = models.CharField(max_length=100)
+    secondary_personality = models.CharField(max_length=100)
+
 
 
 @receiver(post_save, sender=Vote)

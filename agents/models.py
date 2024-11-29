@@ -8,7 +8,7 @@ class AgentClient(models.Model):
     label = models.CharField(max_length=100)
     default_prompt = models.TextField(default="", max_length=500)
     slug = models.SlugField(unique=True, blank=True, editable=False)
-    api_key = models.CharField(max_length=100)
+    api_key = models.CharField(max_length=1000)
     base_url = models.URLField()
 
     def save(self, *args, **kwargs):
@@ -34,8 +34,10 @@ class AutoVote(models.Model):
     active = models.BooleanField(default=True)
 
 
+
 class AutoAgent(models.Model):
     autovote = models.ForeignKey(AutoVote, on_delete=models.CASCADE)
     agent = models.OneToOneField(Agent, on_delete=models.CASCADE)
+    duration = models.IntegerField(null=True)
     label = models.CharField(max_length=100)
     
