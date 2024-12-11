@@ -1,5 +1,8 @@
 from enum import Enum
-from polls.models import Agent, AgentMetrics, QuestionGroup
+import random
+import traceback
+from django.contrib.auth.models import User
+from polls.models import Agent, AgentMetrics, Crowd, QuestionGroup
 from dataclasses import dataclass
 from skfuzzy import gaussmf
 import numpy as np
@@ -133,4 +136,50 @@ def updateAllProfiles():
         profile.save()
         agent.save()
 
-    
+def delimitValue(value, upperLimit, lowerLimit):
+    if value > upperLimit:
+        return upperLimit
+    if value < lowerLimit:
+        return lowerLimit
+    return value
+
+
+def load_agents_fromCSV():
+    import csv
+    with open('polls/utils/agents.csv') as csvfile:
+        reader = csv.DictReader(csvfile)
+        user = User.objects.get(pk=1)
+        for row in reader:
+            agent = Agent()
+            crowd = Crowd()
+            try:
+                agent = Agent.objects.create(user=user)
+                crowd = Crowd.objects.create(agent=agent, age=row['age'], name=row['name'], sex=row['sex'], duration=random.gauss(float(232,75), 100), email=row['email'])  
+                for q in QuestionGroup.objects.first().questions.all():
+                    for c in q.classification_set.all():
+                        random_number = random.gauss(float(c.benchmark), 40)
+                        agent.estimate_set.create(classification=c, value=delimitValue(random_number,100,0))
+                agent.save()
+                crowd.save()
+                print(f"Agent {crowd.name} created")
+            except Exception as e:
+                if agent.pk:
+                    agent.delete()
+                if crowd.pk:
+                    crowd.delete()
+                print(f"Error creating agent {crowd.name}")
+                print(e)
+
+def clean_agents_fromCSV():
+    import csv
+    with open('polls/utils/agents.csv') as csvfile:
+        reader = csv.DictReader(csvfile)
+        user = User.objects.get(pk=1)
+        Agent.objects.filter(score=0).delete()
+        for row in reader:
+            try:
+                crowd = Crowd.objects.get(email=row['email'])  
+                crowd.agent.delete()
+            except Exception as e:
+                print(f"Error cleaning agent {row['name']}")
+                print(e)
