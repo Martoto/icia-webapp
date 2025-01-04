@@ -43,12 +43,8 @@ STATICFILES_DIRS = [
 if os.getenv('DJANGO_ENV') == 'dev': 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['DBNAME'],
-            'HOST': os.environ['DBHOST'],
-            'USER': os.environ['DBUSER'],
-            'PASSWORD': os.environ['DBPASS'],
-            'PORT': os.environ['DBPORT'],
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 elif os.getenv('DJANGO_ENV') == 'prod':

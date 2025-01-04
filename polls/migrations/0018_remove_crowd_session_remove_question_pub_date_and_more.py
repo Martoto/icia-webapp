@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='crowd',
             name='sex',
-            field=models.CharField(null=True),
+            field=models.CharField(null=True, max_length=10),
         ),
         migrations.AlterField(
             model_name='classification',
