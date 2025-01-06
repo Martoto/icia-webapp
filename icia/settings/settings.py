@@ -19,7 +19,7 @@ load_dotenv(BASE_DIR / ".env")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', default=get_random_secret_key())
-REGISTRATION_OPEN = os.environ.get('DJANGO_ALLOW_REGISTRATION',True)
+REGISTRATION_OPEN = os.environ.get('DJANGO_ALLOW_REGISTRATION',False)
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', default=" ").split(" ")
 
